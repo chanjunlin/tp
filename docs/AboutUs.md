@@ -39,11 +39,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Shayne Leong
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/shanyey.png.JPG" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/shanyey)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Developer
