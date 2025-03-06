@@ -19,11 +19,11 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Project Advisor
 
-### Jane Doe
+### Zhan Wen
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/panomia01.png" width="200px">
 
-[[github](http://github.com/johndoe)]
+[[github](http://github.com/panomia01)]
 [[portfolio](team/johndoe.md)]
 
 * Role: Team Lead
