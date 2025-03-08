@@ -17,8 +17,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/jon-seana)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Member
-* Responsibilities: Technical Lead
+* Role: Developer
+* Responsibilities: Technical Lead 
 
 ### Zhan Wen
 
@@ -41,7 +41,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Shayne Leong
 
-<img src="images/shanyey.png.JPG" width="200px">
+<img src="images/shanyey.png" width="200px">
 
 [[github](http://github.com/shanyey)]
 [[portfolio](team/johndoe.md)]

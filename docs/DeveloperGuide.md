@@ -262,42 +262,61 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* Manager or nurse at a private nurse agency
+* has a need to manage a significant number of nurses and/or patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**: 
+1) Manage nurse and patients faster than a typical mouse/GUI driven app
+2) Allows faster creation and storage of details compared to traditional pen and paper methods
+3) Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
+| Priority | As a …​                       | I want to …​                                                                         | So that I can…​                                                                                 |
+|----------|-------------------------------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| `* * *`  | Manager                       | add nurse contacts                                                                   | add new nurses contacts who joined the team                                                     |
+| `* * *`  | Manager                       | delete nurse contacts                                                                | remove contact of nurses who leave the agency                                                   |
+| `* * *`  | Manager                       | add patients contacts                                                                | keep track of new patients who register with the agency                                         |
+| `* * *`  | Manager                       | delete patient contacts                                                              | remove patients who are no longer registered with the agency                                    |
+| `* * *`  | Manager                       | view all nurses                                                                      | see all nurses details at once                                                                  |
+| `* * *`  | Manager                       | view all patients                                                                    | see all registered patients at once                                                             |
+| `* * *`  | Nurse                         | view patients details                                                                | view the needs of the patient I'm caring for                                                    |
+| `* * *`  | Nurse                         | exit the application quickly                                                         | resume other tasking at hands                                                                   |
+| `* *`    | Manager                       | view all patients attached to a certain nurse                                        | check which patients a nurse is currently assigned to                                           |
+| `* *`    | Manager                       | view the nurse assigned to a patient                                                 | check who is in charge of a certain patient                                                     |
+| `* *`    | Manager                       | schedule appointments for a patient                                                  | ensure the patient has an appointment and a nurse                                               |
+| `* *`    | Manager                       | assign a nurse to a appointment                                                      | ensure the appointment has a specified nurse                                                    |
+| `* *`    | Manager                       | sort patient details                                                                 | sort my patients according to various criteria such as blood type and severity level            |
+| `* *`    | Manager                       | assign categories to patients                                                        | add the severity of each patient                                                                |
+| `* *`    | Manager                       | adjust categories of patients                                                        | lower or increase the severity / priority of patients over time                                 |
+| `* *`    | Nurse                         | find patient details                                                                 | check details about a specific nurse                                                            |
+| `* *`    | Nurse                         | sort patient details                                                                 | quickly find details about a specific patient                                                   |
+| `* *`    | Nurse                         | transfer the patients under me to another nurse                                      | ensure my patients are not neglected during my absence                                          |
+| `*`      | Manager                       | add roles of nurses                                                                  | see which nurse has a larger responsibility                                                     |
+| `*`      | Forgetful Nurse               | schedule automatic reminders for task like checkups and medications times            | task are always done on time                                                                    |
+| `*`      | Nurse during a midnight shift | activate night mode interface with darker colours and larger text to enhance visuals | reduce eye strain while ensuring accuracy when recording patient data in dimly lit environments |
+| `*`      | Manager                       | log in using my staff credential                                                     | Securely access patient records                                                                 |
+																							
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Delete a nurse / patient**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list nurses / patients
+2.  AddressBook shows the list of nurses / patients
+3.  User requests to delete a specific nurse / patient in the list
+4.  AddressBook deletes the nurse / patient
 
     Use case ends.
 
@@ -313,7 +332,67 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: Add a nurse / patient**
+
+**MSS**
+
+1.  User requests to list nurses / patients
+2.  AddressBook shows the list of nurses / patients
+3.  User requests to add a nurse / patient in the list
+4.  AddressBook adds the nurse / patient
+    
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The user enters incorrect command format.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Edit a nurse / patient**
+
+**MSS**
+
+1. User requests to list nurses / patients
+2. AddressBook shows the list of nurses / patients
+3. User requests to edit a nurse's / patient's details
+4. AddressBook edits the nurse's / patient's details
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The user enters incorrect command format.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Exit the app**
+
+**MSS**
+
+1. User requests to exit app
+2. AddressBook closes
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The user enters incorrect command format.
+    * 1a1. AddressBook shows an error message.
+
+      Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
@@ -321,12 +400,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-*{More to be added}*
-
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type))
+* **Appointment**: The role of the person
+* **Manager**: Manages the nurses
+* **Nurse**: Tends to the patients
 
 --------------------------------------------------------------------------------------------------------------------
 
