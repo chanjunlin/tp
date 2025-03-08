@@ -262,14 +262,17 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* Manager or nurse at a private nurse agency
+* has a need to manage a significant number of nurses and/or patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**: 
+1) Manage nurse and patients faster than a typical mouse/GUI driven app
+2) Allows faster creation and storage of details compared to traditional pen and paper methods
+3) Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
 
 ### User stories
 
