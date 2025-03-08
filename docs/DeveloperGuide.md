@@ -341,8 +341,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type))
+* **Appointment**: The role of the person
+* **Manager**: Manages the nurses
+* **Nurse**: Tends to the patients
 
 --------------------------------------------------------------------------------------------------------------------
 
