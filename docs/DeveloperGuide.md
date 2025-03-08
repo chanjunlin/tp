@@ -275,20 +275,31 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                  | So that I can…​                                              |
-|----------|--------------------------------------------|-------------------------------|--------------------------------------------------------------|
-| `* * *`  | Manager                                    | add nurse contacts            | add new nurses contacts who joined the team                  |
-| `* * *`  | Manager                                    | delete nurse contacts         | remove contact of nurses who leave the agency                |
-| `* * *`  | Manager                                    | add patients contacts         | keep track of new patients who register with the agency      |
-| `* * *`  | Manager                                    | delete patient contacts       | remove patients who are no longer registered with the agency |
-| `* * *`  | Manager                                    | view all nurses               | see all nurses details at once                               |
-| `* * *`  | Manager                                    | view all patients             | see all registered patients at once                          |
-| `* * *`  | Nurse                                      | view patients details         | view the needs of the patient I'm caring for                 |
-| `* * *`  | Nurse                                      | exit the application quickly  | resume other tasking at hands                                |
-| `* *`    | user                                       | hide private contact details  | minimize chance of someone else seeing them by accident      |
-| `*`      | user with many persons in the address book | sort persons by name          | locate a person easily                                       |
-|          |                                            |                               |                                                              |
-
+| Priority | As a …​                       | I want to …​                                                                         | So that I can…​                                                                                 |
+|----------|-------------------------------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| `* * *`  | Manager                       | add nurse contacts                                                                   | add new nurses contacts who joined the team                                                     |
+| `* * *`  | Manager                       | delete nurse contacts                                                                | remove contact of nurses who leave the agency                                                   |
+| `* * *`  | Manager                       | add patients contacts                                                                | keep track of new patients who register with the agency                                         |
+| `* * *`  | Manager                       | delete patient contacts                                                              | remove patients who are no longer registered with the agency                                    |
+| `* * *`  | Manager                       | view all nurses                                                                      | see all nurses details at once                                                                  |
+| `* * *`  | Manager                       | view all patients                                                                    | see all registered patients at once                                                             |
+| `* * *`  | Nurse                         | view patients details                                                                | view the needs of the patient I'm caring for                                                    |
+| `* * *`  | Nurse                         | exit the application quickly                                                         | resume other tasking at hands                                                                   |
+| `* *`    | Manager                       | view all patients attached to a certain nurse                                        | check which patients a nurse is currently assigned to                                           |
+| `* *`    | Manager                       | view the nurse assigned to a patient                                                 | check who is in charge of a certain patient                                                     |
+| `* *`    | Manager                       | schedule appointments for a patient                                                  | ensure the patient has an appointment and a nurse                                               |
+| `* *`    | Manager                       | assign a nurse to a appointment                                                      | ensure the appointment has a specified nurse                                                    |
+| `* *`    | Manager                       | sort patient details                                                                 | sort my patients according to various criteria such as blood type and severity level            |
+| `* *`    | Manager                       | assign categories to patients                                                        | add the severity of each patient                                                                |
+| `* *`    | Manager                       | adjust categories of patients                                                        | lower or increase the severity / priority of patients over time                                 |
+| `* *`    | Nurse                         | find patient details                                                                 | check details about a specific nurse                                                            |
+| `* *`    | Nurse                         | sort patient details                                                                 | quickly find details about a specific patient                                                   |
+| `* *`    | Nurse                         | transfer the patients under me to another nurse                                      | ensure my patients are not neglected during my absence                                          |
+| `*`      | Manager                       | add roles of nurses                                                                  | see which nurse has a larger responsibility                                                     |
+| `*`      | Forgetful Nurse               | schedule automatic reminders for task like checkups and medications times            | task are always done on time                                                                    |
+| `*`      | Nurse during a midnight shift | activate night mode interface with darker colours and larger text to enhance visuals | reduce eye strain while ensuring accuracy when recording patient data in dimly lit environments |
+| `*`      | Manager                       | log in using my staff credential                                                     | Securely access patient records                                                                 |
+																							
 *{More to be added}*
 
 ### Use cases
