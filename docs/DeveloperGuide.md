@@ -275,15 +275,19 @@ _{Explain here how the data archiving feature will be implemented}_
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                 | So that I can…​                                                        |
-| -------- |--------------------------------------------|------------------------------|------------------------------------------------------------------------|
-| `* * *`  | Manager                                    | add nurse contacts           | add new nurses contacts who joined the team                            |
-| `* * *`  | Manager                                    | delete nurse contacts        | remove contact of nurses who leave the agency                          |
-| `* * *`  | Manager                                    | delete a person              | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name        | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name         | locate a person easily                                                 |
-|          |                                            |                              |                                                                        |
+| Priority | As a …​                                    | I want to …​                  | So that I can…​                                              |
+|----------|--------------------------------------------|-------------------------------|--------------------------------------------------------------|
+| `* * *`  | Manager                                    | add nurse contacts            | add new nurses contacts who joined the team                  |
+| `* * *`  | Manager                                    | delete nurse contacts         | remove contact of nurses who leave the agency                |
+| `* * *`  | Manager                                    | add patients contacts         | keep track of new patients who register with the agency      |
+| `* * *`  | Manager                                    | delete patient contacts       | remove patients who are no longer registered with the agency |
+| `* * *`  | Manager                                    | view all nurses               | see all nurses details at once                               |
+| `* * *`  | Manager                                    | view all patients             | see all registered patients at once                          |
+| `* * *`  | Nurse                                      | view patients details         | view the needs of the patient I'm caring for                 |
+| `* * *`  | Nurse                                      | exit the application quickly  | resume other tasking at hands                                |
+| `* *`    | user                                       | hide private contact details  | minimize chance of someone else seeing them by accident      |
+| `*`      | user with many persons in the address book | sort persons by name          | locate a person easily                                       |
+|          |                                            |                               |                                                              |
 
 *{More to be added}*
 
