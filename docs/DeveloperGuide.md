@@ -290,14 +290,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Delete a nurse / patient**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list nurses / patients
+2.  AddressBook shows the list of nurses / patients
+3.  User requests to delete a specific nurse / patient in the list
+4.  AddressBook deletes the nurse / patient
 
     Use case ends.
 
@@ -313,15 +313,73 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: Add a nurse / patient**
+
+**MSS**
+
+1.  User requests to list nurses / patients
+2.  AddressBook shows the list of nurses / patients
+3.  User requests to add a nurse / patient in the list
+4.  AddressBook adds the nurse / patient
+    
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The user enters incorrect command format.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Edit a nurse / patient**
+
+**MSS**
+
+1. User requests to list nurses / patients
+2. AddressBook shows the list of nurses / patients
+3. User requests to edit a nurse's / patient's details
+4. AddressBook edits the nurse's / patient's details
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The user enters incorrect command format.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Exit the app**
+
+**MSS**
+
+1. User requests to exit app
+2. AddressBook closes
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The user enters incorrect command format.
+    * 1a1. AddressBook shows an error message.
+
+      Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-*{More to be added}*
 
 ### Glossary
 
