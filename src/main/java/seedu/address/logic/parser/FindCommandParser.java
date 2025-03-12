@@ -4,6 +4,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindNurseCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -33,7 +34,8 @@ public class FindCommandParser implements Parser<FindCommand> {
             }
 
             try {
-                int nurseIndex = Integer.parseInt(splitArgs[1]);
+                Index nurseIndex = ParserUtil.parseIndex(splitArgs[1]);
+
                 return new FindNurseCommand(nurseIndex);
             } catch (NumberFormatException e) {
                 throw new ParseException("INDEX must be a valid integer!");
