@@ -1,10 +1,7 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_NOT_IMPLEMENTED_YET;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.jupiter.api.Test;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -18,8 +15,5 @@ public class FindNurseCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    @Test
-    public void execute() {
-        assertCommandFailure(new FindNurseCommand(), model, MESSAGE_NOT_IMPLEMENTED_YET);
-    }
+
 }
