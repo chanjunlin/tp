@@ -1,12 +1,15 @@
 package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.exceptions.CommandException;
+import java.util.Arrays;
+
 import seedu.address.model.Model;
+import seedu.address.model.person.NameContainsKeywordsPredicate;
+
 
 /**
  * Changes the remark of an existing person in the address book.
  */
-public class FindNurseCommand extends Command {
+public class FindNurseCommand extends FindCommand {
 
     public static final String COMMAND_WORD = "find nurse";
 
@@ -19,8 +22,18 @@ public class FindNurseCommand extends Command {
 
     public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Find nurse command not implemented yet";
 
+    private final int patientIndex;
+
+    /**
+     * Test
+     * @param patientIndex Test
+     */
+    public FindNurseCommand(int patientIndex) {
+        super(new NameContainsKeywordsPredicate(Arrays.asList("nurse")));
+        this.patientIndex = patientIndex;
+    }
     @Override
-    public CommandResult execute(Model model) throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+    public CommandResult execute(Model model) {
+        return new CommandResult("Hello from findNurse");
     }
 }
