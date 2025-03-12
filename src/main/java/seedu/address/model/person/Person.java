@@ -20,6 +20,7 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
+    private final Appointment appointment;
 
     // Data fields
     private final Address address;
@@ -30,14 +31,16 @@ public class Person {
      * Every field must be present and not null.
      * TODO add in blood type parameter
      */
-    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
+                  Appointment appointment, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, address, tags, bloodType);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
         this.bloodType = bloodType;
+        this.appointment = appointment;
     }
 
     public Name getName() {
@@ -58,6 +61,10 @@ public class Person {
 
     public BloodType getBloodType() {
         return bloodType;
+    }
+
+    public Appointment getAppointment() {
+        return appointment;
     }
 
     /**
@@ -101,14 +108,16 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && tags.equals(otherPerson.tags)
-                && bloodType.equals(otherPerson.bloodType);
+                && bloodType.equals(otherPerson.bloodType)
+                && appointment.equals(otherPerson.appointment)
+                && tags.equals(otherPerson.tags);
+
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, tags);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags);
     }
 
     @Override
@@ -118,8 +127,9 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
-                .add("tags", tags)
                 .add("bloodType", bloodType)
+                .add("appointment", appointment)
+                .add("tags", tags)
                 .toString();
     }
 
