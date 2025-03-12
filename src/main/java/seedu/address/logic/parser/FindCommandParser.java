@@ -25,6 +25,21 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
+        // Check if the command is for finding by nurse index
+        if (trimmedArgs.startsWith("nurse")) {
+            String[] splitArgs = trimmedArgs.split("\\s+");
+            if (splitArgs.length != 2) {
+                throw new ParseException("Invalid format! Usage: find nurse INDEX");
+            }
+
+            try {
+                int nurseIndex = Integer.parseInt(splitArgs[1]);
+                return new FindNurseCommand(nurseIndex);
+            } catch (NumberFormatException e) {
+                throw new ParseException("INDEX must be a valid integer!");
+            }
+        }
+
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
