@@ -83,7 +83,11 @@ public class AddressBookParserTest {
         System.out.println("hi");
     }
 
-
+    @Test
+    public void parseCommand_invalidList_throwsParseException() {
+        assertThrows(ParseException.class, "Invalid appointment type! Only 'Nurse' or 'Patient' are allowed.", () ->
+                parser.parseCommand("list xyz"));
+    }
 
     @Test
     public void parseCommand_help() throws Exception {
@@ -95,6 +99,8 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list nurse"));
+        assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list patient"));
     }
 
     @Test
