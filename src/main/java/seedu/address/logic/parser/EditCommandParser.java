@@ -19,6 +19,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -38,10 +39,18 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_TAG);
 
-        Index index;
+        String fixedInput = argMultimap.getPreamble().trim();
+        String[] splitInput = fixedInput.split("\\s+", 2);
+        if (splitInput.length < 2) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+
+        Appointment filterAppointment = ParserUtil.parseAppointment(splitInput[0]);
+
+        Index index = ParserUtil.parseIndex(splitInput[1]);
 
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            index = ParserUtil.parseIndex(splitInput[1]);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
@@ -65,9 +74,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_BLOODTYPE).isPresent()) {
             editPersonDescriptor.setBloodType(ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get()));
         }
-        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAppointment(ParserUtil.parseAppointment(
-                    argMultimap.getValue(PREFIX_APPOINTMENT).get()));
+        if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
+            editPersonDescriptor.setAppointment(ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get()));
         }
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
@@ -76,7 +84,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(index, editPersonDescriptor);
+        return new EditCommand(filterAppointment, index, editPersonDescriptor);
     }
 
     /**
