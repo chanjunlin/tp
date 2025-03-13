@@ -62,17 +62,20 @@ public class FindNurseCommand extends FindCommand {
 
         Set<Tag> updatedTags = new HashSet<>(patient.getTags());
 
-        String nurseName = null;
+        StringBuilder nurseNames = new StringBuilder();
 
         for (Tag tag : updatedTags) {
             if (tag.tagName.startsWith("Nurse")) {
-                nurseName = tag.tagName.substring(5);
-                break;
+                String tempNurseName = tag.tagName.substring(5);
+                if (nurseNames.length() > 0) {
+                    nurseNames.append(", ");
+                }
+                nurseNames.append(tempNurseName);
             }
         }
 
-        if (nurseName != null) {
-            return new CommandResult(String.format(MESSAGE_NURSE_FOUND, patient.getName(), nurseName));
+        if (nurseNames != null) {
+            return new CommandResult(String.format(MESSAGE_NURSE_FOUND, patient.getName(), nurseNames.toString()));
         } else {
             throw new CommandException(String.format(MESSAGE_NO_NURSE_ASSIGNED, patientIndex.getOneBased()));
         }
