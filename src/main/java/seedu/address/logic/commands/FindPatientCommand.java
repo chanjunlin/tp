@@ -54,7 +54,8 @@ public class FindPatientCommand extends FindCommand {
             throw new CommandException(String.format(MESSAGE_NO_PATIENT_ASSIGNED, nurseIndex.getOneBased()));
         }
 
-        return new CommandResult(String.format(MESSAGE_PATIENT_FOUND, nurse.getName(), String.join(", ", patientNames)));
+        return new CommandResult(String.format(MESSAGE_PATIENT_FOUND, nurse.getName(),
+                String.join(", ", patientNames)));
     }
 
     private Person getNurseFromModel(Model model) throws CommandException {
@@ -82,7 +83,7 @@ public class FindPatientCommand extends FindCommand {
 
     private boolean isPatientAssignedToNurse(Person patient, Person nurse) {
         Set<Tag> tags = patient.getTags();
-        String nurseNameWithoutSpaces = nurse.getName().toString().replace(" ","");
+        String nurseNameWithoutSpaces = nurse.getName().toString().replace(" " , "");
         System.out.println(nurseNameWithoutSpaces);
 
         return tags.stream()
