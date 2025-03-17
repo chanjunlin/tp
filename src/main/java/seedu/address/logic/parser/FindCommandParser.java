@@ -4,7 +4,9 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindNurseCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
@@ -23,6 +25,21 @@ public class FindCommandParser implements Parser<FindCommand> {
         if (trimmedArgs.isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+
+        if (trimmedArgs.startsWith("nurse")) {
+            String[] splitArgs = trimmedArgs.split("\\s+");
+            if (splitArgs.length != 2) {
+                throw new ParseException("Invalid format! Usage: find nurse INDEX");
+            }
+
+            try {
+                Index nurseIndex = ParserUtil.parseIndex(splitArgs[1]);
+
+                return new FindNurseCommand(nurseIndex);
+            } catch (NumberFormatException e) {
+                throw new ParseException("INDEX must be a valid integer!");
+            }
         }
 
         String[] nameKeywords = trimmedArgs.split("\\s+");

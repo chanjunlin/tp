@@ -23,6 +23,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -32,6 +33,7 @@ import seedu.address.testutil.PersonUtil;
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
+    private Appointment nurse = new Appointment("nurse");
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -59,7 +61,7 @@ public class AddressBookParserTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+        assertEquals(new EditCommand(nurse, INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
@@ -77,6 +79,17 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_findNurse() throws Exception {
+        System.out.println("hi");
+    }
+
+    @Test
+    public void parseCommand_invalidList_throwsParseException() {
+        assertThrows(ParseException.class, "Invalid appointment type! Only 'Nurse' or 'Patient' are allowed.", () ->
+                parser.parseCommand("list xyz"));
+    }
+
+    @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
@@ -86,6 +99,8 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+        assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list nurse"));
+        assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list patient"));
     }
 
     @Test

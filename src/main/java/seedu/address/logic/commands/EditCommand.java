@@ -39,10 +39,11 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person appointment specified "
+            + "by the index number used in the displayed person list according to each type of appointment. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Parameters: " + "APPOINTMENT (Nurse or Patient) "
+            + "INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -50,7 +51,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_BLOODTYPE + "BLOODTYPE] "
             + "[" + PREFIX_APPOINTMENT + "APPOINTMENT] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " Nurse" + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
@@ -60,15 +61,18 @@ public class EditCommand extends Command {
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private final Appointment filterAppointment;
 
     /**
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Appointment filterAppointment, Index index, EditPersonDescriptor editPersonDescriptor) {
+        requireNonNull(filterAppointment);
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
+        this.filterAppointment = filterAppointment;
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
@@ -76,6 +80,9 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        // Filters based on the appointment specified by user input.
+        model.updateFilteredPersonList(person -> person.getAppointment().equals(filterAppointment));
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
