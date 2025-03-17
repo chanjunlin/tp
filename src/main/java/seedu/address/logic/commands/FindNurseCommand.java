@@ -45,7 +45,6 @@ public class FindNurseCommand extends FindCommand {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         Person patient = getPatientFromModel(model);
-        System.out.println(patient.getName());
         List<String> nurseNames = getAssignedNurseNames(patient);
 
         if (nurseNames.isEmpty()) {
