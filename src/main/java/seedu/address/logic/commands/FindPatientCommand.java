@@ -28,9 +28,8 @@ public class FindPatientCommand extends FindCommand {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_INVALID_NURSE = "The person at index %d is not a nurse.";
-
     public static final String MESSAGE_NO_PATIENT_ASSIGNED = "No patient assigned to the nurse at index %d.";
-    public static final String MESSAGE_NURSE_FOUND = "Patient(s) assigned to nurse %s: %s.";
+    public static final String MESSAGE_PATIENT_FOUND = "Patient(s) assigned to nurse %s: %s.";
 
     private final Index nurseIndex;
 
@@ -55,7 +54,8 @@ public class FindPatientCommand extends FindCommand {
             throw new CommandException(String.format(MESSAGE_NO_PATIENT_ASSIGNED, nurseIndex.getOneBased()));
         }
 
-        return new CommandResult(String.format(MESSAGE_NURSE_FOUND, nurse.getName(), String.join(", ", patientNames)));
+        return new CommandResult(String.format(MESSAGE_PATIENT_FOUND, nurse.getName(),
+                String.join(", ", patientNames)));
     }
 
     private Person getNurseFromModel(Model model) throws CommandException {
@@ -83,6 +83,10 @@ public class FindPatientCommand extends FindCommand {
 
     private boolean isPatientAssignedToNurse(Person patient, Person nurse) {
         Set<Tag> tags = patient.getTags();
-        return tags.stream().anyMatch(tag -> tag.tagName.equals("Nurse" + nurse.getName()));
+        String nurseNameWithoutSpaces = nurse.getName().toString().replace(" " , "");
+        System.out.println(nurseNameWithoutSpaces);
+
+        return tags.stream()
+                .anyMatch(tag -> tag.tagName.equals("Nurse" + nurseNameWithoutSpaces));
     }
 }
