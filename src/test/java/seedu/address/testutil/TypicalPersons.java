@@ -33,13 +33,13 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withTags("friends").build();
+            .withTags("NurseBenson").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
             .withBloodType("AB+")
-            .withAppointment("Patient")
+            .withAppointment("Nurse")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
