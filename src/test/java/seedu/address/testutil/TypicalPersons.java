@@ -70,7 +70,7 @@ public class TypicalPersons {
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Nurse").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
@@ -111,6 +111,6 @@ public class TypicalPersons {
     }
 
     public static List<Person> getTypicalPersons() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE, HOON, IDA));
+        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
     }
 }

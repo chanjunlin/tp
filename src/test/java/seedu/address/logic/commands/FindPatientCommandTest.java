@@ -41,7 +41,7 @@ public class FindPatientCommandTest {
 
     @Test
     public void execute_validIndexNoPatientAssigned_throwsCommandException() {
-        Index validNurseIndex = Index.fromZeroBased(8);
+        Index validNurseIndex = Index.fromZeroBased(6);
         FindPatientCommand command = new FindPatientCommand(validNurseIndex);
 
         CommandException exception = assertThrows(CommandException.class, () -> {
