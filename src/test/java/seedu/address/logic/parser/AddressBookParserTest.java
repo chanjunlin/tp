@@ -33,7 +33,7 @@ import seedu.address.testutil.PersonUtil;
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
-    private Appointment nurse = new Appointment("nurse");
+    private Appointment nurse = new Appointment("Nurse");
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -79,8 +79,13 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_findNurse() throws Exception {
-        System.out.println("hi");
+    public void parseCommand_validFindNurse() {
+
+    }
+
+    @Test
+    public void parseCommand_validFindPatient() {
+
     }
 
     @Test
