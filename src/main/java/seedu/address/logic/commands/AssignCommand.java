@@ -38,6 +38,7 @@ public class AssignCommand extends Command {
 
     /**
      * Creates an AssignCommand to assign a nurse to a patient.
+     *
      * @param patientIndex
      * @param nurseIndex
      */
