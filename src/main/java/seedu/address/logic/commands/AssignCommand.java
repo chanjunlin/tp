@@ -30,6 +30,8 @@ public class AssignCommand extends Command {
 
     public static final String MESSAGE_INVALID_NURSE = "The person at index %d is not a nurse.";
 
+    private static final int MAX_NURSES_PER_PATIENT = 2;
+
     private final Index patientIndex;
 
     private final Index nurseIndex;
@@ -66,6 +68,12 @@ public class AssignCommand extends Command {
 
         if (!nurse.getAppointment().toString().equals("Nurse")) {
             throw new CommandException(String.format(MESSAGE_INVALID_NURSE, nurseIndex.getOneBased()));
+        }
+
+        long nurseCount = patient.getTags().stream().filter(tag -> tag.tagName.startsWith("Nurse")).count();
+
+        if (nurseCount >= MAX_NURSES_PER_PATIENT) {
+            throw new CommandException("This patient already has " + MAX_NURSES_PER_PATIENT + " assigned nurses!");
         }
 
         Set<Tag> updatedTags = new HashSet<>(patient.getTags());
