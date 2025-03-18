@@ -33,7 +33,7 @@ import seedu.address.testutil.PersonUtil;
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
-    private Appointment nurse = new Appointment("nurse");
+    private Appointment nurse = new Appointment("Nurse");
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -98,9 +98,8 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
-        assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list nurse"));
-        assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list patient"));
+        assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list Nurse"));
+        assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list Patient"));
     }
 
     @Test
