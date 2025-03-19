@@ -53,7 +53,8 @@ public class AddressBookParser {
         // Lower level log messages are used sparingly to minimize noise in the code.
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
-        switch (commandWord) {
+        // Ensures user command word input is not case-sensitive.
+        switch (commandWord.toLowerCase()) {
 
         case AddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
