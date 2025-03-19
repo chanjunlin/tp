@@ -75,7 +75,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setBloodType(ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get()));
         }
         if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
-            editPersonDescriptor.setAppointment(ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get()));
+            editPersonDescriptor.setAppointment(ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT)
+                    .get()));
         }
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
