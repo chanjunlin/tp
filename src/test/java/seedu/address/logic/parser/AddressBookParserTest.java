@@ -54,7 +54,6 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
-    /* TODO
     @Test
     public void parseCommand_edit() throws Exception {
         Person person = new PersonBuilder().build();
@@ -63,7 +62,6 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
-    */
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -80,16 +78,6 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_validFindNurse() {
-
-    }
-
-    @Test
-    public void parseCommand_validFindPatient() {
-
-    }
-
-    @Test
     public void parseCommand_invalidList_throwsParseException() {
         assertThrows(ParseException.class, "Invalid appointment type! Only 'Nurse' or 'Patient' are allowed.", () ->
                 parser.parseCommand("list xyz"));
@@ -101,14 +89,12 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
 
-    /* TODO
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list Nurse"));
         assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list Patient"));
     }
-    */
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
