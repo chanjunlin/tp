@@ -19,7 +19,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Appointment;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -39,18 +38,10 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_TAG);
 
-        String fixedInput = argMultimap.getPreamble().trim();
-        String[] splitInput = fixedInput.split("\\s+", 2);
-        if (splitInput.length < 2) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
-        }
-
-        Appointment filterAppointment = ParserUtil.parseAppointment(splitInput[0]);
-
-        Index index = ParserUtil.parseIndex(splitInput[1]);
+        Index index;
 
         try {
-            index = ParserUtil.parseIndex(splitInput[1]);
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
         }
@@ -85,7 +76,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        return new EditCommand(filterAppointment, index, editPersonDescriptor);
+        return new EditCommand(index, editPersonDescriptor);
     }
 
     /**
