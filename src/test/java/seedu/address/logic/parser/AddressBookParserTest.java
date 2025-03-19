@@ -80,8 +80,13 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_findNurse() throws Exception {
-        System.out.println("hi");
+    public void parseCommand_validFindNurse() {
+
+    }
+
+    @Test
+    public void parseCommand_validFindPatient() {
+
     }
 
     @Test

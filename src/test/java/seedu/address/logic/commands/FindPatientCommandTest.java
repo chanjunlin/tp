@@ -4,9 +4,9 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_INVALID_PATIENT;
-import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_NO_NURSE_ASSIGNED;
-import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_NURSE_FOUND;
+import static seedu.address.logic.commands.FindPatientCommand.MESSAGE_INVALID_NURSE;
+import static seedu.address.logic.commands.FindPatientCommand.MESSAGE_NO_PATIENT_ASSIGNED;
+import static seedu.address.logic.commands.FindPatientCommand.MESSAGE_PATIENT_FOUND;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
@@ -21,17 +21,18 @@ import seedu.address.model.UserPrefs;
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
  */
 
-public class FindNurseCommandTest {
+public class FindPatientCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
     public void execute_validIndex_success() {
-        Index validPatientIndex = Index.fromZeroBased(0);
-        FindNurseCommand command = new FindNurseCommand(validPatientIndex);
+        Index validNurseIndex = Index.fromZeroBased(1);
+        FindPatientCommand command = new FindPatientCommand(validNurseIndex);
+
         try {
             CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_NURSE_FOUND, "Alice Pauline", "BensonMeier"),
+            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "Benson Meier", "Alice Pauline"),
                     result.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());
@@ -39,35 +40,35 @@ public class FindNurseCommandTest {
     }
 
     @Test
-    public void execute_validIndexNoNurseAssigned_throwsCommandException() {
-        Index validPatientIndex = Index.fromZeroBased(2);
-        FindNurseCommand command = new FindNurseCommand(validPatientIndex);
+    public void execute_validIndexNoPatientAssigned_throwsCommandException() {
+        Index validNurseIndex = Index.fromZeroBased(6);
+        FindPatientCommand command = new FindPatientCommand(validNurseIndex);
 
         CommandException exception = assertThrows(CommandException.class, () -> {
             command.execute(model);
         });
 
-        assertEquals(String.format(MESSAGE_NO_NURSE_ASSIGNED, validPatientIndex.getOneBased()),
+        assertEquals(String.format(MESSAGE_NO_PATIENT_ASSIGNED, validNurseIndex.getOneBased()),
                 exception.getMessage());
     }
 
     @Test
-    public void execute_invalidIndexNotPatient_throwsCommandException() {
-        Index invalidPatientIndex = Index.fromZeroBased(1);
-        FindNurseCommand command = new FindNurseCommand(invalidPatientIndex);
+    public void execute_invalidIndexNotNurse_throwsCommandException() {
+        Index invalidNurseIndex = Index.fromZeroBased(0);
+        FindPatientCommand command = new FindPatientCommand(invalidNurseIndex);
 
         CommandException exception = assertThrows(CommandException.class, () -> {
             command.execute(model);
         });
 
-        assertEquals(String.format(MESSAGE_INVALID_PATIENT, invalidPatientIndex.getOneBased()),
+        assertEquals(String.format(MESSAGE_INVALID_NURSE, invalidNurseIndex.getOneBased()),
                 exception.getMessage());
     }
 
     @Test
     public void execute_invalidIndexIndexOutOfBounds_throwsCommandException() {
         Index invalidPatientIndex = Index.fromZeroBased(100000);
-        FindNurseCommand command = new FindNurseCommand(invalidPatientIndex);
+        FindPatientCommand command = new FindPatientCommand(invalidPatientIndex);
 
         CommandException exception = assertThrows(CommandException.class, () -> {
             command.execute(model);
