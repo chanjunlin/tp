@@ -33,13 +33,13 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withTags("friends").build();
+            .withTags("NurseBensonMeier").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
             .withBloodType("AB+")
-            .withAppointment("Patient")
+            .withAppointment("Nurse")
             .withTags("owesMoney", "friends").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
@@ -52,8 +52,7 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withBloodType("AB+")
-            .withAppointment("Patient")
-            .withTags("friends").build();
+            .withAppointment("Patient").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("9482224")
             .withEmail("werner@example.com")
@@ -71,7 +70,7 @@ public class TypicalPersons {
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Nurse").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
@@ -85,7 +84,7 @@ public class TypicalPersons {
             .withEmail("hans@example.com")
             .withAddress("chicago ave")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Nurse").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

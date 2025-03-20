@@ -62,12 +62,9 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindNurseCommand findNurseScenario(String trimmedArgs) throws ParseException {
         String[] splitArgs = splitArguments(trimmedArgs, "nurse");
 
-        try {
-            Index nurseIndex = ParserUtil.parseIndex(splitArgs[1]);
-            return new FindNurseCommand(nurseIndex);
-        } catch (NumberFormatException e) {
-            throw new ParseException("NURSE_INDEX must be a valid integer!");
-        }
+        Index nurseIndex = ParserUtil.parseIndex(splitArgs[1]);
+        return new FindNurseCommand(nurseIndex);
+
     }
 
     /**
@@ -79,12 +76,9 @@ public class FindCommandParser implements Parser<FindCommand> {
     public FindPatientCommand findPatientScenario(String trimmedArgs) throws ParseException {
         String[] splitArgs = splitArguments(trimmedArgs, "patient");
 
-        try {
-            Index patientIndex = ParserUtil.parseIndex(splitArgs[1]);
-            return new FindPatientCommand(patientIndex);
-        } catch (NumberFormatException e) {
-            throw new ParseException("PATIENT_INDEX must be a valid integer!");
-        }
+        Index patientIndex = ParserUtil.parseIndex(splitArgs[1]);
+        return new FindPatientCommand(patientIndex);
+
     }
 
     /**

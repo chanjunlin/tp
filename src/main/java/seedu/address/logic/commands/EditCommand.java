@@ -29,6 +29,7 @@ import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonHasAppointmentPredicate;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -39,11 +40,10 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person appointment specified "
-            + "by the index number used in the displayed person list according to each type of appointment. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+            + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: " + "APPOINTMENT (Nurse or Patient) "
-            + "INDEX (must be a positive integer) "
+            + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -51,7 +51,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_BLOODTYPE + "BLOODTYPE] "
             + "[" + PREFIX_APPOINTMENT + "APPOINTMENT] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " Nurse" + " 1 "
+            + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
@@ -61,18 +61,15 @@ public class EditCommand extends Command {
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
-    private final Appointment filterAppointment;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index of the person in the filtered person list to edit.
+     * @param editPersonDescriptor details to edit the person with.
      */
-    public EditCommand(Appointment filterAppointment, Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(filterAppointment);
+    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
-        this.filterAppointment = filterAppointment;
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
@@ -80,8 +77,6 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        // Filters based on the appointment specified by user input.
-        model.updateFilteredPersonList(person -> person.getAppointment().equals(filterAppointment));
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -97,8 +92,23 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        updateModelList(model);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    /**
+     * Updates the model list based on the current filter for appointments.
+     *
+     * @param model Model to be updated.
+     */
+    private void updateModelList(Model model) {
+        if (ListCommand.getAppointmentFilter() != null) {
+            // If list is filtered by appointment.
+            model.updateFilteredPersonList(new PersonHasAppointmentPredicate(ListCommand.getAppointmentFilter()));
+        } else {
+            // If list isn't filtered by appointment.
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        }
     }
 
     /**
@@ -177,7 +187,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, appointment, tags);
         }
 
         public void setName(Name name) {
