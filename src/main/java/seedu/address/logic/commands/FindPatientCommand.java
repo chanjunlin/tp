@@ -1,9 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,6 +15,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonHasAppointmentPredicate;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -46,9 +49,13 @@ public class FindPatientCommand extends FindCommand {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
+        PersonHasAppointmentPredicate currentPredicate = getCurrentPredicate();
         Person nurse = getNurseFromModel(model);
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         List<String> patientNames = getAssignedPatientNames(nurse, model);
+
+        model.updateFilteredPersonList(Objects.requireNonNullElse(currentPredicate, PREDICATE_SHOW_ALL_PERSONS));
 
         if (patientNames.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_PATIENT_ASSIGNED, nurseIndex.getOneBased()));
@@ -56,6 +63,12 @@ public class FindPatientCommand extends FindCommand {
 
         return new CommandResult(String.format(MESSAGE_PATIENT_FOUND, nurse.getName(),
                 String.join(", ", patientNames)));
+    }
+
+    private PersonHasAppointmentPredicate getCurrentPredicate() {
+        return ListCommand.getAppointmentFilter() != null
+                ? new PersonHasAppointmentPredicate(ListCommand.getAppointmentFilter())
+                : null;
     }
 
     private Person getNurseFromModel(Model model) throws CommandException {
@@ -84,7 +97,6 @@ public class FindPatientCommand extends FindCommand {
     private boolean isPatientAssignedToNurse(Person patient, Person nurse) {
         Set<Tag> tags = patient.getTags();
         String nurseNameWithoutSpaces = nurse.getName().toString().replace(" " , "");
-        System.out.println(nurseNameWithoutSpaces);
 
         return tags.stream()
                 .anyMatch(tag -> tag.tagName.equals("Nurse" + nurseNameWithoutSpaces));
