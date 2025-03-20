@@ -16,6 +16,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Appointment;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -76,4 +77,37 @@ public class FindPatientCommandTest {
 
         assertEquals("The person index provided is invalid", exception.getMessage());
     }
+
+    @Test
+    public void execute_withoutFilter() {
+        Index validNurseIndex = Index.fromZeroBased(1);
+        FindPatientCommand findCommand = new FindPatientCommand(validNurseIndex);
+
+        try {
+            Command listCommand = new ListCommand(null);
+            listCommand.execute(model);
+            CommandResult result1 = findCommand.execute(model);
+            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "Benson Meier", "Alice Pauline"),
+                    result1.getFeedbackToUser());
+        } catch (CommandException e) {
+            fail("Execution should not throw an exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void execute_withFilter() {
+        Index validNurseIndex = Index.fromZeroBased(0);
+        FindPatientCommand findCommand = new FindPatientCommand(validNurseIndex);
+
+        try {
+            Command listNurseCommand = new ListCommand(new Appointment("nurse"));
+            listNurseCommand.execute(model);
+            CommandResult result2 = findCommand.execute(model);
+            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "Benson Meier", "Alice Pauline"),
+                    result2.getFeedbackToUser());
+        } catch (CommandException e) {
+            fail("Execution should not throw an exception: " + e.getMessage());
+        }
+    }
+
 }
