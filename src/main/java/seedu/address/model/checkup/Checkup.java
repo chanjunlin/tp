@@ -6,10 +6,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Person;
 
 /**
  * test
@@ -24,38 +24,27 @@ public class Checkup {
             "Checkup cannot be scheduled in the past";
     private static final LocalTime START_TIME = LocalTime.of(9, 0);
     private static final LocalTime END_TIME = LocalTime.of(17, 0);
-
-    private final Person patient;
-    private final Person nurse;
-    private final LocalDateTime checkupDateTime;
+    public final LocalDateTime checkupDateTime;
 
 
     /**
      * test
-     * @param patient test
-     * @param nurse test
      * @param checkupDate test
      * @param checkupTime test
      * @throws ParseException test
      */
-    public Checkup(Person patient, Person nurse, LocalDate checkupDate, LocalTime checkupTime) throws ParseException {
-        allNonNull(patient, nurse, checkupDate, checkupTime);
-        checkArgument(isValidCheckup(patient, nurse, checkupDate, checkupTime), MESSAGE_CONSTRAINTS);
-        this.patient = patient;
-        this.nurse = nurse;
+    public Checkup(LocalDate checkupDate, LocalTime checkupTime) throws ParseException {
+        allNonNull(checkupDate, checkupTime);
+        checkArgument(isValidCheckup(checkupDate, checkupTime), MESSAGE_CONSTRAINTS);
         this.checkupDateTime = createCheckupDateTime(checkupDate, checkupTime);
     }
 
     /**
      * test
-     * @param patient test
-     * @param nurse test
      * @param checkupDate test
      * @param checkupTime test
      */
-    public void allNonNull(Person patient, Person nurse, LocalDate checkupDate, LocalTime checkupTime) {
-        requireNonNull(patient);
-        requireNonNull(nurse);
+    public void allNonNull(LocalDate checkupDate, LocalTime checkupTime) {
         requireNonNull(checkupDate);
         requireNonNull(checkupTime);
     }
@@ -63,7 +52,7 @@ public class Checkup {
     /**
      * Returns true if a given string is a valid checkUpDate name.
      */
-    public static boolean isValidCheckup(Person patient, Person nurse, LocalDate checkupDate, LocalTime checkupTime)
+    public static boolean isValidCheckup(LocalDate checkupDate, LocalTime checkupTime)
             throws ParseException {
         LocalDateTime checkupDateTime = createCheckupDateTime(checkupDate, checkupTime);
         if (!isWithinBusinessHours(checkupDateTime)) {
@@ -71,9 +60,6 @@ public class Checkup {
         }
         if (!isNotInPast(checkupDateTime)) {
             throw new ParseException(MESSAGE_PAST_DATE);
-        }
-        if (!isTimeSlotAvailable(patient, nurse, checkupDateTime)) {
-            throw new ParseException(MESSAGE_INVALID_DATETIME);
         }
         return true;
     }
@@ -88,26 +74,6 @@ public class Checkup {
 
     private static boolean isNotInPast(LocalDateTime dateTime) {
         return !dateTime.isBefore(LocalDateTime.now());
-    }
-    private static boolean isTimeSlotAvailable(Person patient, Person nurse, LocalDateTime dateTime)
-            throws ParseException {
-        if (!isWithinBusinessHours(dateTime)) {
-            throw new ParseException(MESSAGE_OUTSIDE_BUSINESS_HOURS);
-        }
-        if (!isNotInPast(dateTime)) {
-            throw new ParseException(MESSAGE_PAST_DATE);
-        }
-        return !hasPatientConflict(patient, dateTime) && !hasNurseConflict(nurse, dateTime);
-    }
-
-    private static boolean hasPatientConflict(Person patient, LocalDateTime dateTime) {
-        return patient.getCheckups().stream()
-                .anyMatch(checkup -> checkup.getDateTime().equals(dateTime));
-    }
-
-    private static boolean hasNurseConflict(Person nurse, LocalDateTime dateTime) {
-        return nurse.getCheckups().stream()
-                .anyMatch(checkup -> checkup.getDateTime().equals(dateTime));
     }
 
     public LocalDateTime getDateTime() {
@@ -124,9 +90,7 @@ public class Checkup {
             return false;
         }
 
-        return patient.equals(otherCheckup.patient)
-                && nurse.equals(otherCheckup.nurse)
-                && checkupDateTime.equals(otherCheckup.checkupDateTime);
+        return checkupDateTime.equals(otherCheckup.checkupDateTime);
     }
 
     public LocalDate getCheckupDate() {
@@ -137,22 +101,14 @@ public class Checkup {
         return this.checkupDateTime.toLocalTime();
     }
 
-    public Person getPatient() {
-        return this.patient;
-    }
-
-    public Person getNurse() {
-        return this.nurse;
-    }
-
     @Override
     public int hashCode() {
-        return Objects.hash(patient, nurse, checkupDateTime);
+        return Objects.hash(checkupDateTime);
     }
 
     @Override
     public String toString() {
-        return this.checkupDateTime.toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        return checkupDateTime.format(formatter);
     }
-
 }

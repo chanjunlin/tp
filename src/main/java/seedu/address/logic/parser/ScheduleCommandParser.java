@@ -33,11 +33,10 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
                             ScheduleCommand.MESSAGE_USAGE));
         }
         Index patientIndex = getPatientIndex(trimmedArgs);
-        Index nurseIndex = getNurseIndex(trimmedArgs);
 
         LocalDate checkupDate = getCheckupDate(trimmedArgs);
         LocalTime checkupTime = getCheckupTime(trimmedArgs);
-        return new ScheduleCommand(patientIndex, nurseIndex, checkupDate, checkupTime);
+        return new ScheduleCommand(patientIndex, checkupDate, checkupTime);
     }
 
     public Index getPatientIndex(String trimmedArgs) throws ParseException {
@@ -45,14 +44,10 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         return ParserUtil.parseIndex(parsedArgument[0]);
     }
 
-    public Index getNurseIndex(String trimmedArgs) throws ParseException {
-        String[] parsedArgument = parseArguments(trimmedArgs);
-        return ParserUtil.parseIndex(parsedArgument[1]);
-    }
 
     public LocalDate getCheckupDate(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
-        String dateString = parsedArgument[2];
+        String dateString = parsedArgument[1];
 
         if (!dateString.matches(DATE_VALIDATION_REGEX)) {
             throw new ParseException("Invalid date format. Use dd/MM/yyyy");
@@ -68,7 +63,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
 
     public LocalTime getCheckupTime(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
-        String timeString = parsedArgument[3];
+        String timeString = parsedArgument[2];
         if (!timeString.matches(TIME_VALIDATION_REGEX)) {
             throw new ParseException("Invalid date format. Use dd/MM/yyyy");
         }
@@ -88,7 +83,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public String[] parseArguments(String trimmedArgs) throws ParseException {
         String[] parsedArguments = trimmedArgs.split("\\s+");
-        if (parsedArguments.length < 4) {
+        if (parsedArguments.length != 3) {
             throw new ParseException(MESSAGE_USAGE);
         }
         return parsedArguments;

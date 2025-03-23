@@ -102,10 +102,6 @@ public class Person {
     }
 
     public Set<Checkup> getCheckups() {
-
-        for (Checkup checkup : checkups) {
-            System.out.println(checkup.toString());
-        }
         return Collections.unmodifiableSet(checkups);
     }
 
