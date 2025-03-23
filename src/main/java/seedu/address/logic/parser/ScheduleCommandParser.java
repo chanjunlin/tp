@@ -13,17 +13,19 @@ import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * test
+ * Parses input arguments and creates a ScheduleCommand.
  */
 public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     private static final String DATE_VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
     private static final String TIME_VALIDATION_REGEX = "^([01][0-9]|2[0-3])[0-5][0-9]$";
 
     /**
-     * test
-     * @param args test
-     * @return test
-     * @throws ParseException test
+     * Parses the given {@code String} representation of arguments
+     * and returns a ScheduleCommand object for execution.
+     *
+     * @param args The user input args to be parsed.
+     * @return A ScheduleCommand based on the parsed arguments.
+     * @throws ParseException If the input does not conform to expected formats.
      */
     public ScheduleCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim().toLowerCase();
@@ -39,12 +41,25 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         return new ScheduleCommand(patientIndex, checkupDate, checkupTime);
     }
 
+    /**
+     * Retrieves and parses the patient index from the input arguments.
+     *
+     * @param trimmedArgs The input arguments from which to retrieve the index.
+     * @return The Patient Index extracted from the arguments.
+     * @throws ParseException If the index is not valid.
+     */
     public Index getPatientIndex(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
         return ParserUtil.parseIndex(parsedArgument[0]);
     }
 
-
+    /**
+     * Retrieves and parses the checkup date from the input arguments.
+     *
+     * @param trimmedArgs The input arguments from which to retrieve the date.
+     * @return The LocalDate object representing the checkup date.
+     * @throws ParseException If the date is not in the expected format or is invalid.
+     */
     public LocalDate getCheckupDate(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
         String dateString = parsedArgument[1];
@@ -61,6 +76,13 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         }
     }
 
+    /**
+     * Retrieves and parses the checkup time from the input arguments.
+     *
+     * @param trimmedArgs The input arguments from which to retrieve the time.
+     * @return The LocalTime object representing the checkup time.
+     * @throws ParseException If the time is not in the expected format or is invalid.
+     */
     public LocalTime getCheckupTime(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
         String timeString = parsedArgument[2];
@@ -76,10 +98,11 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     }
 
     /**
-     * test
-     * @param trimmedArgs test
-     * @return test
-     * @throws ParseException test
+     * Parses the input arguments to ensure the correct number of parameters are provided.
+     *
+     * @param trimmedArgs The input arguments to be split.
+     * @return An array of arguments extracted from the input string.
+     * @throws ParseException If the number of arguments is incorrect.
      */
     public String[] parseArguments(String trimmedArgs) throws ParseException {
         String[] parsedArguments = trimmedArgs.split("\\s+");

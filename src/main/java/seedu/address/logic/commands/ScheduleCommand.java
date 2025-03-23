@@ -19,7 +19,7 @@ import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Person;
 
 /**
- * test
+ * Represent a command to schedule a checkup for a patient
  */
 public class ScheduleCommand extends Command {
     public static final String COMMAND_WORD = "schedule";
@@ -37,10 +37,11 @@ public class ScheduleCommand extends Command {
 
 
     /**
-     * test
-     * @param patientIndex test
-     * @param checkupDate test
-     * @param checkupTime test
+     * Construct a ScheduleCommand
+     *
+     * @param patientIndex The index of the patient from the filtered list.
+     * @param checkupDate The date of the scheduled checkup.
+     * @param checkupTime The time of the scheduled checkup.
      */
     public ScheduleCommand(Index patientIndex, LocalDate checkupDate,
                            LocalTime checkupTime) {
@@ -49,6 +50,13 @@ public class ScheduleCommand extends Command {
         this.checkupTime = checkupTime;
     }
 
+    /**
+     * Executes the command and schedules for a checkup for the patient
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @return A CommandResult containing feedback for the user.
+     * @throws CommandException If the command execution fails due to invalid data or state.
+     */
     @Override
     public CommandResult execute(Model model) throws CommandException {
         Person patient = getPatientFromModel(model);
@@ -65,6 +73,13 @@ public class ScheduleCommand extends Command {
         }
     }
 
+    /**
+     * Retrieves the patient from the model based on the given patient index.
+     *
+     * @param model The model containing data and interactions for the application.
+     * @return The patient corresponding to the patient index.
+     * @throws CommandException If the patient index is invalid or the patient is not a valid patient.
+     */
     public Person getPatientFromModel(Model model) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -80,16 +95,35 @@ public class ScheduleCommand extends Command {
         return patient;
     }
 
+    /**
+     * Creates a new Checkup object using the specified date and time.
+     *
+     * @return A new Checkup instance.
+     * @throws ParseException If the checkup cannot be created due to invalid data.
+     */
     public Checkup createCheckup() throws ParseException {
         return new Checkup(checkupDate, checkupTime);
     }
 
+    /**
+     * Checks if the patient already has a conflicting checkup scheduled at the same date and time.
+     *
+     * @param patient The patient to check against.
+     * @return True if a conflicting checkup exists; False otherwise.
+     */
     private boolean hasConflictingCheckup(Person patient) {
         LocalDateTime newDateTime = LocalDateTime.of(checkupDate, checkupTime);
         return patient.getCheckups().stream()
                 .anyMatch(existingCheckup -> existingCheckup.getDateTime().equals(newDateTime));
     }
 
+    /**
+     * Updates the patient with the newly created checkup.
+     *
+     * @param model The model containing data and operations for the application.
+     * @param patient The patient to update with the new checkup.
+     * @param newCheckup The newly created checkup instance.
+     */
     private void updatePatientWithCheckup(Model model, Person patient, Checkup newCheckup) {
         Set<Checkup> patientCheckups = new HashSet<>(patient.getCheckups());
         patientCheckups.add(newCheckup);
@@ -99,6 +133,12 @@ public class ScheduleCommand extends Command {
         model.setPerson(patient, updatedPatient);
     }
 
+    /**
+     * Generates a success message after the checkup is scheduled.
+     *
+     * @param patient The patient for whom the checkup was scheduled.
+     * @return A CommandResult containing the success message.
+     */
     private CommandResult generateSuccessMessage(Person patient) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");

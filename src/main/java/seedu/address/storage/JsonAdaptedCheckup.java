@@ -10,18 +10,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.checkup.Checkup;
 
-
 /**
- * test
+ * Adapts a Checkup object for JSON serialization and deserialization.
  */
 public class JsonAdaptedCheckup {
     private final String date;
     private final String time;
 
     /**
-     * test
-     * @param date test
-     * @param time test
+     * Constructs a JsonAdaptedCheckup with the specified date and time.
+     *
+     * @param date The date of the checkup in dd/MM/yyyy format.
+     * @param time The time of the checkup in HH:mm format.
      */
     @JsonCreator
     public JsonAdaptedCheckup(@JsonProperty("date") String date,
@@ -31,8 +31,9 @@ public class JsonAdaptedCheckup {
     }
 
     /**
-     * test
-     * @param source test
+     * Constructs a JsonAdaptedCheckup from a Checkup object.
+     *
+     * @param source The Checkup object to adapt.
      */
     public JsonAdaptedCheckup(Checkup source) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -42,9 +43,10 @@ public class JsonAdaptedCheckup {
     }
 
     /**
-     * test
-     * @return test
-     * @throws IllegalValueException test
+     * Converts this JsonAdaptedCheckup back into a Checkup object.
+     *
+     * @return A Checkup object corresponding to this JSON representation.
+     * @throws IllegalValueException If the date or time is invalid.
      */
     public Checkup toModelType() throws IllegalValueException {
         LocalDate checkupDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
