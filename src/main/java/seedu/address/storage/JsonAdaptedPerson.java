@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -33,6 +34,7 @@ class JsonAdaptedPerson {
     private final String bloodType;
     private final String appointment;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedMedicalHistory> medicalHistory = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -42,7 +44,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("bloodType") String bloodType,
                              @JsonProperty("appointment") String appointment,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("medicalHistory") List<JsonAdaptedMedicalHistory> medicalHistory) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -52,6 +55,10 @@ class JsonAdaptedPerson {
 
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+
+        if (medicalHistory != null) {
+            this.medicalHistory.addAll(medicalHistory);
         }
     }
 
@@ -68,6 +75,8 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        medicalHistory.addAll(source.getMedicalHistory().stream().map(JsonAdaptedMedicalHistory::new)
+                                                                 .collect(Collectors.toList()));
     }
 
     /**
@@ -77,8 +86,14 @@ class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        final List<MedicalHistory> personMedicalHistory = new ArrayList<>();
+
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+
+        for (JsonAdaptedMedicalHistory medicalHistory : medicalHistory) {
+            personMedicalHistory.add(medicalHistory.toModelType());
         }
 
         if (name == null) {
@@ -132,6 +147,8 @@ class JsonAdaptedPerson {
         final Appointment modelAppointment = new Appointment(appointment);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType, modelAppointment, modelTags);
+        final Set<MedicalHistory> modelMedicalHistory = new HashSet<>(personMedicalHistory);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType, modelAppointment, modelTags,
+                          modelMedicalHistory);
     }
 }

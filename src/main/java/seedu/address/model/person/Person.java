@@ -26,13 +26,13 @@ public class Person {
     private final Address address;
     private final BloodType bloodType;
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<MedicalHistory> medicalHistory = new HashSet<>();
 
     /**
      * Every field must be present and not null.
-     * TODO add in blood type parameter
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
-                  Appointment appointment, Set<Tag> tags) {
+                  Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory) {
         requireAllNonNull(name, phone, email, address, tags, bloodType);
         this.name = name;
         this.phone = phone;
@@ -41,6 +41,7 @@ public class Person {
         this.tags.addAll(tags);
         this.bloodType = bloodType;
         this.appointment = appointment;
+        this.medicalHistory.addAll(medicalHistory);
     }
 
     public Name getName() {
@@ -72,7 +73,17 @@ public class Person {
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
+        if (tags.isEmpty()) {
+            return Collections.emptySet();
+        }
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Set<MedicalHistory> getMedicalHistory() {
+        if (medicalHistory.isEmpty()) {
+            return Collections.emptySet();
+        }
+        return Collections.unmodifiableSet(medicalHistory);
     }
 
     /**
@@ -110,14 +121,15 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && bloodType.equals(otherPerson.bloodType)
                 && appointment.equals(otherPerson.appointment)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && medicalHistory.equals(otherPerson.medicalHistory);
 
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, appointment, tags);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
     }
 
     @Override
@@ -130,6 +142,7 @@ public class Person {
                 .add("bloodType", bloodType)
                 .add("appointment", appointment)
                 .add("tags", tags)
+                .add("medicalHistory", medicalHistory)
                 .toString();
     }
 
