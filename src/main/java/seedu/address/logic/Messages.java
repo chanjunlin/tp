@@ -55,7 +55,7 @@ public class Messages {
 
     private static StringBuilder tagBuilder(StringBuilder builder, Person person) {
         builder.append("; Tags: ");
-        if (person.getTags().isEmpty()) {
+        if (person.checkIfTagsIsEmpty()) {
             builder.append("No tags");
         } else {
             person.getTags().forEach(builder::append);
@@ -65,7 +65,7 @@ public class Messages {
 
     private static StringBuilder medicalHistoryBuilder(StringBuilder builder, Person person) {
         builder.append("; Medical History: ");
-        if (person.getMedicalHistory().isEmpty()) {
+        if (person.checkIfMedicalHistoryIsEmpty()) {
             builder.append("No medical history");
         } else {
             person.getMedicalHistory().forEach(builder::append);

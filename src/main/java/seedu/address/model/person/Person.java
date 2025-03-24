@@ -79,11 +79,29 @@ public class Person {
         return Collections.unmodifiableSet(tags);
     }
 
+    /**
+     * Returns true if tags is empty and false otherwise.
+     */
+    public boolean checkIfTagsIsEmpty() {
+        return getTags().isEmpty();
+    }
+
+    /**
+     * Returns an immutable medical history set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
     public Set<MedicalHistory> getMedicalHistory() {
         if (medicalHistory.isEmpty()) {
             return Collections.emptySet();
         }
         return Collections.unmodifiableSet(medicalHistory);
+    }
+
+    /**
+     * Returns true if medical history is empty and false otherwise.
+     */
+    public boolean checkIfMedicalHistoryIsEmpty() {
+        return getMedicalHistory().isEmpty();
     }
 
     /**
