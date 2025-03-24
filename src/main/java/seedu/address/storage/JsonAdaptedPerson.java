@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
@@ -33,6 +34,7 @@ class JsonAdaptedPerson {
     private final String bloodType;
     private final String appointment;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
+    private final List<JsonAdaptedCheckup> checkups = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -42,7 +44,8 @@ class JsonAdaptedPerson {
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("bloodType") String bloodType,
                              @JsonProperty("appointment") String appointment,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("checkups") List<JsonAdaptedCheckup> checkups) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -52,6 +55,10 @@ class JsonAdaptedPerson {
 
         if (tags != null) {
             this.tags.addAll(tags);
+        }
+
+        if (checkups != null) {
+            this.checkups.addAll(checkups);
         }
     }
 
@@ -68,6 +75,9 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        checkups.addAll(source.getCheckups().stream()
+                .map(JsonAdaptedCheckup::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -77,8 +87,14 @@ class JsonAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        final List<Checkup> personCheckups = new ArrayList<>();
+
         for (JsonAdaptedTag tag : tags) {
             personTags.add(tag.toModelType());
+        }
+
+        for (JsonAdaptedCheckup checkup : checkups) {
+            personCheckups.add(checkup.toModelType());
         }
 
         if (name == null) {
@@ -132,6 +148,8 @@ class JsonAdaptedPerson {
         final Appointment modelAppointment = new Appointment(appointment);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType, modelAppointment, modelTags);
+        final Set<Checkup> modelCheckups = new HashSet<>(personCheckups);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType, modelAppointment, modelTags,
+                modelCheckups);
     }
 }

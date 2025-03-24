@@ -28,9 +28,9 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        if (trimmedArgs.startsWith("nurse")) {
+        if (trimmedArgs.startsWith("nurse of patient")) {
             return findNurseScenario(trimmedArgs);
-        } else if (trimmedArgs.startsWith("patient")) {
+        } else if (trimmedArgs.startsWith("patient of nurse")) {
             return findPatientScenario(trimmedArgs);
         }
 
