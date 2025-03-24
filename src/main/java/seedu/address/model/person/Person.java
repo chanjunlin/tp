@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.checkup.Checkup;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,10 +27,34 @@ public class Person {
     private final Address address;
     private final BloodType bloodType;
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<Checkup> checkups = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      * TODO add in blood type parameter
+     */
+    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
+                  Appointment appointment, Set<Tag> tags, Set<Checkup> checkups) {
+        requireAllNonNull(name, phone, email, address, tags, bloodType);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.checkups.addAll(checkups);
+        this.bloodType = bloodType;
+        this.appointment = appointment;
+    }
+
+    /**
+     * test
+     * @param name test
+     * @param phone test
+     * @param email test
+     * @param address test
+     * @param bloodType test
+     * @param appointment test
+     * @param tags test
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
                   Appointment appointment, Set<Tag> tags) {
@@ -39,6 +64,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+        this.checkups.addAll(new HashSet<>());
         this.bloodType = bloodType;
         this.appointment = appointment;
     }
@@ -73,6 +99,10 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Set<Checkup> getCheckups() {
+        return Collections.unmodifiableSet(checkups);
     }
 
     /**
@@ -110,14 +140,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && bloodType.equals(otherPerson.bloodType)
                 && appointment.equals(otherPerson.appointment)
-                && tags.equals(otherPerson.tags);
-
+                && tags.equals(otherPerson.tags)
+                && checkups.equals(otherPerson.checkups);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, appointment, tags);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, checkups);
     }
 
     @Override
@@ -130,7 +160,7 @@ public class Person {
                 .add("bloodType", bloodType)
                 .add("appointment", appointment)
                 .add("tags", tags)
+                .add("checkups", checkups)
                 .toString();
     }
-
 }
