@@ -136,9 +136,6 @@ class JsonAdaptedPerson {
         }
         final Appointment modelAppointment = new Appointment(appointment);
 
-        if (!NextOfKin.isValidNextOfKin(nextOfKin)) {
-            throw new IllegalValueException(NextOfKin.MESSAGE_CONSTRAINTS);
-        }
         final NextOfKin modelNextOfKin = new NextOfKin(nextOfKin);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);

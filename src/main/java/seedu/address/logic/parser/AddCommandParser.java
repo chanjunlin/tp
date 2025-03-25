@@ -56,7 +56,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get());
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());
         Optional<String> nokInput = argMultimap.getValue(PREFIX_NOK);
-        NextOfKin nextOfKin = new NextOfKin(nokInput.orElse("Next-Of-Kin not provided"));
+        NextOfKin nextOfKin = new NextOfKin(nokInput.orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person person = new Person(name, phone, email, address, bloodType, appointment, tagList, nextOfKin);

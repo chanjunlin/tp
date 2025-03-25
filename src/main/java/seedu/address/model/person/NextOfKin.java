@@ -21,7 +21,7 @@ public class NextOfKin {
      */
     public NextOfKin(String input) {
         if (input == null || input.trim().isEmpty()) {
-            this.value = "";
+            this.value = "Next of Kin not provided";
         } else {
             checkArgument(isValidNextOfKin(input), MESSAGE_CONSTRAINTS);
             this.value = input.trim();
@@ -34,9 +34,6 @@ public class NextOfKin {
      */
     public static boolean isValidNextOfKin(String input) {
         requireNonNull(input);
-        if (input.equals("Next-Of-Kin not provided")) {
-            return true;
-        }
         String[] parts = input.trim().split(" ", 2);
         if (parts.length < 2) {
             return false;
