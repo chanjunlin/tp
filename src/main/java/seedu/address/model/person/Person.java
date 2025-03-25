@@ -33,14 +33,14 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
                   Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory) {
-        requireAllNonNull(name, phone, email, address, tags, bloodType);
+        requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.tags.addAll(tags);
         this.bloodType = bloodType;
         this.appointment = appointment;
+        this.tags.addAll(tags);
         this.medicalHistory.addAll(medicalHistory);
     }
 
@@ -115,6 +115,20 @@ public class Person {
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName());
+    }
+
+    /**
+     * Returns true if the appointment is nurse and false otherwise.
+     */
+    public boolean isNurse() {
+        return this.getAppointment().toString().equalsIgnoreCase("nurse");
+    }
+
+    /**
+     * Returns true if the person has medical history and false otherwise.
+     */
+    public boolean hasMedicalHistory() {
+        return !this.getMedicalHistory().isEmpty();
     }
 
     /**
