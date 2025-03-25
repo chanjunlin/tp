@@ -3,9 +3,30 @@ layout: page
 title: User Guide
 ---
 
-MediBook is a desktop app for managing patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI). Designed for speed and efficiency, MediBook empowers private nurse centres to assign staff, retrieve patient information, and manage appointments faster than traditional pen-and-paper or GUI-based systems.
-* Table of Contents
-{:toc}
+MediBook is a desktop app for managing patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI). Designed for speed and efficiency, MediBook empowers private nurse centres to assign staff, retrieve patient information, and manage appointments faster than traditional pen-and-paper or GUI-based systems. 
+
+# Table of Contents
+1. [Quick start](#quick-start)
+2. [Features](#features)
+    * [Viewing Help](#viewing-help--help)
+    * [Adding a person](#adding-a-person-add)
+    * [Listing all persons](#listing-all-persons--list)
+    * [Editing a person](#editing-a-person--edit)
+    * [Locating persons by name](#locating-persons-by-name-find)
+    * [Finding patients](#finding-patient)
+    * [Finding nurse](#finding-nurse)
+    * [Deleting a person](#deleting-a-person--delete)
+    * [Clearing all entries](#clearing-all-entries--clear)
+    * [Exiting the program](#exiting-the-program--exit)
+    * [Assigning a nurse to a patient](#assigning-a-nurse-to-a-patient--assign)
+    * [Schedule checkups](#schedule-checkups--schedule)
+    * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
+    * [Saving the data](#saving-the-data)
+    * [Editing the data file](#editing-the-data-file)
+    * [Archiving data files](#archiving-data-files-coming-in-v20)
+3. [FAQ](#faq)
+4. [Known Issues](#known-issues)
+5. [Command Summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -101,7 +122,7 @@ Examples:
 
 ### Listing all persons : `list`
 
-Displays a list of persons in the address book. You can choose to list all persons, only patients, or only nurses.
+Displays a list of persons in the address book. You can choose to list all persons, only patients, only nurses or all patients with checkups.
 
 Formats:
 
@@ -111,6 +132,8 @@ Formats:
 
 `list nurse` — Lists only nurses.
 
+`list checkup` - Lists all patients with checkups.
+
 Examples:
 
 `list` → Shows every entry in the address book.
@@ -118,6 +141,8 @@ Examples:
 `list patient` → Shows only persons with the appointment role Patient.
 
 `list nurse` → Shows only persons with the appointment role Nurse.
+
+`list checkup` → Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
 
 ### Editing a person : `edit`
 
@@ -156,14 +181,14 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-Finding patient 
+### Finding patient
 
 Format: `find patient of nurse INDEX`
 
 Examples:
 * `find patient of nurse 1` returns `Patient Alice Pauline`
 
-Finding nurse
+### Finding nurse
 
 Format: `find nurse of patient INDEX`
 
@@ -196,15 +221,6 @@ Exits the program.
 
 Format: `exit`
 
-### Schedule checkups : `schedule`
-
-Schedules a checkup for the patient 
-
-Format: `schedule INDEX DATE TIME`
-
-Examples:
-* `schedule 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm 
-
 ### Assigning a nurse to a patient : `assign`
 
 Assigns a specified nurse to a specified patient.
@@ -214,6 +230,15 @@ Format: `assign PATIENT_INDEX NURSE_INDEX`
 * Assigns the nurse at `NURSE_INDEX` to the patient at `PATIENT_INDEX`.
 * `NURSE_INDEX` and `PATIENT_INDEX` both refer to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
+
+### Schedule checkups : `schedule`
+
+Schedules a checkup for the patient 
+
+Format: `schedule INDEX DATE TIME`
+
+Examples:
+* `schedule 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm
 
 ### Viewing a nurse or patient : `view`
 
@@ -268,7 +293,8 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list` `list nurse` `list patient`
+**List** | `list` `list nurse` `list patient` `list checkup`
 **Help** | `help`
 **Assign** | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`
+**Schedule** | `schedule PATIENT_INDEX DATE_TIME`
 **View** | `view INDEX`<br> e.g., `view 2`
