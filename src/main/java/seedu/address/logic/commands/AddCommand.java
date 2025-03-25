@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -30,6 +31,7 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_BLOODTYPE + "BLOODTYPE "
             + PREFIX_APPOINTMENT + "APPOINTMENT "
+            + "[" + PREFIX_NOK + "NEXT_OF_KIN_NAME_PHONE]"
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
@@ -38,6 +40,7 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_BLOODTYPE + "AB+ "
             + PREFIX_APPOINTMENT + "Nurse "
+            + PREFIX_NOK + "Jane 91234567 "
             + PREFIX_TAG + "friends "
             + PREFIX_TAG + "owesMoney";
 

@@ -26,14 +26,15 @@ public class Person {
     private final Address address;
     private final BloodType bloodType;
     private final Set<Tag> tags = new HashSet<>();
+    private final NextOfKin nextOfKin;
 
     /**
      * Every field must be present and not null.
      * TODO add in blood type parameter
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
-                  Appointment appointment, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags, bloodType);
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin) {
+        requireAllNonNull(name, phone, email, address, tags, bloodType, nextOfKin);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -41,6 +42,7 @@ public class Person {
         this.tags.addAll(tags);
         this.bloodType = bloodType;
         this.appointment = appointment;
+        this.nextOfKin = nextOfKin;
     }
 
     public Name getName() {
@@ -73,6 +75,14 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns the next of kin of the person, if available.
+     * May be {@code null} if not specified.
+     */
+    public NextOfKin getNextOfKin() {
+        return nextOfKin;
     }
 
     /**
@@ -110,14 +120,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && bloodType.equals(otherPerson.bloodType)
                 && appointment.equals(otherPerson.appointment)
+                && nextOfKin.equals(otherPerson.nextOfKin)
                 && tags.equals(otherPerson.tags);
-
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, appointment, tags);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, nextOfKin);
     }
 
     @Override
@@ -129,6 +139,7 @@ public class Person {
                 .add("address", address)
                 .add("bloodType", bloodType)
                 .add("appointment", appointment)
+                .add("nextOfKin", nextOfKin)
                 .add("tags", tags)
                 .toString();
     }

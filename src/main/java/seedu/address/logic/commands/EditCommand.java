@@ -28,6 +28,7 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonHasAppointmentPredicate;
 import seedu.address.model.person.Phone;
@@ -125,9 +126,10 @@ public class EditCommand extends Command {
         BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Appointment updatedAppointment = editPersonDescriptor.getAppointment().orElse(personToEdit.getAppointment());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        NextOfKin nextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBloodType, updatedAppointment,
-                updatedTags);
+                updatedTags, nextOfKin);
     }
 
     @Override
@@ -166,6 +168,7 @@ public class EditCommand extends Command {
         private BloodType bloodType;
         private Appointment appointment;
         private Set<Tag> tags;
+        private NextOfKin nextOfKin;
 
         public EditPersonDescriptor() {}
 
@@ -181,13 +184,14 @@ public class EditCommand extends Command {
             setTags(toCopy.tags);
             setBloodType(toCopy.bloodType);
             setAppointment(toCopy.appointment);
+            setNextOfKin(toCopy.nextOfKin);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, appointment, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, appointment, tags, nextOfKin);
         }
 
         public void setName(Name name) {
@@ -255,6 +259,19 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setNextOfKin(NextOfKin nextOfKin) {
+            this.nextOfKin = nextOfKin;
+        }
+
+        /**
+         * Returns the next of kin of the person.
+         * Returns {@code Optional#empty()} if {@code nextOfKin} is null.
+         */
+        public Optional<NextOfKin> getNextOfKin() {
+            return Optional.ofNullable(nextOfKin);
+        }
+
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -273,7 +290,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(bloodType, otherEditPersonDescriptor.bloodType)
                     && Objects.equals(appointment, otherEditPersonDescriptor.appointment)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(nextOfKin, otherEditPersonDescriptor.nextOfKin);
         }
 
         @Override
@@ -285,6 +303,7 @@ public class EditCommand extends Command {
                     .add("address", address)
                     .add("bloodType", bloodType)
                     .add("appointment", appointment)
+                    .add("nextOfKin", nextOfKin)
                     .add("tags", tags)
                     .toString();
         }

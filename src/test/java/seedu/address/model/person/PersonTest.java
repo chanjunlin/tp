@@ -85,6 +85,10 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
+        //different NOK -> returns false
+        editedAlice = new PersonBuilder(ALICE).withNextOfKin("Jane 91234567").build();
+        assertFalse(ALICE.equals(editedAlice));
+
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
@@ -94,7 +98,7 @@ public class PersonTest {
     public void toStringMethod() {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
-                + ", bloodType=" + ALICE.getBloodType() + ", appointment=" + ALICE.getAppointment()
+                + ", bloodType=" + ALICE.getBloodType() + ", appointment=" + ALICE.getAppointment() + ", nextOfKin=" + ALICE.getNextOfKin()
                 + ", tags=" + ALICE.getTags() + "}";
         assertEquals(expected, ALICE.toString());
     }

@@ -15,6 +15,7 @@ import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -32,6 +33,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final String bloodType;
     private final String appointment;
+    private final String nextOfKin;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -42,6 +44,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("bloodType") String bloodType,
                              @JsonProperty("appointment") String appointment,
+                             @JsonProperty("nextOfKin") String nextOfKin,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -49,6 +52,7 @@ class JsonAdaptedPerson {
         this.address = address;
         this.bloodType = bloodType;
         this.appointment = appointment;
+        this.nextOfKin = nextOfKin;
 
         if (tags != null) {
             this.tags.addAll(tags);
@@ -65,6 +69,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         bloodType = source.getBloodType().bloodType;
         appointment = source.getAppointment().appointment;
+        nextOfKin = source.getNextOfKin().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -131,7 +136,14 @@ class JsonAdaptedPerson {
         }
         final Appointment modelAppointment = new Appointment(appointment);
 
+        if (!NextOfKin.isValidNextOfKin(nextOfKin)) {
+            throw new IllegalValueException(NextOfKin.MESSAGE_CONSTRAINTS);
+        }
+        final NextOfKin modelNextOfKin = new NextOfKin(nextOfKin);
+
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType, modelAppointment, modelTags);
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType,
+                modelAppointment, modelTags, modelNextOfKin);
     }
 }
