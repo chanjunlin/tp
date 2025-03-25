@@ -62,7 +62,7 @@ public class EditCommand extends Command {
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_INVALID_MEDICAL_HISTORY = "Medical history should not be added to a nurse.";
-    public static final String MESSAGE_INVALID_MEDICAL_HISTORY_DELETE = "Delete medical history inorder "
+    public static final String MESSAGE_INVALID_MEDICAL_HISTORY_DELETE = "Delete medical history in order "
                                                                       + "to change to nurse appointment."
                                                                       + " (e.g. edit 1 mh/ to remove medical history).";
 
