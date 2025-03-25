@@ -31,7 +31,7 @@ public class Person {
 
     /**
      * Every field must be present and not null.
-     * TODO add in blood type parameter
+     *
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
                   Appointment appointment, Set<Tag> tags, Set<Checkup> checkups) {
@@ -105,6 +105,9 @@ public class Person {
         return Collections.unmodifiableSet(checkups);
     }
 
+    public boolean hasCheckup() {
+        return !checkups.isEmpty();
+    }
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
