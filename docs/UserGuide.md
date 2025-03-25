@@ -128,6 +128,20 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+Finding patient 
+
+Format: `find patient of nurse INDEX`
+
+Examples:
+* `find patient of nurse 1` returns `Patient Alice Pauline`
+
+Finding nurse
+
+Format: `find nurse of patient INDEX`
+
+Examples:
+* `find nurse of patient 2` returns `Nurse Benson Meier`
+
 ### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
@@ -153,6 +167,15 @@ Format: `clear`
 Exits the program.
 
 Format: `exit`
+
+### Schedule checkups : `schedule`
+
+Schedules a checkup for the patient 
+
+Format: `schedule INDEX DATE TIME`
+
+Examples:
+* `schedule 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm 
 
 ### Saving the data
 
