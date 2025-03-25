@@ -154,6 +154,27 @@ Exits the program.
 
 Format: `exit`
 
+### Assigning a nurse to a patient : `assign`
+
+Assigns a specified nurse to a specified patient.
+
+Format: `assign PATIENT_INDEX NURSE_INDEX`
+
+* Assigns the nurse at `NURSE_INDEX` to the patient at `PATIENT_INDEX`.
+* `NURSE_INDEX` and `PATIENT_INDEX` both refer to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+### Viewing a nurse or patient : `view`
+
+View details of specified nurse or patient. Shows medical history of patient specified (if any).
+
+Format: `view INDEX`
+
+* Displays the details of the person at `INDEX`.
+* If the person is a patient, then the patient's medical history is shown (if any).
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
 ### Saving the data
 
 AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
@@ -198,3 +219,5 @@ Action | Format, Examples
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List** | `list`
 **Help** | `help`
+**Assign** | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`
+**View** | `view INDEX`<br> e.g., `view 2`
