@@ -3,8 +3,7 @@ layout: page
 title: User Guide
 ---
 
-MediBook is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
-
+MediBook is a desktop app for managing patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI). Designed for speed and efficiency, MediBook empowers private nurse centres to assign staff, retrieve patient information, and manage appointments faster than traditional pen-and-paper or GUI-based systems.
 * Table of Contents
 {:toc}
 
@@ -89,9 +88,23 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Displays a list of persons in the address book. You can choose to list all persons, only patients, or only nurses.
 
-Format: `list`
+Formats:
+
+`list` — Lists all persons (patients and nurses).
+
+`list patient` — Lists only patients.
+
+`list nurse` — Lists only nurses.
+
+Examples:
+
+`list` → Shows every entry in the address book.
+
+`list patient` → Shows only persons with the appointment role Patient.
+
+`list nurse` → Shows only persons with the appointment role Nurse.
 
 ### Editing a person : `edit`
 
@@ -196,5 +209,5 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
+**List** | `list` `list nurse` `list patient`
 **Help** | `help`
