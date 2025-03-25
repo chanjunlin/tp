@@ -61,6 +61,10 @@ public class EditCommand extends Command {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_INVALID_MEDICAL_HISTORY = "Medical history should not be added to a nurse.";
+    public static final String MESSAGE_INVALID_MEDICAL_HISTORY_DELETE = "Delete medical history inorder "
+                                                                      + "to change to nurse appointment."
+                                                                      + " (e.g. edit 1 mh/ to remove medical history).";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -90,6 +94,8 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
+        ensureOnlyPatientCanHaveMedicalHistory(personToEdit, editedPerson);
+
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -97,6 +103,14 @@ public class EditCommand extends Command {
         model.setPerson(personToEdit, editedPerson);
         updateModelList(model);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+    }
+
+    private void ensureOnlyPatientCanHaveMedicalHistory(Person personToEdit, Person editedPerson) throws CommandException {
+        boolean editedPersonIsNurse = editedPerson.getAppointment().toString().equalsIgnoreCase("nurse");
+        boolean editedPersonHasMedicalHistory = !editedPerson.getMedicalHistory().isEmpty();
+        if (editedPersonIsNurse && editedPersonHasMedicalHistory) {
+            throw new CommandException(MESSAGE_INVALID_MEDICAL_HISTORY + "\n" + MESSAGE_INVALID_MEDICAL_HISTORY_DELETE);
+        }
     }
 
     /**

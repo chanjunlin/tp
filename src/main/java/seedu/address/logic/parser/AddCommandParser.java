@@ -30,6 +30,8 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    public static final String MESSAGE_INVALID_MEDICAL_HISTORY_ADD = "Medical history should not be added to a nurse";
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
@@ -55,12 +57,25 @@ public class AddCommandParser implements Parser<AddCommand> {
         BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get());
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+
+        ensureNurseDoesNotHaveMedicalHistory(appointment, argMultimap, PREFIX_MEDICAL_HISTORY);
+
         Set<MedicalHistory> medicalHistoryList =
                 ParserUtil.parseMedicalHistories(argMultimap.getAllValues(PREFIX_MEDICAL_HISTORY));
 
         Person person = new Person(name, phone, email, address, bloodType, appointment, tagList, medicalHistoryList);
 
         return new AddCommand(person);
+    }
+
+    private void ensureNurseDoesNotHaveMedicalHistory(Appointment appointment,
+                                                      ArgumentMultimap argMultimap,
+                                                      Prefix prefix) throws ParseException {
+        boolean isNurse = appointment.toString().equalsIgnoreCase("nurse");
+        boolean hasMedicalHistory = !argMultimap.getValue(prefix).isEmpty();
+        if (isNurse && hasMedicalHistory) {
+            throw new ParseException(MESSAGE_INVALID_MEDICAL_HISTORY_ADD);
+        }
     }
 
     /**

@@ -25,23 +25,24 @@ public class Person {
     // Data fields
     private final Address address;
     private final BloodType bloodType;
-    private final Set<Tag> tags = new HashSet<>();
-    private final Set<MedicalHistory> medicalHistory = new HashSet<>();
+    private final Set<Tag> tags;
+    private final Set<MedicalHistory> medicalHistory;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
                   Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory) {
-        requireAllNonNull(name, phone, email, address, tags, bloodType);
+        requireAllNonNull(name, phone, email, address, bloodType, appointment);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.tags.addAll(tags);
         this.bloodType = bloodType;
         this.appointment = appointment;
-        this.medicalHistory.addAll(medicalHistory);
+
+        this.tags = (tags != null) ? new HashSet<>(tags) : new HashSet<>();
+        this.medicalHistory = (medicalHistory != null) ? new HashSet<>(medicalHistory) : new HashSet<>();
     }
 
     public Name getName() {
