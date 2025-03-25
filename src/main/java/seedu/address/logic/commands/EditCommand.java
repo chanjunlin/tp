@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -27,6 +28,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonHasAppointmentPredicate;
@@ -50,7 +52,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BLOODTYPE + "BLOODTYPE] "
             + "[" + PREFIX_APPOINTMENT + "APPOINTMENT] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_MEDICAL_HISTORY + "MEDICAL_HISTORY]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -125,9 +128,11 @@ public class EditCommand extends Command {
         BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Appointment updatedAppointment = editPersonDescriptor.getAppointment().orElse(personToEdit.getAppointment());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<MedicalHistory> updatedMedicalHistory = editPersonDescriptor.getMedicalHistory()
+                                                                        .orElse(personToEdit.getMedicalHistory());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBloodType, updatedAppointment,
-                updatedTags);
+                updatedTags, updatedMedicalHistory);
     }
 
     @Override
@@ -166,6 +171,7 @@ public class EditCommand extends Command {
         private BloodType bloodType;
         private Appointment appointment;
         private Set<Tag> tags;
+        private Set<MedicalHistory> medicalHistory;
 
         public EditPersonDescriptor() {}
 
@@ -181,13 +187,15 @@ public class EditCommand extends Command {
             setTags(toCopy.tags);
             setBloodType(toCopy.bloodType);
             setAppointment(toCopy.appointment);
+            setMedicalHistory(toCopy.medicalHistory);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, appointment, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, appointment,
+                                               tags, medicalHistory);
         }
 
         public void setName(Name name) {
@@ -255,6 +263,15 @@ public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
+        public void setMedicalHistory(Set<MedicalHistory> medicalHistory) {
+            this.medicalHistory = (medicalHistory != null) ? new HashSet<>(medicalHistory) : null;
+        }
+
+        public Optional<Set<MedicalHistory>> getMedicalHistory() {
+            return (medicalHistory != null) ? Optional.of(Collections.unmodifiableSet(medicalHistory))
+                                            : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -273,7 +290,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(bloodType, otherEditPersonDescriptor.bloodType)
                     && Objects.equals(appointment, otherEditPersonDescriptor.appointment)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(medicalHistory, otherEditPersonDescriptor.medicalHistory);
         }
 
         @Override
@@ -286,6 +304,7 @@ public class EditCommand extends Command {
                     .add("bloodType", bloodType)
                     .add("appointment", appointment)
                     .add("tags", tags)
+                    .add("medicalHistory", medicalHistory)
                     .toString();
         }
     }
