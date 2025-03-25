@@ -94,7 +94,7 @@ public class EditCommand extends Command {
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        ensureOnlyPatientCanHaveMedicalHistory(personToEdit, editedPerson);
+        ensureOnlyPatientCanHaveMedicalHistory(editedPerson);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -105,9 +105,9 @@ public class EditCommand extends Command {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
-    private void ensureOnlyPatientCanHaveMedicalHistory(Person personToEdit, Person editedPerson) throws CommandException {
-        boolean editedPersonIsNurse = editedPerson.getAppointment().toString().equalsIgnoreCase("nurse");
-        boolean editedPersonHasMedicalHistory = !editedPerson.getMedicalHistory().isEmpty();
+    private void ensureOnlyPatientCanHaveMedicalHistory(Person editedPerson) throws CommandException {
+        boolean editedPersonIsNurse = editedPerson.isNurse();
+        boolean editedPersonHasMedicalHistory = editedPerson.hasMedicalHistory();
         if (editedPersonIsNurse && editedPersonHasMedicalHistory) {
             throw new CommandException(MESSAGE_INVALID_MEDICAL_HISTORY + "\n" + MESSAGE_INVALID_MEDICAL_HISTORY_DELETE);
         }

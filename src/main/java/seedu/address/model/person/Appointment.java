@@ -34,6 +34,13 @@ public class Appointment {
         return test.toLowerCase().matches(VALIDATION_REGEX);
     }
 
+    /**
+     * Returns true if the appointment is nurse and false otherwise.
+     */
+    public boolean isNurse() {
+        return this.toString().equalsIgnoreCase("nurse");
+    }
+
     @Override
     public String toString() {
         return appointment;

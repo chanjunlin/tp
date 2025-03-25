@@ -71,7 +71,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     private void ensureNurseDoesNotHaveMedicalHistory(Appointment appointment,
                                                       ArgumentMultimap argMultimap,
                                                       Prefix prefix) throws ParseException {
-        boolean isNurse = appointment.toString().equalsIgnoreCase("nurse");
+        boolean isNurse = appointment.isNurse();
         boolean hasMedicalHistory = !argMultimap.getValue(prefix).isEmpty();
         if (isNurse && hasMedicalHistory) {
             throw new ParseException(MESSAGE_INVALID_MEDICAL_HISTORY_ADD);

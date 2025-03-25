@@ -118,6 +118,20 @@ public class Person {
     }
 
     /**
+     * Returns true if the appointment is nurse and false otherwise.
+     */
+    public boolean isNurse() {
+        return this.getAppointment().toString().equalsIgnoreCase("nurse");
+    }
+
+    /**
+     * Returns true if the person has medical history and false otherwise.
+     */
+    public boolean hasMedicalHistory() {
+        return !this.getMedicalHistory().isEmpty();
+    }
+
+    /**
      * Returns true if both persons have the same identity and data fields.
      * This defines a stronger notion of equality between two persons.
      */
