@@ -83,8 +83,4 @@ public class FindCommandParserTest {
         String errorMessage = "Index is not a non-zero unsigned integer.";
         assertParseFailure(parser, "patient two", errorMessage);
     }
-
-
-
-
 }

@@ -33,7 +33,9 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withTags("NurseBensonMeier").build();
+            .withTags("NurseBensonMeier")
+            .withCheckups("12/12/2025 10:00")
+            .build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")

@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_USAGE;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ScheduleCommand;
@@ -54,25 +53,33 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         }
 
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            return LocalDate.parse(dateString, formatter);
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Invalid date values");
+            return getLocalDate(dateString);
+        } catch (Exception e) {
+            throw new ParseException(e.getMessage());
         }
+    }
+
+    private static LocalDate getLocalDate(String dateString) throws ParseException {
+        String[] dateParts = dateString.split("/");
+        int day = Integer.parseInt(dateParts[0]);
+        int month = Integer.parseInt(dateParts[1]);
+        int year = Integer.parseInt(dateParts[2]);
+
+        if (day < 1 || day > LocalDate.of(year, month, 1).lengthOfMonth()) {
+            throw new ParseException("Invalid day for the given month/year");
+        }
+
+        return LocalDate.of(year, month, day);
     }
 
     public LocalTime getCheckupTime(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
         String timeString = parsedArgument[2];
         if (!timeString.matches(TIME_VALIDATION_REGEX)) {
-            throw new ParseException("Invalid date format. Use dd/MM/yyyy");
+            throw new ParseException("Invalid time values. Use HHmm");
         }
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-            return LocalTime.parse(timeString, formatter);
-        } catch (DateTimeParseException e) {
-            throw new ParseException("Invalid time values");
-        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+        return LocalTime.parse(timeString, formatter);
     }
 
     /**
