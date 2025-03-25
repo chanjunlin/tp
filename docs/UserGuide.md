@@ -15,9 +15,9 @@ MediBook is a **desktop app for managing contacts, optimized for use via a Comma
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for MediBook.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -28,9 +28,18 @@ MediBook is a **desktop app for managing contacts, optimized for use via a Comma
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Patient` : Adds a contact named `John Doe` to the Address Book.
+
+   * `edit 2 b/AB-` : Edits the blood type of the 2nd contact shown in the current list.  
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
+   
+   * `assign 1 2`: Assigns the patient at index 1 to the nurse at index 2 shown in the current list.
+   
+   * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
+
+   * `schedule 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
+   * `view 4` : Displays the medical history of the patient at the 4th index in the current list.
 
    * `clear` : Deletes all contacts.
 
