@@ -62,9 +62,9 @@ class JsonAdaptedPerson {
 
         if (checkups != null) {
             this.checkups.addAll(checkups);
-            if (medicalHistory != null) {
-                this.medicalHistory.addAll(medicalHistory);
-            }
+        }
+        if (medicalHistory != null) {
+            this.medicalHistory.addAll(medicalHistory);
         }
 
     }

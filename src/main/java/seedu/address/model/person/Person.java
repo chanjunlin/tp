@@ -44,6 +44,31 @@ public class Person {
         this.appointment = appointment;
         this.tags.addAll(tags);
         this.medicalHistory.addAll(medicalHistory);
+        this.checkups.addAll(checkups);
+    }
+
+    /**
+     * test
+     * @param name test
+     * @param phone test
+     * @param email test
+     * @param address test
+     * @param bloodType test
+     * @param appointment test
+     * @param tags test
+     * @param medicalHistory test
+     */
+    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
+                  Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory) {
+        requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.bloodType = bloodType;
+        this.appointment = appointment;
+        this.tags.addAll(tags);
+        this.medicalHistory.addAll(medicalHistory);
         this.checkups.addAll(new HashSet<>());
     }
 
