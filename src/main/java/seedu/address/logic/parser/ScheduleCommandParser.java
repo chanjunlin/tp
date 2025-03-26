@@ -30,12 +30,10 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     public ScheduleCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim().toLowerCase();
         if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            ScheduleCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
-        Index patientIndex = getPatientIndex(trimmedArgs);
 
+        Index patientIndex = getPatientIndex(trimmedArgs);
         LocalDate checkupDate = getCheckupDate(trimmedArgs);
         LocalTime checkupTime = getCheckupTime(trimmedArgs);
         return new ScheduleCommand(patientIndex, checkupDate, checkupTime);

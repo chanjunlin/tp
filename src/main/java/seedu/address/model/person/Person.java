@@ -86,6 +86,9 @@ public class Person {
         return Collections.unmodifiableSet(checkups);
     }
 
+    public boolean hasCheckup() {
+        return !checkups.isEmpty();
+    }
     /**
      * Returns true if tags is empty and false otherwise.
      */
