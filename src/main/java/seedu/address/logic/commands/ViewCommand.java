@@ -30,6 +30,11 @@ public class ViewCommand extends Command {
 
     private final Index index;
 
+    /**
+     * Creates a ViewCommand to display the details of the nurse or patient at the specified index.
+     *
+     * @param index Index of the person to view.
+     */
     public ViewCommand(Index index) {
         this.index = index;
     }
