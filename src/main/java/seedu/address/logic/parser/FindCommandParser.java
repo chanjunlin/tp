@@ -46,8 +46,9 @@ public class FindCommandParser implements Parser<FindCommand> {
      */
     public String[] splitArguments(String args, String commandType) throws ParseException {
         String[] splitArgs = args.split("\\s+");
-        if (splitArgs.length != 2) {
-            String indexType = commandType.equals("nurse") ? "PATIENT_INDEX" : "NURSE_INDEX";
+        System.out.println(splitArgs.length);
+        if (splitArgs.length != 4) {
+            String indexType = commandType.equals("nurse of patient") ? "PATIENT_INDEX" : "NURSE_INDEX";
             throw new ParseException(String.format("Usage: find %s %s", commandType, indexType));
         }
         return splitArgs;
@@ -60,9 +61,9 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException test
      */
     public FindNurseCommand findNurseScenario(String trimmedArgs) throws ParseException {
-        String[] splitArgs = splitArguments(trimmedArgs, "nurse");
+        String[] splitArgs = splitArguments(trimmedArgs, "nurse of patient");
 
-        Index nurseIndex = ParserUtil.parseIndex(splitArgs[1]);
+        Index nurseIndex = ParserUtil.parseIndex(splitArgs[3]);
         return new FindNurseCommand(nurseIndex);
 
     }
@@ -74,9 +75,9 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException test
      */
     public FindPatientCommand findPatientScenario(String trimmedArgs) throws ParseException {
-        String[] splitArgs = splitArguments(trimmedArgs, "patient");
+        String[] splitArgs = splitArguments(trimmedArgs, "patient of nurse");
 
-        Index patientIndex = ParserUtil.parseIndex(splitArgs[1]);
+        Index patientIndex = ParserUtil.parseIndex(splitArgs[3]);
         return new FindPatientCommand(patientIndex);
 
     }

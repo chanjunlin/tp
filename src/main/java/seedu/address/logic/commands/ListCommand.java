@@ -27,6 +27,10 @@ public class ListCommand extends Command {
         this.appointmentFilter = appointmentFilter;
     }
 
+    /**
+     * test
+     * @param filterByCheckup test
+     */
     public ListCommand(boolean filterByCheckup) {
         this.appointmentFilter = null;
         this.filterByCheckup = filterByCheckup;
