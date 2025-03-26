@@ -27,13 +27,13 @@ public class Person {
     private final BloodType bloodType;
     private final Set<Tag> tags = new HashSet<>();
     private final NextOfKin nextOfKin;
+    private final Set<MedicalHistory> medicalHistory = new HashSet<>();
 
     /**
      * Every field must be present and not null.
-     * TODO add in blood type parameter
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
-                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin) {
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin, Set<MedicalHistory> medicalHistory) {
         requireAllNonNull(name, phone, email, address, tags, bloodType, nextOfKin);
         this.name = name;
         this.phone = phone;
@@ -43,6 +43,7 @@ public class Person {
         this.bloodType = bloodType;
         this.appointment = appointment;
         this.nextOfKin = nextOfKin;
+        this.medicalHistory.addAll(medicalHistory);
     }
 
     public Name getName() {
@@ -74,6 +75,9 @@ public class Person {
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
+        if (tags.isEmpty()) {
+            return Collections.emptySet();
+        }
         return Collections.unmodifiableSet(tags);
     }
 
@@ -83,6 +87,31 @@ public class Person {
      */
     public NextOfKin getNextOfKin() {
         return nextOfKin;
+    }
+
+    /**
+     * Returns true if tags is empty and false otherwise.
+     */
+    public boolean checkIfTagsIsEmpty() {
+        return getTags().isEmpty();
+    }
+
+    /**
+     * Returns an immutable medical history set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<MedicalHistory> getMedicalHistory() {
+        if (medicalHistory.isEmpty()) {
+            return Collections.emptySet();
+        }
+        return Collections.unmodifiableSet(medicalHistory);
+    }
+
+    /**
+     * Returns true if medical history is empty and false otherwise.
+     */
+    public boolean checkIfMedicalHistoryIsEmpty() {
+        return getMedicalHistory().isEmpty();
     }
 
     /**
@@ -121,13 +150,15 @@ public class Person {
                 && bloodType.equals(otherPerson.bloodType)
                 && appointment.equals(otherPerson.appointment)
                 && nextOfKin.equals(otherPerson.nextOfKin)
-                && tags.equals(otherPerson.tags);
+                && tags.equals(otherPerson.tags)
+                && medicalHistory.equals(otherPerson.medicalHistory);
+
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, nextOfKin);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory);
     }
 
     @Override
@@ -141,6 +172,7 @@ public class Person {
                 .add("appointment", appointment)
                 .add("nextOfKin", nextOfKin)
                 .add("tags", tags)
+                .add("medicalHistory", medicalHistory)
                 .toString();
     }
 

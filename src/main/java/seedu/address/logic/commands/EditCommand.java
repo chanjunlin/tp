@@ -5,7 +5,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
@@ -27,6 +29,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
@@ -51,7 +54,9 @@ public class EditCommand extends Command {
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_BLOODTYPE + "BLOODTYPE] "
             + "[" + PREFIX_APPOINTMENT + "APPOINTMENT] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_NOK + "NEXTOFKIN] "
+            + "[" + PREFIX_TAG + "TAG]... "
+            + "[" + PREFIX_MEDICAL_HISTORY + "MEDICAL_HISTORY]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -127,9 +132,11 @@ public class EditCommand extends Command {
         Appointment updatedAppointment = editPersonDescriptor.getAppointment().orElse(personToEdit.getAppointment());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         NextOfKin nextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
+        Set<MedicalHistory> updatedMedicalHistory = editPersonDescriptor.getMedicalHistory()
+                                                                        .orElse(personToEdit.getMedicalHistory());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBloodType, updatedAppointment,
-                updatedTags, nextOfKin);
+                updatedTags, nextOfKin, updatedMedicalHistory);
     }
 
     @Override
@@ -169,6 +176,7 @@ public class EditCommand extends Command {
         private Appointment appointment;
         private Set<Tag> tags;
         private NextOfKin nextOfKin;
+        private Set<MedicalHistory> medicalHistory;
 
         public EditPersonDescriptor() {}
 
@@ -185,13 +193,15 @@ public class EditCommand extends Command {
             setBloodType(toCopy.bloodType);
             setAppointment(toCopy.appointment);
             setNextOfKin(toCopy.nextOfKin);
+            setMedicalHistory(toCopy.medicalHistory);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, bloodType, appointment, tags, nextOfKin);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address
+                    , bloodType, appointment, tags, nextOfKin, medicalHistory);
         }
 
         public void setName(Name name) {
@@ -272,6 +282,15 @@ public class EditCommand extends Command {
         }
 
 
+        public void setMedicalHistory(Set<MedicalHistory> medicalHistory) {
+            this.medicalHistory = (medicalHistory != null) ? new HashSet<>(medicalHistory) : null;
+        }
+
+        public Optional<Set<MedicalHistory>> getMedicalHistory() {
+            return (medicalHistory != null) ? Optional.of(Collections.unmodifiableSet(medicalHistory))
+                                            : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -291,7 +310,8 @@ public class EditCommand extends Command {
                     && Objects.equals(bloodType, otherEditPersonDescriptor.bloodType)
                     && Objects.equals(appointment, otherEditPersonDescriptor.appointment)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(nextOfKin, otherEditPersonDescriptor.nextOfKin);
+                    && Objects.equals(nextOfKin, otherEditPersonDescriptor.nextOfKin)
+                    && Objects.equals(medicalHistory, otherEditPersonDescriptor.medicalHistory);
         }
 
         @Override
@@ -305,6 +325,7 @@ public class EditCommand extends Command {
                     .add("appointment", appointment)
                     .add("nextOfKin", nextOfKin)
                     .add("tags", tags)
+                    .add("medicalHistory", medicalHistory)
                     .toString();
         }
     }

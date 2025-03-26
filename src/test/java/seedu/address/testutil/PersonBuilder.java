@@ -7,6 +7,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
@@ -36,6 +37,7 @@ public class PersonBuilder {
     private Appointment appointment;
     private Set<Tag> tags;
     private NextOfKin nextOfKin;
+    private Set<MedicalHistory> medicalHistory;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -49,6 +51,7 @@ public class PersonBuilder {
         appointment = new Appointment(DEFAULT_APPOINTMENT);
         nextOfKin = new NextOfKin(DEFAULT_NEXTOFKIN);
         tags = new HashSet<>();
+        medicalHistory = new HashSet<>();
     }
 
     /**
@@ -63,6 +66,7 @@ public class PersonBuilder {
         appointment = personToCopy.getAppointment();
         nextOfKin = personToCopy.getNextOfKin();
         tags = new HashSet<>(personToCopy.getTags());
+        medicalHistory = new HashSet<>(personToCopy.getMedicalHistory());
     }
 
     /**
@@ -131,8 +135,16 @@ public class PersonBuilder {
     }
 
 
+    /**
+     * Sets the {@code MedicalHistory} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMedicalHistory(String ... medicalHistories) {
+        this.medicalHistory = SampleDataUtil.getMedicalHistorySet(medicalHistories);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, bloodType, appointment, tags, nextOfKin);
+        return new Person(name, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory);
     }
 
 }
