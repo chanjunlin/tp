@@ -66,7 +66,8 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getEmail().orElse(null) + ", address="
                 + editPersonDescriptor.getAddress().orElse(null) + ", bloodType="
                 + editPersonDescriptor.getBloodType().orElse(null) + ", appointment="
-                + editPersonDescriptor.getAppointment().orElse(null) + ", tags="
+                + editPersonDescriptor.getAppointment().orElse(null) + ", nextOfKin="
+                + editPersonDescriptor.getNextOfKin().orElse(null) + ", tags="
                 + editPersonDescriptor.getTags().orElse(null) + ", medicalHistory="
                 + editPersonDescriptor.getMedicalHistory().orElse(null) + "}";
         assertEquals(expected, editPersonDescriptor.toString());
