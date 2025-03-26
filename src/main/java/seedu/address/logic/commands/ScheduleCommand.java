@@ -31,6 +31,7 @@ public class ScheduleCommand extends Command {
 
     public static final String MESSAGE_CHECKUP_CREATED = "Appointment for Patient %s has been "
             + "successfully created on %s at %s";
+
     private final Index patientIndex;
     private final LocalDate checkupDate;
     private final LocalTime checkupTime;
