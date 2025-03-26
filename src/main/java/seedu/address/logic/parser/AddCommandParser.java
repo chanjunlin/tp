@@ -41,7 +41,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_NOK, PREFIX_TAG, PREFIX_MEDICAL_HISTORY);
+                        PREFIX_ADDRESS, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_NOK, PREFIX_TAG,
+                        PREFIX_MEDICAL_HISTORY);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT)
@@ -63,7 +64,8 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<MedicalHistory> medicalHistoryList =
                 ParserUtil.parseMedicalHistories(argMultimap.getAllValues(PREFIX_MEDICAL_HISTORY));
 
-        Person person = new Person(name, phone, email, address, bloodType, appointment, tagList, nextOfKin, medicalHistoryList);
+        Person person = new Person(name, phone, email, address, bloodType, appointment, tagList,
+                nextOfKin, medicalHistoryList);
 
         return new AddCommand(person);
     }

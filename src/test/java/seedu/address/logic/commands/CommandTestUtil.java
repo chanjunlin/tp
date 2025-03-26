@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -45,6 +46,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_NOK_AMY = "Mary 81328493";
     public static final String VALID_NOK_BOB = "Bobby 83401042";
+    public static final String VALID_MEDICAL_HISTORY_AMY = "Diabetes";
+    public static final String VALID_MEDICAL_HISTORY_BOB = "Diabetes";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -62,6 +65,8 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
     public static final String NOK_DESC_AMY = " " + PREFIX_NOK + VALID_NOK_AMY;
     public static final String NOK_DESC_BOB = " " + PREFIX_NOK + VALID_NOK_BOB;
+    public static final String MEDICAL_HISTORY_AMY = " " + PREFIX_MEDICAL_HISTORY + VALID_MEDICAL_HISTORY_AMY;
+    public static final String MEDICAL_HISTORY_BOB = " " + PREFIX_MEDICAL_HISTORY + VALID_MEDICAL_HISTORY_BOB;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -82,11 +87,13 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBloodType(VALID_BLOOD_TYPE_AMY).withAppointment(VALID_APPOINTMENT_AMY)
-                .withTags(VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_AMY).build();
+                .withTags(VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_AMY)
+                .withMedicalHistory(VALID_MEDICAL_HISTORY_AMY).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBloodType(VALID_BLOOD_TYPE_BOB).withAppointment(VALID_APPOINTMENT_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
+                .withMedicalHistory(VALID_MEDICAL_HISTORY_BOB).build();
     }
 
     /**

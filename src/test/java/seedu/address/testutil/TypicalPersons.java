@@ -36,7 +36,8 @@ public class TypicalPersons {
             .withBloodType("AB+")
             .withAppointment("Patient")
             .withNextOfKin("John 92231333")
-            .withTags("NurseBensonMeier").build();
+            .withTags("NurseBensonMeier")
+            .withMedicalHistory("Diabetes").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
@@ -45,42 +46,48 @@ public class TypicalPersons {
             .withAppointment("Nurse")
             .withNextOfKin("John 92231333")
             .withTags("owesMoney", "friends")
-            .withNextOfKin("Jane 82342322").build();
+            .withNextOfKin("Jane 82342322")
+            .withMedicalHistory("Diabetes").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
             .withEmail("heinz@example.com")
             .withAddress("wall street")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("87652533")
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("9482224")
             .withEmail("werner@example.com")
             .withBloodType("AB+")
             .withAppointment("Patient")
             .withAddress("michegan ave")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("9482427")
             .withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("9482442")
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withBloodType("AB+")
             .withAppointment("Nurse")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
@@ -89,14 +96,16 @@ public class TypicalPersons {
             .withAddress("little india")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
             .withPhone("8482131")
             .withEmail("hans@example.com")
             .withAddress("chicago ave")
             .withBloodType("AB+")
             .withAppointment("Nurse")
-            .withNextOfKin("John 92231333").build();
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)

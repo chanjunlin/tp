@@ -34,6 +34,9 @@ public class NextOfKin {
      */
     public static boolean isValidNextOfKin(String input) {
         requireNonNull(input);
+        if (input.equals("Next of Kin not provided")) {
+            return true;
+        }
         String[] parts = input.trim().split(" ", 2);
         if (parts.length < 2) {
             return false;

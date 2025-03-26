@@ -4,7 +4,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -38,8 +40,12 @@ public class PersonUtil {
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_BLOODTYPE + person.getBloodType().bloodType + " ");
         sb.append(PREFIX_APPOINTMENT + person.getAppointment().appointment + " ");
+        sb.append(PREFIX_NOK + person.getNextOfKin().value + " ");
         person.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
+        );
+        person.getMedicalHistory().stream().forEach(
+                s -> sb.append(PREFIX_MEDICAL_HISTORY + s.medicalHistory + " ")
         );
         return sb.toString();
     }
