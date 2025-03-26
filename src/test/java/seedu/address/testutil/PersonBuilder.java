@@ -9,6 +9,7 @@ import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -25,6 +26,8 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BLOOD_TYPE = "AB+";
     public static final String DEFAULT_APPOINTMENT = "Patient";
+    public static final String DEFAULT_NEXTOFKIN = "Jane 91231233";
+    public static final String DEFAULT_MEDICALHISTORY = "Diabetes";
 
     private Name name;
     private Phone phone;
@@ -34,6 +37,7 @@ public class PersonBuilder {
     private BloodType bloodType;
     private Appointment appointment;
     private Set<Tag> tags;
+    private NextOfKin nextOfKin;
     private Set<MedicalHistory> medicalHistory;
 
     /**
@@ -46,8 +50,10 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         bloodType = new BloodType(DEFAULT_BLOOD_TYPE);
         appointment = new Appointment(DEFAULT_APPOINTMENT);
+        nextOfKin = new NextOfKin(DEFAULT_NEXTOFKIN);
         tags = new HashSet<>();
         medicalHistory = new HashSet<>();
+        medicalHistory.add(new MedicalHistory(DEFAULT_MEDICALHISTORY));
     }
 
     /**
@@ -60,6 +66,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         bloodType = personToCopy.getBloodType();
         appointment = personToCopy.getAppointment();
+        nextOfKin = personToCopy.getNextOfKin();
         tags = new HashSet<>(personToCopy.getTags());
         medicalHistory = new HashSet<>(personToCopy.getMedicalHistory());
     }
@@ -121,6 +128,16 @@ public class PersonBuilder {
     }
 
     /**
+     * Sets the {@code NextOfKin} of the {@code Person} that we are building.
+     * The input should be in the format "Name Phone", e.g., "Jane Doe 91234567".
+     */
+    public PersonBuilder withNextOfKin(String nok) {
+        this.nextOfKin = new NextOfKin(nok);
+        return this;
+    }
+
+
+    /**
      * Sets the {@code MedicalHistory} of the {@code Person} that we are building.
      */
     public PersonBuilder withMedicalHistory(String ... medicalHistories) {
@@ -129,7 +146,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
+        return new Person(name, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory);
     }
 
 }

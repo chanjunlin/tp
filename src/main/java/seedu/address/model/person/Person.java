@@ -28,13 +28,15 @@ public class Person {
     private final BloodType bloodType;
     private final Set<Tag> tags = new HashSet<>();
     private final Set<Checkup> checkups = new HashSet<>();
+    private final NextOfKin nextOfKin;
     private final Set<MedicalHistory> medicalHistory = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
-                  Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory, Set<Checkup> checkups) {
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin,
+                  Set<MedicalHistory> medicalHistory, Set<Checkup> checkups) {
         requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
         this.name = name;
         this.phone = phone;
@@ -43,6 +45,7 @@ public class Person {
         this.bloodType = bloodType;
         this.appointment = appointment;
         this.tags.addAll(tags);
+        this.nextOfKin = nextOfKin;
         this.medicalHistory.addAll(medicalHistory);
         this.checkups.addAll(checkups);
     }
@@ -59,7 +62,7 @@ public class Person {
      * @param medicalHistory test
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
-                  Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory) {
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin, Set<MedicalHistory> medicalHistory) {
         requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
         this.name = name;
         this.phone = phone;
@@ -67,6 +70,7 @@ public class Person {
         this.address = address;
         this.bloodType = bloodType;
         this.appointment = appointment;
+        this.nextOfKin = nextOfKin;
         this.tags.addAll(tags);
         this.medicalHistory.addAll(medicalHistory);
         this.checkups.addAll(new HashSet<>());
@@ -114,6 +118,14 @@ public class Person {
     public boolean hasCheckup() {
         return !checkups.isEmpty();
     }
+    /**
+     * Returns the next of kin of the person, if available.
+     * May be {@code null} if not specified.
+     */
+    public NextOfKin getNextOfKin() {
+        return nextOfKin;
+    }
+
     /**
      * Returns true if tags is empty and false otherwise.
      */
@@ -188,6 +200,7 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && bloodType.equals(otherPerson.bloodType)
                 && appointment.equals(otherPerson.appointment)
+                && nextOfKin.equals(otherPerson.nextOfKin)
                 && tags.equals(otherPerson.tags)
                 && medicalHistory.equals(otherPerson.medicalHistory)
                 && checkups.equals(otherPerson.checkups);
@@ -196,7 +209,8 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, medicalHistory, checkups);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory,
+                checkups);
     }
 
     @Override
@@ -208,6 +222,7 @@ public class Person {
                 .add("address", address)
                 .add("bloodType", bloodType)
                 .add("appointment", appointment)
+                .add("nextOfKin", nextOfKin)
                 .add("tags", tags)
                 .add("medicalHistory", medicalHistory)
                 .add("checkups", checkups)

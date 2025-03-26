@@ -9,7 +9,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -100,6 +102,28 @@ public class EditPersonDescriptorBuilder {
         descriptor.setTags(tagSet);
         return this;
     }
+
+    /**
+     * Parses the {@code medicalHistory} into a {@code Set<MedicalHistory>}
+     * and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withMedicalHistory(String... medicalHistory) {
+        Set<MedicalHistory> mHset = Stream.of(medicalHistory).map(MedicalHistory::new).collect(Collectors.toSet());
+        descriptor.setMedicalHistory(mHset);
+        return this;
+    }
+
+    /**
+     * Parses the {@code nextOfKin} string and sets it to the {@code EditPersonDescriptor}
+     * that we are building.
+     * The input should be in the format "Name Phone", e.g., "Jane Doe 91234567".
+     */
+    public EditPersonDescriptorBuilder withNextOfKin(String nextOfKin) {
+        descriptor.setNextOfKin(new NextOfKin(nextOfKin));
+        return this;
+    }
+
 
     public EditPersonDescriptor build() {
         return descriptor;
