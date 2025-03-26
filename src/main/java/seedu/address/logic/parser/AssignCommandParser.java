@@ -13,7 +13,7 @@ public class AssignCommandParser implements Parser<AssignCommand> {
      * Parses the given {@code String} of arguments in the context of the AssignCommand
      * and returns an AssignCommand object for execution.
      * @param args
-     * @return test
+     * @return AssignCommand object
      * @throws ParseException if the user input does not conform the expected format
      */
     public AssignCommand parse(String args) throws ParseException {
