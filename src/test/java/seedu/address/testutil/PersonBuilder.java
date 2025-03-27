@@ -56,7 +56,6 @@ public class PersonBuilder {
         tags = new HashSet<>();
         checkups = new HashSet<>();
         medicalHistory = new HashSet<>();
-        medicalHistory.add(new MedicalHistory(DEFAULT_MEDICALHISTORY));
     }
 
     /**

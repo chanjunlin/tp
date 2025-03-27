@@ -44,7 +44,7 @@ public class TypicalPersons {
             .withEmail("johnd@example.com")
             .withPhone("98765432")
             .withBloodType("AB+")
-            .withAppointment("Nurse")
+            .withAppointment("Patient")
             .withNextOfKin("John 92231333")
             .withTags("owesMoney", "friends")
             .withNextOfKin("Jane 82342322").build();
@@ -114,7 +114,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBloodType(VALID_BLOOD_TYPE_BOB)
             .withAppointment(VALID_APPOINTMENT_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_BOB)
-            .withMedicalHistory("").build();
+            .withMedicalHistory("Cancer").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
