@@ -29,7 +29,7 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Schedules an appointment for a patient with a nurse.\n"
             + "Parameters: ACTION PATIENT_INDEX DATE TIME\n"
-            + "Example: " + COMMAND_WORD + "add 1 01/01/2025 1400";
+            + "Example: " + COMMAND_WORD + " add 1 01/01/2025 1400";
 
     public static final String MESSAGE_CHECKUP_CREATED = "Appointment for Patient %s has been "
             + "successfully created on %s at %s";

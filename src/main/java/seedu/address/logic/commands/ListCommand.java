@@ -16,7 +16,8 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS_ALL = "Listed all persons (Nurses and Patients)";
     public static final String MESSAGE_SUCCESS_FILTERED = "Listed all persons with appointment: %s";
-    public static final String MESSAGE_SUCCESS_CHECKUP = "Listed all persons with checkups";
+    public static final String MESSAGE_SUCCESS_CHECKUP = "Listed all persons with checkups."
+                                                         + " List are sorted by earliest checkup date.";
 
     private static Appointment currentAppointmentFilter = null;
 

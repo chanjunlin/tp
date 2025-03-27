@@ -25,6 +25,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
@@ -148,9 +149,10 @@ public class EditCommand extends Command {
         NextOfKin nextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         Set<MedicalHistory> updatedMedicalHistory = editPersonDescriptor.getMedicalHistory()
                                                                         .orElse(personToEdit.getMedicalHistory());
+        Set<Checkup> currentCheckups = editPersonDescriptor.getCheckups().orElse(personToEdit.getCheckups());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBloodType, updatedAppointment,
-                updatedTags, nextOfKin, updatedMedicalHistory);
+                updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
     }
 
     @Override
@@ -191,6 +193,7 @@ public class EditCommand extends Command {
         private Set<Tag> tags;
         private NextOfKin nextOfKin;
         private Set<MedicalHistory> medicalHistory;
+        private Set<Checkup> checkups;
 
         public EditPersonDescriptor() {}
 
@@ -208,6 +211,7 @@ public class EditCommand extends Command {
             setAppointment(toCopy.appointment);
             setNextOfKin(toCopy.nextOfKin);
             setMedicalHistory(toCopy.medicalHistory);
+            setCheckups(toCopy.checkups);
         }
 
         /**
@@ -305,6 +309,15 @@ public class EditCommand extends Command {
                                             : Optional.empty();
         }
 
+        public void setCheckups(Set<Checkup> checkups) {
+            this.checkups = (checkups != null) ? new HashSet<>(checkups) : null;
+        }
+
+        public Optional<Set<Checkup>> getCheckups() {
+            return (checkups != null) ? Optional.of(Collections.unmodifiableSet(checkups))
+                                      : Optional.empty();
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -340,6 +353,7 @@ public class EditCommand extends Command {
                     .add("nextOfKin", nextOfKin)
                     .add("tags", tags)
                     .add("medicalHistory", medicalHistory)
+                    .add("checkups", checkups)
                     .toString();
         }
     }
