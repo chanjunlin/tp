@@ -5,10 +5,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -18,7 +21,9 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -28,6 +33,8 @@ import seedu.address.model.tag.Tag;
  */
 public class AddCommandParser implements Parser<AddCommand> {
 
+    public static final String MESSAGE_INVALID_MEDICAL_HISTORY_ADD = "Medical history should not be added to a nurse";
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
      * and returns an AddCommand object for execution.
@@ -36,7 +43,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                        PREFIX_ADDRESS, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_TAG);
+                        PREFIX_ADDRESS, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_NOK, PREFIX_TAG,
+                        PREFIX_MEDICAL_HISTORY);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
                 PREFIX_EMAIL, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT)
@@ -52,11 +60,29 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get());
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());
+        Optional<String> nokInput = argMultimap.getValue(PREFIX_NOK);
+        NextOfKin nextOfKin = new NextOfKin(nokInput.orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, bloodType, appointment, tagList);
+        ensureNurseDoesNotHaveMedicalHistory(appointment, argMultimap, PREFIX_MEDICAL_HISTORY);
+
+        Set<MedicalHistory> medicalHistoryList =
+                ParserUtil.parseMedicalHistories(argMultimap.getAllValues(PREFIX_MEDICAL_HISTORY));
+
+        Person person = new Person(name, phone, email, address, bloodType, appointment, tagList,
+                nextOfKin, medicalHistoryList);
 
         return new AddCommand(person);
+    }
+
+    private void ensureNurseDoesNotHaveMedicalHistory(Appointment appointment,
+                                                      ArgumentMultimap argMultimap,
+                                                      Prefix prefix) throws ParseException {
+        boolean isNurse = appointment.isNurse();
+        boolean hasMedicalHistory = !argMultimap.getValue(prefix).isEmpty();
+        if (isNurse && hasMedicalHistory) {
+            throw new ParseException(MESSAGE_INVALID_MEDICAL_HISTORY_ADD);
+        }
     }
 
     /**

@@ -43,6 +43,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label appointment;
     @FXML
+    private Label nextOfKin;
+    @FXML
     private FlowPane tags;
     @FXML
     private FlowPane checkups;
@@ -60,6 +62,7 @@ public class PersonCard extends UiPart<Region> {
         email.setText(person.getEmail().value);
         bloodType.setText(person.getBloodType().bloodType);
         appointment.setText(person.getAppointment().appointment);
+        nextOfKin.setText(person.getNextOfKin().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
