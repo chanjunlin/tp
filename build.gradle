@@ -78,7 +78,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'addressbookTeam2.jar'
+    archiveFileName = 'MediBook.jar'
 }
 
 defaultTasks 'clean', 'test'
