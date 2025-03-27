@@ -27,7 +27,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_BLOOD_TYPE = "AB+";
     public static final String DEFAULT_APPOINTMENT = "Patient";
-    public static final String DEFAULT_NEXTOFKIN = "Jane 91231233";
+    public static final String DEFAULT_NEXTOFKIN = "";
     //public static final String DEFAULT_MEDICALHISTORY = "Diabetes";
 
     private Name name;

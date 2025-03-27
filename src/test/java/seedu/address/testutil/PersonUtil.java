@@ -14,6 +14,7 @@ import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -63,12 +64,23 @@ public class PersonUtil {
                 .append(bloodType.bloodType).append(" "));
         descriptor.getAppointment().ifPresent(appointment -> sb.append(PREFIX_APPOINTMENT)
                 .append(appointment.appointment).append(" "));
+        descriptor.getNextOfKin().ifPresent(nextOfKin -> sb.append(PREFIX_NOK)
+                .append(nextOfKin.value).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();
             if (tags.isEmpty()) {
                 sb.append(PREFIX_TAG);
             } else {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
+            }
+        }
+        if (descriptor.getMedicalHistory().isPresent()) {
+            Set<MedicalHistory> medicalHistorySet = descriptor.getMedicalHistory().get();
+            if (medicalHistorySet.isEmpty()) {
+                sb.append(PREFIX_MEDICAL_HISTORY);
+            } else {
+                medicalHistorySet.forEach(history -> sb.append(PREFIX_MEDICAL_HISTORY)
+                        .append(history.medicalHistory).append(" "));
             }
         }
         return sb.toString();
