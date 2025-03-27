@@ -47,10 +47,20 @@ public class Messages {
                 .append(person.getBloodType())
                 .append("; Appointment: ")
                 .append(person.getAppointment());
-
+        //nokBuilder()
         tagBuilder(builder, person);
         medicalHistoryBuilder(builder, person);
         return builder.toString();
+    }
+
+    private static StringBuilder nokBuilder(StringBuilder builder, Person person) {
+        builder.append("; Next of Kin: ");
+        if (person.getNextOfKin() == null) {
+            builder.append("No next of kin");
+        } else {
+            builder.append(person.getNextOfKin());
+        }
+        return builder;
     }
 
     private static StringBuilder tagBuilder(StringBuilder builder, Person person) {

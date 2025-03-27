@@ -23,18 +23,24 @@ import seedu.address.model.person.Person;
  */
 public class ScheduleCommand extends Command {
     public static final String COMMAND_WORD = "schedule";
+    public static final String ADD_SCHEDULE_COMMAND = "add";
+    public static final String DELETE_SCHEDULE_COMMAND = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Schedules an appointment for a patient with a nurse.\n"
-            + "Parameters: PATIENT_INDEX DATE TIME\n"
-            + "Example: " + COMMAND_WORD + " 1 01/01/2025 1400";
+            + "Parameters: ACTION PATIENT_INDEX DATE TIME\n"
+            + "Example: " + COMMAND_WORD + " add 1 01/01/2025 1400";
 
     public static final String MESSAGE_CHECKUP_CREATED = "Appointment for Patient %s has been "
             + "successfully created on %s at %s";
 
+    public static final String MESSAGE_CHECKUP_DELETED = "Appointment for Patient %s has been "
+            + "successfully deleted from %s at %s";
+    public static final String MESSAGE_CHECKUP_DOES_NOT_EXIST = "Appointment does not exist";
     private final Index patientIndex;
     private final LocalDate checkupDate;
     private final LocalTime checkupTime;
+    private final boolean isAdding;
 
 
     /**
@@ -44,8 +50,9 @@ public class ScheduleCommand extends Command {
      * @param checkupDate The date of the scheduled checkup.
      * @param checkupTime The time of the scheduled checkup.
      */
-    public ScheduleCommand(Index patientIndex, LocalDate checkupDate,
+    public ScheduleCommand(boolean isAdding, Index patientIndex, LocalDate checkupDate,
                            LocalTime checkupTime) {
+        this.isAdding = isAdding;
         this.patientIndex = patientIndex;
         this.checkupDate = checkupDate;
         this.checkupTime = checkupTime;
@@ -62,9 +69,10 @@ public class ScheduleCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         Person patient = getPatientFromModel(model);
 
-        if (hasConflictingCheckup(patient)) {
+        if (hasConflictingCheckup(patient) && isAdding) {
             throw new CommandException("A checkup is already scheduled at this datetime.");
         }
+
         try {
             Checkup newCheckup = createCheckup();
             updatePatientWithCheckup(model, patient, newCheckup);
@@ -125,9 +133,15 @@ public class ScheduleCommand extends Command {
      * @param patient The patient to update with the new checkup.
      * @param newCheckup The newly created checkup instance.
      */
-    private void updatePatientWithCheckup(Model model, Person patient, Checkup newCheckup) {
+    private void updatePatientWithCheckup(Model model, Person patient, Checkup newCheckup) throws CommandException {
         Set<Checkup> patientCheckups = new HashSet<>(patient.getCheckups());
-        patientCheckups.add(newCheckup);
+        if (isAdding) {
+            patientCheckups.add(newCheckup);
+        } else {
+            hasTargetCheckup(patientCheckups, newCheckup);
+            patientCheckups.remove(newCheckup);
+        }
+
         Person updatedPatient = new Person(
                 patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(),
                 patient.getBloodType(), patient.getAppointment(), patient.getTags(), patient.getNextOfKin(),
@@ -135,6 +149,11 @@ public class ScheduleCommand extends Command {
         model.setPerson(patient, updatedPatient);
     }
 
+    private void hasTargetCheckup(Set<Checkup> patientCheckups, Checkup newCheckup) throws CommandException {
+        if (!patientCheckups.contains(newCheckup)) {
+            throw new CommandException(MESSAGE_CHECKUP_DOES_NOT_EXIST);
+        }
+    }
     /**
      * Generates a success message after the checkup is scheduled.
      *
@@ -148,7 +167,7 @@ public class ScheduleCommand extends Command {
         String dateStr = this.checkupDate.format(dateFormatter);
         String timeStr = this.checkupTime.format(timeFormatter);
 
-        return new CommandResult(String.format(MESSAGE_CHECKUP_CREATED,
+        return new CommandResult(String.format((isAdding) ? MESSAGE_CHECKUP_CREATED : MESSAGE_CHECKUP_DELETED,
                 patient.getName(), dateStr, timeStr));
     }
 }

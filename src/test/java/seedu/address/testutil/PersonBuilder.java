@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
@@ -37,6 +38,7 @@ public class PersonBuilder {
     private BloodType bloodType;
     private Appointment appointment;
     private Set<Tag> tags;
+    private Set<Checkup> checkups;
     private NextOfKin nextOfKin;
     private Set<MedicalHistory> medicalHistory;
 
@@ -52,6 +54,7 @@ public class PersonBuilder {
         appointment = new Appointment(DEFAULT_APPOINTMENT);
         nextOfKin = new NextOfKin(DEFAULT_NEXTOFKIN);
         tags = new HashSet<>();
+        checkups = new HashSet<>();
         medicalHistory = new HashSet<>();
         medicalHistory.add(new MedicalHistory(DEFAULT_MEDICALHISTORY));
     }
@@ -68,6 +71,7 @@ public class PersonBuilder {
         appointment = personToCopy.getAppointment();
         nextOfKin = personToCopy.getNextOfKin();
         tags = new HashSet<>(personToCopy.getTags());
+        checkups = new HashSet<>(personToCopy.getCheckups());
         medicalHistory = new HashSet<>(personToCopy.getMedicalHistory());
     }
 
@@ -84,6 +88,16 @@ public class PersonBuilder {
      */
     public PersonBuilder withTags(String ... tags) {
         this.tags = SampleDataUtil.getTagSet(tags);
+        return this;
+    }
+
+    /**
+     * test
+     * @param checkups test
+     * @return test
+     */
+    public PersonBuilder withCheckups(String ... checkups) {
+        this.checkups = SampleDataUtil.getCheckupSet(checkups);
         return this;
     }
 

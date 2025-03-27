@@ -43,6 +43,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setBloodType(person.getBloodType());
         descriptor.setAppointment(person.getAppointment());
         descriptor.setTags(person.getTags());
+        descriptor.setNextOfKin(person.getNextOfKin());
+        descriptor.setMedicalHistory(person.getMedicalHistory());
     }
 
     /**

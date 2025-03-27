@@ -1,12 +1,17 @@
 package seedu.address.model.util;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
@@ -61,6 +66,24 @@ public class SampleDataUtil {
     public static Set<Tag> getTagSet(String... strings) {
         return Arrays.stream(strings)
                 .map(Tag::new)
+                .collect(Collectors.toSet());
+    }
+
+    public static Set<Checkup> getCheckupSet(String ... dateTimeStrings) {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        return Arrays.stream(dateTimeStrings)
+                .map(dateTimeString -> {
+                    String[] parts = dateTimeString.split(" ");
+                    LocalDate date = LocalDate.parse(parts[0], dateFormatter);
+                    LocalTime time = LocalTime.parse(parts[1], timeFormatter);
+                    try {
+                        Checkup checkup = new Checkup(date, time);
+                        return checkup;
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .collect(Collectors.toSet());
     }
 

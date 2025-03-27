@@ -35,6 +35,7 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withBloodType("AB+")
             .withAppointment("Patient")
+            .withCheckups("12/12/2025 10:00")
             .withNextOfKin("John 92231333")
             .withTags("NurseBensonMeier")
             .withMedicalHistory("Diabetes").build();
@@ -46,8 +47,7 @@ public class TypicalPersons {
             .withAppointment("Nurse")
             .withNextOfKin("John 92231333")
             .withTags("owesMoney", "friends")
-            .withNextOfKin("Jane 82342322")
-            .withMedicalHistory("Diabetes").build();
+            .withNextOfKin("Jane 82342322").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
             .withEmail("heinz@example.com")
@@ -86,8 +86,7 @@ public class TypicalPersons {
             .withAddress("4th street")
             .withBloodType("AB+")
             .withAppointment("Nurse")
-            .withNextOfKin("John 92231333")
-            .withMedicalHistory("Diabetes").build();
+            .withNextOfKin("John 92231333").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
@@ -104,8 +103,7 @@ public class TypicalPersons {
             .withAddress("chicago ave")
             .withBloodType("AB+")
             .withAppointment("Nurse")
-            .withNextOfKin("John 92231333")
-            .withMedicalHistory("Diabetes").build();
+            .withNextOfKin("John 92231333").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
@@ -116,7 +114,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBloodType(VALID_BLOOD_TYPE_BOB)
             .withAppointment(VALID_APPOINTMENT_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_BOB)
-            .build();
+            .withMedicalHistory("").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
