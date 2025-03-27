@@ -20,24 +20,24 @@ public class ScheduleCommandParserTest {
     @Test
     public void parse_invalidDateFormat() {
         String invalidDateFormat = "Invalid date format. Use dd/MM/yyyy";
-        assertParseFailure(parser, "1 12-12-2025 1200", invalidDateFormat);
-        assertParseFailure(parser, "1 12-12/2025 1200", invalidDateFormat);
-        assertParseFailure(parser, "1 12/12/2025/01 1200", invalidDateFormat);
+        assertParseFailure(parser, "add 1 12-12-2025 1200", invalidDateFormat);
+        assertParseFailure(parser, "add 1 12-12/2025 1200", invalidDateFormat);
+        assertParseFailure(parser, "add 1 12/12/2025/01 1200", invalidDateFormat);
     }
 
     @Test
     public void parse_invalidDate() {
         String invalidDate = "Invalid day for the given month/year";
-        assertParseFailure(parser, "1 31/02/2025 1200", invalidDate);
-        assertParseFailure(parser, "1 31/04/2025 1200", invalidDate);
+        assertParseFailure(parser, "add 1 31/02/2025 1200", invalidDate);
+        assertParseFailure(parser, "add 1 31/04/2025 1200", invalidDate);
     }
 
     @Test
     public void parse_invalidTimeFormat() {
         String invalidTime = "Invalid time values. Use HHmm";
-        assertParseFailure(parser, "1 12/12/2025 3025", invalidTime);
-        assertParseFailure(parser, "1 12/12/2025 abcd", invalidTime);
-        assertParseFailure(parser, "1 12/12/2025 12:00", invalidTime);
+        assertParseFailure(parser, "add 1 12/12/2025 3025", invalidTime);
+        assertParseFailure(parser, "add 1 12/12/2025 abcd", invalidTime);
+        assertParseFailure(parser, "add 1 12/12/2025 12:00", invalidTime);
     }
 
     @Test

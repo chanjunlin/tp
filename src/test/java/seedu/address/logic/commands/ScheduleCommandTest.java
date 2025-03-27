@@ -34,6 +34,8 @@ public class ScheduleCommandTest {
     private LocalDate pastDate;
     private LocalTime checkupTime;
     private DateTimeFormatter dateFormatter;
+    private Boolean addCheckup;
+    private Boolean deleteCheckup;
 
     @BeforeEach
     public void setUp() {
@@ -48,7 +50,10 @@ public class ScheduleCommandTest {
         checkupTime = LocalTime.of(10, 0);
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        command = new ScheduleCommand(patientIndex, checkupDate, checkupTime);
+        addCheckup = true;
+        deleteCheckup = false;
+        ;
+        command = new ScheduleCommand(addCheckup, patientIndex, checkupDate, checkupTime);
     }
 
     @Test
@@ -85,7 +90,7 @@ public class ScheduleCommandTest {
 
     @Test
     public void validPatientIndex_pastDateTime() {
-        Command pastDateCommand = new ScheduleCommand(patientIndex, pastDate, checkupTime);
+        Command pastDateCommand = new ScheduleCommand(addCheckup, patientIndex, pastDate, checkupTime);
         CommandException exception = assertThrows(CommandException.class, () -> {
             pastDateCommand.execute(model);
         });
@@ -95,7 +100,7 @@ public class ScheduleCommandTest {
 
     @Test
     public void invalidPatientIndex() {
-        Command invalidPatientCommand = new ScheduleCommand(invalidPatientIndex, checkupDate, checkupTime);
+        Command invalidPatientCommand = new ScheduleCommand(addCheckup, invalidPatientIndex, checkupDate, checkupTime);
         CommandException exception = assertThrows(CommandException.class, () -> {
             invalidPatientCommand.execute(model);
         });
@@ -105,7 +110,7 @@ public class ScheduleCommandTest {
 
     @Test
     public void invalidIndex() {
-        Command invalidIndexCommand = new ScheduleCommand(invalidIndex, checkupDate, checkupTime);
+        Command invalidIndexCommand = new ScheduleCommand(addCheckup, invalidIndex, checkupDate, checkupTime);
         CommandException exception = assertThrows(CommandException.class, () -> {
             invalidIndexCommand.execute(model);
         });

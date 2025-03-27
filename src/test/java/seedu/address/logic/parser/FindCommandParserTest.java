@@ -28,12 +28,12 @@ public class FindCommandParserTest {
         // test when using "nurse"
         FindNurseCommand expectedFindNurseCommand =
                 new FindNurseCommand(Index.fromZeroBased(0));
-        assertParseSuccess(parser, "nurse 1", expectedFindNurseCommand);
+        assertParseSuccess(parser, "nurse of patient 1", expectedFindNurseCommand);
 
         // test when using "Nurse"
         expectedFindNurseCommand =
                 new FindNurseCommand(Index.fromZeroBased(0));
-        assertParseSuccess(parser, "Nurse 1", expectedFindNurseCommand);
+        assertParseSuccess(parser, "Nurse of patient 1", expectedFindNurseCommand);
     }
 
     @Test
@@ -41,12 +41,12 @@ public class FindCommandParserTest {
         // test when using "patient"
         FindPatientCommand expectedFindPatientCommand =
                 new FindPatientCommand(Index.fromZeroBased(0));
-        assertParseSuccess(parser, "patient 1", expectedFindPatientCommand);
+        assertParseSuccess(parser, "patient of nurse 1", expectedFindPatientCommand);
 
         // test when using "Patient"
         expectedFindPatientCommand =
                 new FindPatientCommand(Index.fromZeroBased(0));
-        assertParseSuccess(parser, "Patient 1", expectedFindPatientCommand);
+        assertParseSuccess(parser, "Patient of nurse 1", expectedFindPatientCommand);
     }
 
     @Test
@@ -62,25 +62,25 @@ public class FindCommandParserTest {
 
     @Test
     public void parse_nurseMissingIndex_returnsParseException() {
-        String nurseMissingIndexErrorMessage = "Usage: find nurse PATIENT_INDEX";
-        assertParseFailure(parser, "nurse ", nurseMissingIndexErrorMessage);
+        String nurseMissingIndexErrorMessage = "Usage: find nurse of patient PATIENT_INDEX";
+        assertParseFailure(parser, "nurse of patient", nurseMissingIndexErrorMessage);
     }
 
     @Test
     public void parse_patientMissingIndex_returnsParseException() {
-        String patientMissingIndexErrorMessage = "Usage: find patient NURSE_INDEX";
-        assertParseFailure(parser, "patient ", patientMissingIndexErrorMessage);
+        String patientMissingIndexErrorMessage = "Usage: find patient of nurse NURSE_INDEX";
+        assertParseFailure(parser, "patient of nurse", patientMissingIndexErrorMessage);
     }
 
     @Test
     public void parse_nurseWrongArgument_returnsNumberFormatException() {
         String errorMessage = "Index is not a non-zero unsigned integer.";
-        assertParseFailure(parser, "nurse two", errorMessage);
+        assertParseFailure(parser, "nurse of patient two", errorMessage);
     }
 
     @Test
     public void parse_patientWrongArgument_returnsNumberFormatException() {
         String errorMessage = "Index is not a non-zero unsigned integer.";
-        assertParseFailure(parser, "patient two", errorMessage);
+        assertParseFailure(parser, "patient of nurse two", errorMessage);
     }
 }

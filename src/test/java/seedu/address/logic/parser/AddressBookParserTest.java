@@ -86,8 +86,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_invalidList_throwsParseException() {
-        assertThrows(ParseException.class, "Invalid appointment type! Only 'Nurse' or 'Patient' are allowed.", () ->
-                parser.parseCommand("list xyz"));
+        assertThrows(ParseException.class, "Invalid appointment type! Only 'nurse', 'patient' or "
+                + "'checkup' are allowed.", () -> parser.parseCommand("list xyz"));
     }
 
     @Test
@@ -105,7 +105,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_schedule() throws Exception {
-        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " 1 12/12/2025 1200") instanceof ScheduleCommand);
+        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + "add 1 12/12/2025 1200")
+                instanceof ScheduleCommand);
     }
 
     @Test

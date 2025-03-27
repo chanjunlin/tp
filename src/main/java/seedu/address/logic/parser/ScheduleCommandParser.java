@@ -6,7 +6,6 @@ import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_USAGE;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
