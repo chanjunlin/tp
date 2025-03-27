@@ -28,7 +28,7 @@ public class PersonBuilder {
     public static final String DEFAULT_BLOOD_TYPE = "AB+";
     public static final String DEFAULT_APPOINTMENT = "Patient";
     public static final String DEFAULT_NEXTOFKIN = "Jane 91231233";
-    public static final String DEFAULT_MEDICALHISTORY = "Diabetes";
+    //public static final String DEFAULT_MEDICALHISTORY = "Diabetes";
 
     private Name name;
     private Phone phone;
@@ -56,7 +56,6 @@ public class PersonBuilder {
         tags = new HashSet<>();
         checkups = new HashSet<>();
         medicalHistory = new HashSet<>();
-        medicalHistory.add(new MedicalHistory(DEFAULT_MEDICALHISTORY));
     }
 
     /**
