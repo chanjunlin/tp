@@ -23,8 +23,8 @@ public class AssignCommandTest {
     @Test
     public void execute_assignNurseToPatient_successful() throws CommandException {
         Model model = new ModelManager();
-        Person patient = new PersonBuilder().withName("John Doe").withAppointment("Patient").build();
-        Person nurse = new PersonBuilder().withName("Alice Lee").withAppointment("Nurse").build();
+        Person patient = new PersonBuilder().withName("Alice Doe").withAppointment("Patient").build();
+        Person nurse = new PersonBuilder().withName("John Lee").withAppointment("Nurse").build();
 
         model.addPerson(patient);
         model.addPerson(nurse);
@@ -35,7 +35,7 @@ public class AssignCommandTest {
 
         Person updatedPatient = model.getFilteredPersonList().get(0);
         Set<seedu.address.model.tag.Tag> expectedTags = new HashSet<>(patient.getTags());
-        expectedTags.add(new Tag("NurseAliceLee"));
+        expectedTags.add(new Tag("NurseJOHNLEE"));
 
         assertEquals(expectedTags, updatedPatient.getTags());
         assertEquals(String.format(AssignCommand.MESSAGE_SUCCESS, nurse.getName(), patient.getName()),
@@ -85,7 +85,7 @@ public class AssignCommandTest {
         model.addPerson(nurse);
         model.addPerson(patient);
 
-        AssignCommand assignCommand = new AssignCommand(INDEX_SECOND_PERSON, INDEX_FIRST_PERSON);
+        AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
 
         CommandException exception = assertThrows(CommandException.class, () -> assignCommand.execute(model));
         assertEquals("This patient already has 2 assigned nurses!", exception.getMessage());
