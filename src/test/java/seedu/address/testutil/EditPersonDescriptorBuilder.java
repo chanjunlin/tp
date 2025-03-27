@@ -43,6 +43,8 @@ public class EditPersonDescriptorBuilder {
         descriptor.setBloodType(person.getBloodType());
         descriptor.setAppointment(person.getAppointment());
         descriptor.setTags(person.getTags());
+        descriptor.setNextOfKin(person.getNextOfKin());
+        descriptor.setMedicalHistory(person.getMedicalHistory());
     }
 
     /**
@@ -104,12 +106,13 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Parses the {@code medicalHistory} into a {@code Set<MedicalHistory>} and set it to the {@code EditPersonDescriptor}
+     * Parses the {@code medicalHistory} into a {@code Set<MedicalHistory>}
+     * and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
     public EditPersonDescriptorBuilder withMedicalHistory(String... medicalHistory) {
-        Set<MedicalHistory> MHSet = Stream.of(medicalHistory).map(MedicalHistory::new).collect(Collectors.toSet());
-        descriptor.setMedicalHistory(MHSet);
+        Set<MedicalHistory> mHset = Stream.of(medicalHistory).map(MedicalHistory::new).collect(Collectors.toSet());
+        descriptor.setMedicalHistory(mHset);
         return this;
     }
 

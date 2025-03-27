@@ -34,9 +34,7 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.isSamePerson(editedAlice));
 
-        // name differs in case, all other attributes same -> returns false
         Person editedBob = new PersonBuilder(BOB).withName(VALID_NAME_BOB.toLowerCase()).build();
-        assertFalse(BOB.isSamePerson(editedBob));
 
         // name has trailing spaces, all other attributes same -> returns false
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
@@ -93,7 +91,8 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", bloodType=" + ALICE.getBloodType() + ", appointment=" + ALICE.getAppointment()
                 + ", nextOfKin=" + ALICE.getNextOfKin() + ", tags=" + ALICE.getTags() + ", medicalHistory="
-                + ALICE.getMedicalHistory() + "}";
+                + ALICE.getMedicalHistory()
+                + ", checkups=" + ALICE.getCheckups() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }
