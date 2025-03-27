@@ -15,6 +15,7 @@ import seedu.address.model.person.BloodType;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -156,6 +157,19 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String nok} into a {@code NextOfKin}.
+     *
+     * @throws ParseException if the input format is invalid.
+     */
+    public static NextOfKin parseNextOfKin(String nok) throws ParseException {
+        requireNonNull(nok);
+        if (!NextOfKin.isValidNextOfKin(nok)) {
+            throw new ParseException(NextOfKin.MESSAGE_CONSTRAINTS);
+        }
+        return new NextOfKin(nok);
+    }
+
+    /**
      * Parses a {@code String medicalHistory} into a {@code MedicalHistory}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -181,4 +195,6 @@ public class ParserUtil {
         }
         return medicalHistorySet;
     }
+
+
 }

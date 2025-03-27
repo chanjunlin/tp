@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.checkup.Checkup;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,13 +27,16 @@ public class Person {
     private final Address address;
     private final BloodType bloodType;
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<Checkup> checkups = new HashSet<>();
+    private final NextOfKin nextOfKin;
     private final Set<MedicalHistory> medicalHistory = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
-                  Appointment appointment, Set<Tag> tags, Set<MedicalHistory> medicalHistory) {
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin,
+                  Set<MedicalHistory> medicalHistory, Set<Checkup> checkups) {
         requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
         this.name = name;
         this.phone = phone;
@@ -41,7 +45,35 @@ public class Person {
         this.bloodType = bloodType;
         this.appointment = appointment;
         this.tags.addAll(tags);
+        this.nextOfKin = nextOfKin;
         this.medicalHistory.addAll(medicalHistory);
+        this.checkups.addAll(checkups);
+    }
+
+    /**
+     * test
+     * @param name test
+     * @param phone test
+     * @param email test
+     * @param address test
+     * @param bloodType test
+     * @param appointment test
+     * @param tags test
+     * @param medicalHistory test
+     */
+    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin, Set<MedicalHistory> medicalHistory) {
+        requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory, nextOfKin);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.bloodType = bloodType;
+        this.appointment = appointment;
+        this.nextOfKin = nextOfKin;
+        this.tags.addAll(tags);
+        this.medicalHistory.addAll(medicalHistory);
+        this.checkups.addAll(new HashSet<>());
     }
 
     public Name getName() {
@@ -77,6 +109,21 @@ public class Person {
             return Collections.emptySet();
         }
         return Collections.unmodifiableSet(tags);
+    }
+
+    public Set<Checkup> getCheckups() {
+        return Collections.unmodifiableSet(checkups);
+    }
+
+    public boolean hasCheckup() {
+        return !checkups.isEmpty();
+    }
+    /**
+     * Returns the next of kin of the person, if available.
+     * May be {@code null} if not specified.
+     */
+    public NextOfKin getNextOfKin() {
+        return nextOfKin;
     }
 
     /**
@@ -153,15 +200,17 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && bloodType.equals(otherPerson.bloodType)
                 && appointment.equals(otherPerson.appointment)
+                && nextOfKin.equals(otherPerson.nextOfKin)
                 && tags.equals(otherPerson.tags)
-                && medicalHistory.equals(otherPerson.medicalHistory);
-
+                && medicalHistory.equals(otherPerson.medicalHistory)
+                && checkups.equals(otherPerson.checkups);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
+        return Objects.hash(name, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory,
+                checkups);
     }
 
     @Override
@@ -173,9 +222,10 @@ public class Person {
                 .add("address", address)
                 .add("bloodType", bloodType)
                 .add("appointment", appointment)
+                .add("nextOfKin", nextOfKin)
                 .add("tags", tags)
                 .add("medicalHistory", medicalHistory)
+                .add("checkups", checkups)
                 .toString();
     }
-
 }

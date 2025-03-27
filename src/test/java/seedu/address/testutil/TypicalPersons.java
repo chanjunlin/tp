@@ -10,6 +10,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NOK_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NOK_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
@@ -33,44 +35,58 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withTags("NurseBensonMeier").build();
+            .withCheckups("12/12/2025 10:00")
+            .withNextOfKin("John 92231333")
+            .withTags("NurseBensonMeier")
+            .withMedicalHistory("Diabetes").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withAddress("311, Clementi Ave 2, #02-25")
             .withEmail("johnd@example.com")
             .withPhone("98765432")
             .withBloodType("AB+")
             .withAppointment("Nurse")
-            .withTags("owesMoney", "friends").build();
+            .withNextOfKin("John 92231333")
+            .withTags("owesMoney", "friends")
+            .withNextOfKin("Jane 82342322").build();
     public static final Person CARL = new PersonBuilder().withName("Carl Kurz")
             .withPhone("95352563")
             .withEmail("heinz@example.com")
             .withAddress("wall street")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Patient")
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person DANIEL = new PersonBuilder().withName("Daniel Meier")
             .withPhone("87652533")
             .withEmail("cornelia@example.com")
             .withAddress("10th street")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Patient")
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer")
             .withPhone("9482224")
             .withEmail("werner@example.com")
             .withBloodType("AB+")
             .withAppointment("Patient")
-            .withAddress("michegan ave").build();
+            .withAddress("michegan ave")
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz")
             .withPhone("9482427")
             .withEmail("lydia@example.com")
             .withAddress("little tokyo")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Patient")
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best")
             .withPhone("9482442")
             .withEmail("anna@example.com")
             .withAddress("4th street")
             .withBloodType("AB+")
-            .withAppointment("Nurse").build();
+            .withAppointment("Nurse")
+            .withNextOfKin("John 92231333").build();
 
     // Manually added
     public static final Person HOON = new PersonBuilder().withName("Hoon Meier")
@@ -78,22 +94,27 @@ public class TypicalPersons {
             .withEmail("stefan@example.com")
             .withAddress("little india")
             .withBloodType("AB+")
-            .withAppointment("Patient").build();
+            .withAppointment("Patient")
+            .withNextOfKin("John 92231333")
+            .withMedicalHistory("Diabetes").build();
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller")
             .withPhone("8482131")
             .withEmail("hans@example.com")
             .withAddress("chicago ave")
             .withBloodType("AB+")
-            .withAppointment("Nurse").build();
+            .withAppointment("Nurse")
+            .withNextOfKin("John 92231333").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
     public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
             .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withBloodType(VALID_BLOOD_TYPE_AMY)
-            .withAppointment(VALID_APPOINTMENT_AMY).withTags(VALID_TAG_FRIEND).build();
+            .withAppointment(VALID_APPOINTMENT_AMY).withNextOfKin(VALID_NOK_AMY)
+            .withTags(VALID_TAG_FRIEND).build();
     public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBloodType(VALID_BLOOD_TYPE_BOB)
-            .withAppointment(VALID_APPOINTMENT_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+            .withAppointment(VALID_APPOINTMENT_BOB)
+            .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_BOB)
+            .withMedicalHistory("").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
