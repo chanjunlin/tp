@@ -253,7 +253,7 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: 
+**Value proposition**:
 1) Manage nurse and patients faster than a typical mouse/GUI driven app
 2) Allows faster creation and storage of details compared to traditional pen and paper methods
 3) Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
@@ -286,7 +286,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Forgetful Nurse               | schedule automatic reminders for task like checkups and medications times            | task are always done on time                                                                    |
 | `*`      | Nurse during a midnight shift | activate night mode interface with darker colours and larger text to enhance visuals | reduce eye strain while ensuring accuracy when recording patient data in dimly lit environments |
 | `*`      | Manager                       | log in using my staff credential                                                     | Securely access patient records                                                                 |
-																							
+
 *{More to be added}*
 
 ### Use cases
@@ -324,7 +324,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  AddressBook shows the list of nurses / patients
 3.  User requests to add a nurse / patient in the list
 4.  AddressBook adds the nurse / patient
-    
+
     Use case ends.
 
 **Extensions**
