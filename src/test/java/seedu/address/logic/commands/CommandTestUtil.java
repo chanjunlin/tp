@@ -47,7 +47,7 @@ public class CommandTestUtil {
     public static final String VALID_NOK_AMY = "Mary 81328493";
     public static final String VALID_NOK_BOB = "Bobby 83401042";
     public static final String VALID_MEDICAL_HISTORY_AMY = "Diabetes";
-    public static final String VALID_MEDICAL_HISTORY_BOB = "Diabetes";
+    public static final String VALID_MEDICAL_HISTORY_BOB = "";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

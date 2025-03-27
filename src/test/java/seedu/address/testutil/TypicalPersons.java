@@ -116,7 +116,7 @@ public class TypicalPersons {
             .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withBloodType(VALID_BLOOD_TYPE_BOB)
             .withAppointment(VALID_APPOINTMENT_BOB)
             .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_BOB)
-            .build();
+            .withMedicalHistory("").build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
