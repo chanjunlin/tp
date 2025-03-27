@@ -30,11 +30,11 @@ public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), new BloodType("AB+"), new Appointment("Patient"),
+                new Address("Blk 30 Geylang Street 29, #06-40"), new BloodType("AB+"), new Appointment("Nurse"),
                     getTagSet("friends"), new NextOfKin("Alexis 91023434"), new HashSet<>()),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new BloodType("AB+"),
-                    new Appointment("Patient"), getTagSet("colleagues", "friends"),
+                    new Appointment("Nurse"), getTagSet("colleagues", "friends"),
                     new NextOfKin("Alexis 91023434"), new HashSet<>()),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new BloodType("AB+"), new Appointment("Nurse"),
