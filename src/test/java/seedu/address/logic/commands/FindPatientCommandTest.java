@@ -33,7 +33,7 @@ public class FindPatientCommandTest {
 
         try {
             CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "Benson Meier", "Alice Pauline"),
+            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "BENSON MEIER", "ALICE PAULINE"),
                     result.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());
@@ -87,7 +87,7 @@ public class FindPatientCommandTest {
             Command listCommand = new ListCommand(null);
             listCommand.execute(model);
             CommandResult result1 = findCommand.execute(model);
-            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "Benson Meier", "Alice Pauline"),
+            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "BENSON MEIER", "ALICE PAULINE"),
                     result1.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());
@@ -103,7 +103,7 @@ public class FindPatientCommandTest {
             Command listNurseCommand = new ListCommand(new Appointment("nurse"));
             listNurseCommand.execute(model);
             CommandResult result2 = findCommand.execute(model);
-            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "Benson Meier", "Alice Pauline"),
+            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "BENSON MEIER", "ALICE PAULINE"),
                     result2.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());

@@ -31,7 +31,7 @@ public class FindNurseCommandTest {
         FindNurseCommand command = new FindNurseCommand(validPatientIndex);
         try {
             CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_NURSE_FOUND, "Alice Pauline", "BensonMeier"),
+            assertEquals(String.format(MESSAGE_NURSE_FOUND, "ALICE PAULINE", "BensonMeier"),
                     result.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());

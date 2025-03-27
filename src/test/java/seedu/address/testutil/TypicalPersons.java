@@ -35,6 +35,7 @@ public class TypicalPersons {
             .withPhone("94351253")
             .withBloodType("AB+")
             .withAppointment("Patient")
+            .withCheckups("12/12/2025 10:00")
             .withNextOfKin("John 92231333")
             .withTags("NurseBensonMeier")
             .withMedicalHistory("Diabetes").build();
