@@ -44,7 +44,7 @@ public class TypicalPersons {
             .withEmail("johnd@example.com")
             .withPhone("98765432")
             .withBloodType("AB+")
-            .withAppointment("Patient")
+            .withAppointment("Nurse")
             .withNextOfKin("John 92231333")
             .withTags("owesMoney", "friends")
             .withNextOfKin("Jane 82342322").build();
