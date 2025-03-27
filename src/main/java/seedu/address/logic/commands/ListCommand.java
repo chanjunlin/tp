@@ -40,8 +40,7 @@ public class ListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         if (filterByCheckup) {
-            model.updateFilteredPersonList(new PersonHasCheckupPredicate());
-            model.sortFilteredPersonListByEarliestCheckup();
+            model.updateFilteredPersonListByEarliestCheckup(new PersonHasCheckupPredicate());
             return new CommandResult(MESSAGE_SUCCESS_CHECKUP);
         }
 

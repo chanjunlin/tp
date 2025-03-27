@@ -16,6 +16,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Person;
+
 /**
  * Represents the in-memory model of the address book data.
  */
@@ -39,6 +40,7 @@ public class ModelManager implements Model {
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
         sortedPersons = new SortedList<>(filteredPersons);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     public ModelManager() {
@@ -129,23 +131,26 @@ public class ModelManager implements Model {
 
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
-        requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        updateFilteredPersonListHelper(predicate);
+
+        sortedPersons.setComparator(Comparator.comparing(person -> person.getName().toString()));
     }
 
     @Override
-    public ObservableList<Person> getSortedPersonList() {
-        return sortedPersons;
-    }
+    public void updateFilteredPersonListByEarliestCheckup(Predicate<Person> predicate) {
+        updateFilteredPersonListHelper(predicate);
 
-    @Override
-    public void sortFilteredPersonListByEarliestCheckup() {
         sortedPersons.setComparator(Comparator.comparing(
                 person -> person.getCheckups().stream()
                         .map(Checkup::getDateTime)
                         .min(LocalDateTime::compareTo)
                         .orElse(LocalDateTime.MAX)
         ));
+    }
+
+    private void updateFilteredPersonListHelper(Predicate<Person> predicate) {
+        requireNonNull(predicate);
+        filteredPersons.setPredicate(predicate);
     }
 
     @Override
