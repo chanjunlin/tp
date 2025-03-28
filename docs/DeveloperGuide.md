@@ -199,7 +199,7 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 ### Assign Feature
 
-The `add` command allows the user to add a new person to the address book.
+The `assign` command allows the user to assign a nurse to a patient.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
 2. `AddressBookParser` parses the command and returns an `AddCommand` object.
