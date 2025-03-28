@@ -63,7 +63,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withTags("validTag").build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
@@ -86,7 +86,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_invalidList_throwsParseException() {
-        assertThrows(ParseException.class, "Invalid appointment type! Only 'nurse', 'patient' or "
+        assertThrows(ParseException.class, "Invalid input type! Only 'nurse', 'patient' or "
                 + "'checkup' are allowed.", () -> parser.parseCommand("list xyz"));
     }
 
@@ -105,7 +105,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_schedule() throws Exception {
-        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + "add 1 12/12/2025 1200")
+        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " add 1 12/12/2025 1200")
                 instanceof ScheduleCommand);
     }
 

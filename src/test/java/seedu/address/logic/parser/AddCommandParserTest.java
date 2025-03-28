@@ -14,7 +14,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.MEDICAL_HISTORY_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.MEDICAL_HISTORY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
@@ -146,7 +145,7 @@ public class AddCommandParserTest {
         // zero tags
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                        + ADDRESS_DESC_AMY + BLOOD_TYPE_AMY + APPOINTMENT_AMY + NOK_DESC_AMY + MEDICAL_HISTORY_AMY,
+                        + ADDRESS_DESC_AMY + BLOOD_TYPE_AMY + APPOINTMENT_AMY + NOK_DESC_AMY,
                 new AddCommand(expectedPerson));
     }
 
