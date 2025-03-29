@@ -229,13 +229,13 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 ### Schedule Feature
 
-The `add` command allows the user to add a new person to the address book.
+The `schedule` command allows the user to create a checkup between a patient and a nurse.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `AddCommand` object.
-3. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
+2. `AddressBookParser` parses the command and returns an `ScheduleCommand` object.
+3. `ScheduleCommand#execute()` creates or deletes the checkup from the patient and returns a `CommandResult`.
 
-![Sequence Diagram](...)
+![Sequence Diagram](images/ScheduleSequenceDiagram.png)
 
 #### Design considerations:
 
@@ -402,7 +402,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type))
+* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type, next-of-kin))
 * **Appointment**: The role of the person
 * **Manager**: Manages the nurses
 * **Nurse**: Tends to the patients
@@ -456,6 +456,5 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+   1. _Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
+   2. Delete the file and restart the app to recover and start with a small list of sample contacts._
