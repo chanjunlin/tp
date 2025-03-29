@@ -110,9 +110,10 @@ class JsonAdaptedPerson {
 
         for (JsonAdaptedCheckup checkup : checkups) {
             personCheckups.add(checkup.toModelType());
-            for (JsonAdaptedMedicalHistory medicalHistory : medicalHistory) {
-                personMedicalHistory.add(medicalHistory.toModelType());
-            }
+        }
+
+        for (JsonAdaptedMedicalHistory medicalHistory : medicalHistory) {
+            personMedicalHistory.add(medicalHistory.toModelType());
         }
 
         if (name == null) {
