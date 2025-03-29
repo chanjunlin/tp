@@ -171,13 +171,14 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 ### Edit Feature
 
-The `add` command allows the user to add a new person to the address book.
+The `edit` command allows the user to edit an existing person in the address book.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `AddCommand` object.
-3. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
+2. `AddressBookParser` parses the command and returns an `EditCommandParser` object.
+3. `EditCommandParser#parse()` creates an `EditCommand` object.
+4. `EditCommand#execute()` edits the person in the model and returns a `CommandResult`.
 
-![Sequence Diagram](...)
+![Sequence Diagram](images/EditSequenceDiagram.png)
 
 #### Design considerations:
 
