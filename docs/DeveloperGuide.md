@@ -199,13 +199,13 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 ### Assign Feature
 
-The `add` command allows the user to add a new person to the address book.
+The `assign` command allows the user to assign a nurse to a patient.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `AddCommand` object.
-3. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
+2. `AddressBookParser` parses the command and returns an `AssignCommand` object.
+3. `AssignCommand#execute()` assigns the nurse to the patient and returns a `CommandResult`.
 
-![Sequence Diagram](...)
+![Sequence Diagram](images/AssignSequenceDiagram.png)
 
 #### Design considerations:
 
