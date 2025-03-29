@@ -185,13 +185,28 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 ### Find Feature
 
-The `add` command allows the user to add a new person to the address book.
+The `find` command enables users to search for specific entities in the address book, including:
+- Nurses assigned to the patients.
+- Patients associated with the nurses.
+- Users whose names contain the specified search terms.
 
-1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `AddCommand` object.
-3. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
+This functionality improves user experience by allowing quick access to relevant information.
 
-![Sequence Diagram](...)
+#### Execution Flow:
+1. `LogicManager` receives the command text from the user and passes it to `AddressBookParser`.
+2. Depending on the arguments, `AddressBookParser` will return one of the following:
+    - `FindNurseCommand`: for searching nurses assigned to a specific patient.
+    - `FindPatientCommand`: for searching patients assigned to a specific nurse.
+    - `FindCommand`: a general command for searching based on keywords in user names.
+3. `AddressBookParser` parses the command and returns the appropriate `FindCommand` object.
+4. `FindCommand#execute()` retrieves the relevant entries from the model and returns a `CommandResult`.
+5. For `FindNurseCommand`, it finds and returns all nurses assigned to the specified patient.
+6. For `FindPatientCommand`, it finds and returns all patients assigned to the specified nurse.
+7. For `FindCommand`, it allows the user to search by keywords. For example, executing `find tom harry` will return all users that contain either "tom" or "harry" in their names.
+
+Using this command, users can effortlessly navigate and manage their address book, finding relevant information quickly and efficiently.
+
+![Sequence Diagram](diagrams/FindScheduleSequenceDiagram.puml)
 
 #### Design considerations:
 
