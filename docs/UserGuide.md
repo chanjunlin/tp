@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-MediBook is a desktop app for managing patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI). Designed for speed and efficiency, MediBook empowers private nurse centres to assign staff, retrieve patient information, and manage appointments faster than traditional pen-and-paper or GUI-based systems. 
+MediBook is a desktop app for managing patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI). Designed for speed and efficiency, MediBook empowers private nurse centres to assign staff, retrieve patient information, and manage appointments faster than traditional pen-and-paper or GUI-based systems.
 
 # Table of Contents
 1. [Quick start](#quick-start)
@@ -50,12 +50,12 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 
    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Patient` : Adds a contact named `John Doe` to the Address Book.
 
-   * `edit 2 b/AB-` : Edits the blood type of the 2nd contact shown in the current list.  
+   * `edit 2 b/AB-` : Edits the blood type of the 2nd contact shown in the current list.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
-   
+
    * `assign 1 2`: Assigns the patient at index 1 to the nurse at index 2 shown in the current list.
-   
+
    * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
 
    * `schedule 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
@@ -233,7 +233,7 @@ Format: `assign PATIENT_INDEX NURSE_INDEX`
 
 ### Schedule checkups : `schedule`
 
-Schedules a checkup for the patient 
+Schedules a checkup for the patient
 
 Format: `schedule INDEX DATE TIME`
 

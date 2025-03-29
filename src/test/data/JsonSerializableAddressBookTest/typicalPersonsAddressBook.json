@@ -19,7 +19,7 @@
     "appointment": "Nurse",
     "nextOfKin": "Jane 82342322",
     "tags" : [ "owesMoney", "friends" ],
-    "medicalHistory" : [ "Diabetes" ]
+    "medicalHistory" : []
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
@@ -69,6 +69,6 @@
     "appointment": "Nurse",
     "nextOfKin": "John 92231333",
     "tags" : [ ],
-    "medicalHistory" : [ "Diabetes" ]
+    "medicalHistory" : [ ]
   } ]
 }

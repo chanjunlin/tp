@@ -8,8 +8,8 @@ title: MediBook
 
 ![Ui](images/Ui.png)
 
-**MediBook is a new desktop application, designed for Private Nurse Agencies.** 
-While it has a Graphical User Interface (GUI), 
+**MediBook is a new desktop application, designed for Private Nurse Agencies.**
+While it has a Graphical User Interface (GUI),
 most of the user interactions happen using a CLI (Command Line Interface).
 
 * If you are interested in using MediBook, head over to the [_Quick Start_ section of the **User Guide**](UserGuide.html#quick-start).
