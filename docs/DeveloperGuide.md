@@ -184,6 +184,31 @@ The `edit` command allows the user to edit an existing person in the address boo
 
 We chose to implement parsing with a `ParserUtil` helper class to simplify each command parser. An alternative would be using a central parser for all commands, but this was less modular.
 
+### List Feature
+
+The `list` command allows users to display a subset of people in the address book based on optional filters.
+
+It supports the following use cases:
+- `list` — Lists **all persons** in the address book (patients and nurses).
+- `list nurse` or `list patient` — Lists **only nurses** or **only patients**, respectively.
+- `list checkup` — Lists all persons with scheduled **checkups**, sorted by earliest checkup date.
+
+#### Execution Flow:
+1. `LogicManager` receives the command text (e.g., `"list checkup"`) and passes it to `AddressBookParser`.
+2. `AddressBookParser` uses a `ListCommandParser` to interpret the command.
+3. `ListCommandParser#parse()` constructs a `ListCommand` object, based on the input string.
+4. `ListCommand#execute()` evaluates the internal flags:
+    - If the command was `list checkup`, it calls `updateFilteredPersonListByEarliestCheckup(...)` with a `PersonHasCheckupPredicate`.
+    - If no filter was provided, it lists all persons using `Model.PREDICATE_SHOW_ALL_PERSONS`.
+    - If a specific appointment filter was provided (e.g., `"nurse"`), it filters with `PersonHasAppointmentPredicate`.
+5. A `CommandResult` is returned with a success message indicating what was listed.
+
+![Sequence Diagram](images/ListCommandSequenceDiagram.png)
+
+#### Design considerations:
+
+We chose to centralize filtering logic inside `ListCommand`, separating parsing (`ListCommandParser`) from behavior. This approach improves maintainability and makes it easy to extend filtering options (e.g., by tag or medical history) in the future.
+
 ### Find Feature
 
 The `find` command enables users to search for specific entities in the address book, including:
