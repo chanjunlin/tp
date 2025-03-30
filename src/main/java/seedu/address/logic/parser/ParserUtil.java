@@ -110,8 +110,7 @@ public class ParserUtil {
         String trimmedEmail = email.trim();
         if (trimmedEmail.isEmpty() || trimmedEmail.equals("nil")) {
             return new Email("");
-        }
-        else if (!Email.isValidEmail(trimmedEmail)) {
+        } else if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
         return new Email(trimmedEmail);

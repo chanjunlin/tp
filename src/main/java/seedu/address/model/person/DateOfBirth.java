@@ -40,9 +40,7 @@ public class DateOfBirth {
      */
     public static boolean isValidDate(String dateString) {
         try {
-            logger.info("Date of birth string = " + dateString);
-            LocalDate doob = LocalDate.parse(dateString, FORMATTER);
-            logger.info("dob = " + doob.format(FORMATTER));
+            LocalDate.parse(dateString, FORMATTER);
             return true;
         } catch (DateTimeParseException e) {
             logger.warning(e.getMessage());
