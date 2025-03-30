@@ -29,6 +29,7 @@ import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -140,6 +141,7 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
@@ -151,8 +153,8 @@ public class EditCommand extends Command {
                                                                         .orElse(personToEdit.getMedicalHistory());
         Set<Checkup> currentCheckups = editPersonDescriptor.getCheckups().orElse(personToEdit.getCheckups());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBloodType, updatedAppointment,
-                updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
+        return new Person(updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedAddress, updatedBloodType,
+                updatedAppointment, updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
     }
 
     @Override
@@ -185,6 +187,7 @@ public class EditCommand extends Command {
      */
     public static class EditPersonDescriptor {
         private Name name;
+        private DateOfBirth dob;
         private Phone phone;
         private Email email;
         private Address address;
@@ -203,6 +206,7 @@ public class EditCommand extends Command {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
+            setDateOfBirth(toCopy.dob);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
@@ -224,6 +228,14 @@ public class EditCommand extends Command {
 
         public void setName(Name name) {
             this.name = name;
+        }
+
+        public void setDateOfBirth(DateOfBirth dob) {
+            this.dob = dob;
+        }
+
+        public Optional<DateOfBirth> getDateOfBirth() {
+            return Optional.ofNullable(dob);
         }
 
         public Optional<Name> getName() {

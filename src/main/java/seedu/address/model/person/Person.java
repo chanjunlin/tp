@@ -19,6 +19,7 @@ public class Person {
 
     // Identity fields
     private final Name name;
+    private final DateOfBirth dob;
     private final Phone phone;
     private final Email email;
     private final Appointment appointment;
@@ -34,11 +35,12 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
+    public Person(Name name, DateOfBirth dob, Phone phone, Email email, Address address, BloodType bloodType,
                   Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin,
                   Set<MedicalHistory> medicalHistory, Set<Checkup> checkups) {
-        requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory);
+        requireAllNonNull(name, dob, phone, email, address, bloodType, appointment, tags, medicalHistory, checkups);
         this.name = name;
+        this.dob = dob;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -51,20 +53,13 @@ public class Person {
     }
 
     /**
-     * test
-     * @param name test
-     * @param phone test
-     * @param email test
-     * @param address test
-     * @param bloodType test
-     * @param appointment test
-     * @param tags test
-     * @param medicalHistory test
+     * Optional Checkup field, email present
      */
-    public Person(Name name, Phone phone, Email email, Address address, BloodType bloodType,
+    public Person(Name name, DateOfBirth dob, Phone phone, Email email, Address address, BloodType bloodType,
                   Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin, Set<MedicalHistory> medicalHistory) {
-        requireAllNonNull(name, phone, email, address, bloodType, appointment, tags, medicalHistory, nextOfKin);
+        requireAllNonNull(name, dob, phone, email, address, bloodType, appointment, tags, medicalHistory, nextOfKin);
         this.name = name;
+        this.dob = dob;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -76,8 +71,50 @@ public class Person {
         this.checkups.addAll(new HashSet<>());
     }
 
+    /**
+     * Optional email field, checkup present
+     */
+    public Person(Name name, DateOfBirth dob, Phone phone, Address address, BloodType bloodType,
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin, Set<MedicalHistory> medicalHistory,
+                  Set<Checkup> checkups) {
+        requireAllNonNull(name, dob, phone, address, bloodType, appointment, tags, medicalHistory, nextOfKin, checkups);
+        this.name = name;
+        this.dob = dob;
+        this.phone = phone;
+        this.email = new Email("");
+        this.address = address;
+        this.bloodType = bloodType;
+        this.appointment = appointment;
+        this.nextOfKin = nextOfKin;
+        this.tags.addAll(tags);
+        this.medicalHistory.addAll(medicalHistory);
+        this.checkups.addAll(checkups);
+    }
+
+    /**
+     * Optional email and checkup field
+     */
+    public Person(Name name, DateOfBirth dob, Phone phone, Address address, BloodType bloodType,
+                  Appointment appointment, Set<Tag> tags, NextOfKin nextOfKin, Set<MedicalHistory> medicalHistory) {
+        requireAllNonNull(name, dob, phone, address, bloodType, appointment, tags, medicalHistory, nextOfKin);
+        this.name = name;
+        this.dob = dob;
+        this.phone = phone;
+        this.email = new Email("");
+        this.address = address;
+        this.bloodType = bloodType;
+        this.appointment = appointment;
+        this.nextOfKin = nextOfKin;
+        this.tags.addAll(tags);
+        this.medicalHistory.addAll(medicalHistory);
+        this.checkups.addAll(new HashSet<>());
+    }
+
     public Name getName() {
         return name;
+    }
+    public DateOfBirth getDateOfBirth() {
+        return dob;
     }
 
     public Phone getPhone() {

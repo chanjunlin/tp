@@ -81,9 +81,9 @@ public class AssignCommand extends Command {
         updatedTags.add(new Tag("Nurse" + nurse.getName().fullName.replaceAll(" ", "")));
 
         Person updatedPatient = new Person(
-                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(), patient.getBloodType(),
-                patient.getAppointment(), updatedTags, patient.getNextOfKin(), patient.getMedicalHistory(),
-                patient.getCheckups());
+                patient.getName(), patient.getDateOfBirth(), patient.getPhone(), patient.getEmail(),
+                patient.getAddress(), patient.getBloodType(), patient.getAppointment(), updatedTags,
+                patient.getNextOfKin(), patient.getMedicalHistory(), patient.getCheckups());
         model.setPerson(patient, updatedPatient);
         return new CommandResult(String.format(MESSAGE_SUCCESS, nurse.getName(), patient.getName()));
     }

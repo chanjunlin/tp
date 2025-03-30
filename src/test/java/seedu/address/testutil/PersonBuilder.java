@@ -7,6 +7,7 @@ import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -22,6 +23,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class PersonBuilder {
 
     public static final String DEFAULT_NAME = "Amy Bee";
+    public static final String DEFAULT_DOB = "11/09/2001";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
@@ -31,8 +33,8 @@ public class PersonBuilder {
     //public static final String DEFAULT_MEDICALHISTORY = "Diabetes";
 
     private Name name;
+    private DateOfBirth dob;
     private Phone phone;
-
     private Email email;
     private Address address;
     private BloodType bloodType;
@@ -47,6 +49,7 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
+        dob = new DateOfBirth(DEFAULT_DOB);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
@@ -63,6 +66,7 @@ public class PersonBuilder {
      */
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
+        dob = personToCopy.getDateOfBirth();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
@@ -159,7 +163,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory);
+        return new Person(name, dob, phone, email, address, bloodType, appointment, tags, nextOfKin, medicalHistory);
     }
 
 }

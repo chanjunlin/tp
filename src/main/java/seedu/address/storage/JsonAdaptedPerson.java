@@ -14,6 +14,7 @@ import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -30,6 +31,7 @@ class JsonAdaptedPerson {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
 
     private final String name;
+    private final String dob;
     private final String phone;
     private final String email;
     private final String address;
@@ -44,8 +46,9 @@ class JsonAdaptedPerson {
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-                             @JsonProperty("email") String email, @JsonProperty("address") String address,
+    public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("dob") String dob,
+                             @JsonProperty("phone") String phone, @JsonProperty("email") String email,
+                             @JsonProperty("address") String address,
                              @JsonProperty("bloodType") String bloodType,
                              @JsonProperty("appointment") String appointment,
                              @JsonProperty("nextOfKin") String nextOfKin,
@@ -53,6 +56,7 @@ class JsonAdaptedPerson {
                              @JsonProperty("medicalHistory") List<JsonAdaptedMedicalHistory> medicalHistory,
                              @JsonProperty("checkups") List<JsonAdaptedCheckup> checkups) {
         this.name = name;
+        this.dob = dob;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -78,6 +82,7 @@ class JsonAdaptedPerson {
      */
     public JsonAdaptedPerson(Person source) {
         name = source.getName().fullName;
+        dob = source.getDateOfBirth().dob.toString();
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
@@ -124,6 +129,15 @@ class JsonAdaptedPerson {
         }
         final Name modelName = new Name(name);
 
+        if (dob == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    DateOfBirth.class.getSimpleName()));
+        }
+        if (!DateOfBirth.isValidDate(dob)) {
+            throw new IllegalValueException(DateOfBirth.MESSAGE_CONSTRAINTS);
+        }
+        final DateOfBirth modelDateOfBirth = new DateOfBirth(dob);
+
         if (phone == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Phone.class.getSimpleName()));
         }
@@ -135,7 +149,10 @@ class JsonAdaptedPerson {
         if (email == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Email.class.getSimpleName()));
         }
-        if (!Email.isValidEmail(email)) {
+        if (email.isEmpty() || email.equals("nil")) {
+            final Email modelEmail = new Email("");
+        }
+        else if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
@@ -172,7 +189,7 @@ class JsonAdaptedPerson {
         final Set<Checkup> modelCheckups = new HashSet<>(personCheckups);
         final Set<MedicalHistory> modelMedicalHistory = new HashSet<>(personMedicalHistory);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelBloodType,
+        return new Person(modelName, modelDateOfBirth, modelPhone, modelEmail, modelAddress, modelBloodType,
                 modelAppointment, modelTags, modelNextOfKin, modelMedicalHistory, modelCheckups);
     }
 }
