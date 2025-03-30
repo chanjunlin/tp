@@ -112,6 +112,9 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DOB} of the {@code Person} that we are building.
+     */
     public PersonBuilder withDateOfBirth(String dob) {
         this.dob = new DateOfBirth(dob);
         return this;

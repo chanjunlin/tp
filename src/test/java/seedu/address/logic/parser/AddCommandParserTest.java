@@ -7,6 +7,8 @@ import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.APPOINTMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.BLOOD_TYPE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.BLOOD_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
@@ -17,8 +19,6 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.MEDICAL_HISTORY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DOB_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.NOK_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.NOK_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
@@ -65,7 +65,7 @@ public class AddCommandParserTest {
         Person expectedPerson = new PersonBuilder(BOB).withTags(VALID_TAG_FRIEND).build();
 
         // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + DOB_DESC_BOB +PHONE_DESC_BOB
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + DOB_DESC_BOB + PHONE_DESC_BOB
                 + EMAIL_DESC_BOB + ADDRESS_DESC_BOB + BLOOD_TYPE_BOB + APPOINTMENT_BOB
                 + NOK_DESC_BOB + TAG_DESC_FRIEND + MEDICAL_HISTORY_BOB, new AddCommand(expectedPerson));
 
@@ -102,8 +102,8 @@ public class AddCommandParserTest {
 
         // multiple fields repeated
         assertParseFailure(parser,
-                validExpectedPersonString + DOB_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + ADDRESS_DESC_AMY
-                        + validExpectedPersonString,
+                validExpectedPersonString + DOB_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY
+                        + ADDRESS_DESC_AMY + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME, PREFIX_DOB, PREFIX_ADDRESS, PREFIX_EMAIL,
                         PREFIX_PHONE, PREFIX_APPOINTMENT, PREFIX_BLOODTYPE));
 
@@ -174,8 +174,8 @@ public class AddCommandParserTest {
                         + VALID_ADDRESS_BOB, expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_NAME_BOB + DOB_DESC_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB + VALID_ADDRESS_BOB,
-                expectedMessage);
+        assertParseFailure(parser, VALID_NAME_BOB + DOB_DESC_BOB + VALID_PHONE_BOB + VALID_EMAIL_BOB
+                        + VALID_ADDRESS_BOB, expectedMessage);
     }
 
     @Test

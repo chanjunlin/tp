@@ -2,12 +2,12 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_APPOINTMENT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOOD_TYPE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BLOOD_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DOB_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;

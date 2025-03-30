@@ -2,7 +2,16 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -81,12 +90,12 @@ public class CommandTestUtil {
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).withDOB(VALID_DOB_AMY)
+        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).withDateOfBirth(VALID_DOB_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBloodType(VALID_BLOOD_TYPE_AMY).withAppointment(VALID_APPOINTMENT_AMY)
                 .withTags(VALID_TAG_FRIEND).withNextOfKin(VALID_NOK_AMY)
                 .withMedicalHistory(VALID_MEDICAL_HISTORY_AMY).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).withDOB(VALID_DOB_BOB)
+        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).withDateOfBirth(VALID_DOB_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withBloodType(VALID_BLOOD_TYPE_BOB).withAppointment(VALID_APPOINTMENT_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();

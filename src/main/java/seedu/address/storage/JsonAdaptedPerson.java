@@ -151,8 +151,7 @@ class JsonAdaptedPerson {
         }
         if (email.isEmpty() || email.equals("nil")) {
             final Email modelEmail = new Email("");
-        }
-        else if (!Email.isValidEmail(email)) {
+        } else if (!Email.isValidEmail(email)) {
             throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
         }
         final Email modelEmail = new Email(email);
