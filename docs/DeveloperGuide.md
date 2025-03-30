@@ -207,7 +207,7 @@ This functionality improves user experience by allowing quick access to relevant
 
 Using this command, users can effortlessly navigate and manage their address book, finding relevant information quickly and efficiently.
 
-![Sequence Diagram](diagrams/FindScheduleSequenceDiagram.puml)
+![Sequence Diagram](images/FindScheduleSequenceDiagram.png)
 
 #### Design considerations:
 
