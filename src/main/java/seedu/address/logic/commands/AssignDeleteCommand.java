@@ -24,7 +24,7 @@ public class AssignDeleteCommand extends Command {
             + "Parameters: NURSE_NAME PATIENT_INDEX\n"
             + "Example: " + COMMAND_WORD + " JOHN DOE 2";
 
-    public static final String MESSAGE_SUCCESS = "Removed assigned Nurse %s from patient %s.";
+    public static final String MESSAGE_SUCCESS = "Removed assigned nurse %s from patient %s.";
 
     public static final String MESSAGE_INVALID_PATIENT = "The person at index %d is not a patient.";
 
