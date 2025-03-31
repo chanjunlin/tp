@@ -40,7 +40,6 @@ public class Email {
      */
     public Email(String email) {
         requireNonNull(email);
-        System.out.println(email.isEmpty() + "======" + email.equals("nil"));
         if (email.isEmpty() || email.equals("nil")) {
             value = "nil";
         } else {

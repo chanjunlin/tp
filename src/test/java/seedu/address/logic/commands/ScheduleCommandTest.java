@@ -7,6 +7,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDE
 import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_INVALID_PATIENT;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_CREATED;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_DELETED;
+import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_DOES_NOT_EXIST;
 import static seedu.address.logic.commands.ScheduleCommand.MISSING_ASSIGNED_NURSE;
 import static seedu.address.model.checkup.Checkup.MESSAGE_PAST_DATE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -73,10 +74,9 @@ public class ScheduleCommandTest {
     public void validPatientIndex_nonConflictingCheckup() {
 
         // checkup scheduled successfully for patient with assigned nurse
-        Person patient = model.getFilteredPersonList().get(0);
         try {
             CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patient.getName(),
+            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patientZero.getName(),
                             checkupDate.format(dateFormatter),
                             checkupTimeTen),
                     result.getFeedbackToUser());
@@ -85,10 +85,9 @@ public class ScheduleCommandTest {
         }
 
         // checkup scheduled successfully for patient without assigned nurse
-        patient = model.getFilteredPersonList().get(2);
         try {
             CommandResult result = diffTimeCommad.execute(model);
-            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patient.getName(),
+            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patientTwo.getName(),
                             checkupDate.format(dateFormatter),
                             checkupTimeOne) + "\n" + MISSING_ASSIGNED_NURSE,
                     result.getFeedbackToUser());
@@ -97,16 +96,24 @@ public class ScheduleCommandTest {
         }
 
         // checkup deleted successfully for patient with assigned nurse
-        patient = model.getFilteredPersonList().get(0);
         try {
             CommandResult result = deleteCommand.execute(model);
-            assertEquals(String.format(MESSAGE_CHECKUP_DELETED, patient.getName(),
+            assertEquals(String.format(MESSAGE_CHECKUP_DELETED, patientZero.getName(),
                             checkupDate.format(dateFormatter),
                             checkupTimeTen),
                     result.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());
         }
+
+        // checkup deleted failed because checkup is not present
+        CommandException exception = assertThrows(CommandException.class, () -> {
+            deleteCommand.execute(model);
+        });
+
+        assertEquals(String.format(MESSAGE_CHECKUP_DOES_NOT_EXIST),
+                exception.getMessage());
+
     }
 
     @Test
