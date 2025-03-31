@@ -4,13 +4,22 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_USAGE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ScheduleCommand;
 
 public class ScheduleCommandParserTest {
 
     private ScheduleCommandParser parser = new ScheduleCommandParser();
+    private Index patientIndex;
+    private LocalDate checkupDate;
+    private LocalTime checkupTime;
+    private Boolean addCheckup;
+    private Boolean deleteCheckup;
     @Test
     public void parse_emptyArg_throwsParseException() {
         assertParseFailure(parser, "  ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -47,4 +56,5 @@ public class ScheduleCommandParserTest {
         assertParseFailure(parser, "1 1200", invalidArguments);
         assertParseFailure(parser, "1200", invalidArguments);
     }
+
 }

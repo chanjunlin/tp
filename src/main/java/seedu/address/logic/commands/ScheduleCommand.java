@@ -143,9 +143,9 @@ public class ScheduleCommand extends Command {
         }
 
         Person updatedPatient = new Person(
-                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(),
-                patient.getBloodType(), patient.getAppointment(), patient.getTags(), patient.getNextOfKin(),
-                patient.getMedicalHistory(), patientCheckups);
+                patient.getName(), patient.getDateOfBirth(), patient.getPhone(), patient.getEmail(),
+                patient.getAddress(), patient.getBloodType(), patient.getAppointment(), patient.getTags(),
+                patient.getNextOfKin(), patient.getMedicalHistory(), patientCheckups);
         model.setPerson(patient, updatedPatient);
     }
 

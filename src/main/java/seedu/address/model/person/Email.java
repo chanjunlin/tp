@@ -40,8 +40,13 @@ public class Email {
      */
     public Email(String email) {
         requireNonNull(email);
-        checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
-        value = email;
+        System.out.println(email.isEmpty() + "======" + email.equals("nil"));
+        if (email.isEmpty() || email.equals("nil")) {
+            value = "nil";
+        } else {
+            checkArgument(isValidEmail(email), MESSAGE_CONSTRAINTS);
+            value = email;
+        }
     }
 
     /**
