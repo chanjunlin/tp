@@ -5,7 +5,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -18,6 +17,8 @@ public class DateOfBirth {
             + "DD/MM/YYYY";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final Logger logger = LogsCenter.getLogger(DateOfBirth.class);
+    private static final String DATE_VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
+
 
     public final LocalDate dob;
 
@@ -40,9 +41,19 @@ public class DateOfBirth {
      */
     public static boolean isValidDate(String dateString) {
         try {
-            LocalDate.parse(dateString, FORMATTER);
+            String[] dateParts = dateString.split("/");
+            int day = Integer.parseInt(dateParts[0]);
+            int month = Integer.parseInt(dateParts[1]);
+            int year = Integer.parseInt(dateParts[2]);
+
+            if (day < 1 || day > LocalDate.of(year, month, 1).lengthOfMonth()) {
+                return false;
+            }
+            logger.info("Date of birth string = " + dateString);
+            LocalDate doob = LocalDate.parse(dateString, FORMATTER);
+            logger.info("dob = " + doob.format(FORMATTER));
             return true;
-        } catch (DateTimeParseException e) {
+        } catch (Exception e) {
             logger.warning(e.getMessage());
             return false;
         }

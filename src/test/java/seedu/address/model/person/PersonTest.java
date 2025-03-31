@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
@@ -11,9 +12,12 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BOB;
 
+import java.util.HashSet;
+
 import org.junit.jupiter.api.Test;
 
 import seedu.address.testutil.PersonBuilder;
+
 
 public class PersonTest {
 
@@ -94,5 +98,29 @@ public class PersonTest {
                 + ALICE.getMedicalHistory()
                 + ", checkups=" + ALICE.getCheckups() + "}";
         assertEquals(expected, ALICE.toString());
+    }
+
+    @Test
+    public void constructor_optionalFieldsAreHandled() {
+        Name name = new Name("Alice Pauline");
+        DateOfBirth dob = new DateOfBirth("01/01/1990");
+        Phone phone = new Phone("91234567");
+        Email nilEmail = new Email("nil");
+        Email emptyEmail = new Email("");
+        BloodType bloodType = new BloodType("AB+");
+        Address address = new Address("123, Jurong West Ave 6, #08-111");
+        Appointment appointment = new Appointment("Patient");
+
+        Person personWithNullEmail = new Person(name, dob, phone, new Email("nil"),
+                new Address("123, Jurong West Ave 6, #08-111"),
+                new BloodType("AB+"), new Appointment("Patient"), new HashSet<>(),
+                null, new HashSet<>(), new HashSet<>());
+        assertNotNull(personWithNullEmail);
+
+        Person personWithEmptyEmail = new Person(name, dob, phone, new Email(""),
+                new Address("123, Jurong West Ave 6, #08-111"),
+                new BloodType("AB+"), new Appointment("Patient"), new HashSet<>(),
+                null, new HashSet<>(), new HashSet<>());
+        assertNotNull(personWithEmptyEmail);
     }
 }
