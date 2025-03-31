@@ -2,6 +2,7 @@
   "_comment": "AddressBook save file which contains the same Person values as in TypicalPersons#getTypicalAddressBook()",
   "persons" : [ {
     "name" : "Alice Pauline",
+    "dob" : "11/09/2001",
     "phone" : "94351253",
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
@@ -12,6 +13,7 @@
     "medicalHistory" : [ "Diabetes" ]
   }, {
     "name" : "Benson Meier",
+    "dob" : "11/09/2001",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
@@ -19,9 +21,10 @@
     "appointment": "Nurse",
     "nextOfKin": "Jane 82342322",
     "tags" : [ "owesMoney", "friends" ],
-    "medicalHistory" : [ "Diabetes" ]
+    "medicalHistory" : []
   }, {
     "name" : "Carl Kurz",
+    "dob" : "11/09/2001",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
@@ -32,6 +35,7 @@
     "medicalHistory" : [ "Diabetes" ]
   }, {
     "name" : "Daniel Meier",
+    "dob" : "11/09/2001",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
@@ -42,6 +46,7 @@
     "medicalHistory" : [ "Diabetes" ]
   }, {
     "name" : "Elle Meyer",
+    "dob" : "11/09/2001",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "address" : "michegan ave",
@@ -52,6 +57,7 @@
     "medicalHistory" : [ "Diabetes" ]
   }, {
     "name" : "Fiona Kunz",
+    "dob" : "11/09/2001",
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "address" : "little tokyo",
@@ -62,6 +68,7 @@
     "medicalHistory" : [ "Diabetes" ]
   }, {
     "name" : "George Best",
+    "dob" : "11/09/2001",
     "phone" : "9482442",
     "email" : "anna@example.com",
     "address" : "4th street",
@@ -69,6 +76,6 @@
     "appointment": "Nurse",
     "nextOfKin": "John 92231333",
     "tags" : [ ],
-    "medicalHistory" : [ "Diabetes" ]
+    "medicalHistory" : [ ]
   } ]
 }

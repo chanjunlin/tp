@@ -15,6 +15,7 @@ import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -29,26 +30,31 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"), new BloodType("AB+"), new Appointment("Nurse"),
-                    getTagSet("friends"), new NextOfKin("Alexis 91023434"), new HashSet<>()),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), new BloodType("AB+"),
-                    new Appointment("Nurse"), getTagSet("colleagues", "friends"),
-                    new NextOfKin("Alexis 91023434"), new HashSet<>()),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), new BloodType("AB+"), new Appointment("Nurse"),
-                    getTagSet("neighbours"), new NextOfKin("Alexis 91023434"), new HashSet<>()),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), new BloodType("AB+"),
-                    new Appointment("Nurse"), getTagSet("family"), new NextOfKin("Alexis 91023434"),
-                    new HashSet<>()),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"), new BloodType("AB+"), new Appointment("Nurse"),
-                    getTagSet("classmates"), new NextOfKin("Alexis 91023434"), new HashSet<>()),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"), new BloodType("AB+"), new Appointment("Patient"),
-                    getTagSet("colleagues"), new NextOfKin("Alexis 91023434"), getMedicalHistorySet("Diabetes"))
+            new Person(new Name("Alex Yeoh"), new DateOfBirth("01/01/2001"), new Phone("87438807"),
+                    new Email("alexyeoh@example.com"), new Address("Blk 30 Geylang Street 29, #06-40"),
+                    new BloodType("AB+"), new Appointment("Nurse"), getTagSet("friends"),
+                    new NextOfKin("Alexis 91023434"), new HashSet<>(), new HashSet<>()),
+            new Person(new Name("Bernice Yu"), new DateOfBirth("01/01/1900"), new Phone("99272758"),
+                    new Email("berniceyu@example.com"), new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
+                    new BloodType("AB+"), new Appointment("Nurse"), getTagSet("colleagues", "friends"),
+                    new NextOfKin("Alexis 91023434"), new HashSet<>(), new HashSet<>()),
+            new Person(new Name("Charlotte Oliveiro"), new DateOfBirth("12/05/1989"), new Phone("93210283"),
+                    new Email("charlotte@example.com"), new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
+                    new BloodType("AB+"), new Appointment("Nurse"), getTagSet("neighbours"),
+                    new NextOfKin("Alexis 91023434"), new HashSet<>(), new HashSet<>()),
+            new Person(new Name("David Li"), new DateOfBirth("14/07/1989"), new Phone("91031282"),
+                    new Email("lidavid@example.com"), new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                    new BloodType("AB+"), new Appointment("Nurse"), getTagSet("family"),
+                    new NextOfKin("Alexis 91023434"), new HashSet<>(), new HashSet<>()),
+            new Person(new Name("Irfan Ibrahim"), new DateOfBirth("04/04/2004"), new Phone("92492021"),
+                    new Email("irfan@example.com"), new Address("Blk 47 Tampines Street 20, #17-35"),
+                    new BloodType("AB+"), new Appointment("Nurse"), getTagSet("classmates"),
+                    new NextOfKin("Alexis 91023434"), new HashSet<>(), new HashSet<>()),
+            new Person(new Name("Roy Balakrishnan"), new DateOfBirth("11/09/2001"), new Phone("92624417"),
+                    new Email("royb@example.com"), new Address("Blk 45 Aljunied Street 85, #11-31"),
+                    new BloodType("AB+"), new Appointment("Patient"), getTagSet("colleagues"),
+                    new NextOfKin("Alexis 91023434"), getMedicalHistorySet("Diabetes"),
+                    new HashSet<>())
         };
     }
 

@@ -1,0 +1,38 @@
+@startuml
+
+participant User
+participant ":AddressBookParser" as AddressBookParser
+participant ":FindCommandParser" as FindCommandParser
+
+User -> AddressBookParser: "find nurse of patient 1"
+activate AddressBookParser
+
+AddressBookParser -> FindCommandParser: parse(arguments)
+activate FindCommandParser
+
+FindCommandParser -> FindCommandParser: check if trimmedArgs is empty
+alt isEmpty
+    FindCommandParser --> AddressBookParser: throw ParseException
+else startsWith("nurse of patient")
+    FindCommandParser -> FindCommandParser: findNurseScenario(trimmedArgs)
+    activate FindCommandParser
+    FindCommandParser --> AddressBookParser: return FindNurseCommand(Nurse scenario)
+    deactivate FindCommandParser
+
+else startsWith("patient of nurse")
+    FindCommandParser -> FindCommandParser: findPatientScenario(trimmedArgs)
+    activate FindCommandParser
+    FindCommandParser --> AddressBookParser: return FindPatientCommand (Patient scenario)
+    deactivate FindCommandParser
+else default
+    FindCommandParser -> FindCommandParser: findScenario(trimmedArgs)
+    activate FindCommandParser
+    FindCommandParser --> AddressBookParser: return FindCommand (Default scenario)
+    deactivate FindCommandParser
+    deactivate FindCommandParser
+end
+
+deactivate FindCommandParser
+AddressBookParser --> User: return FindCommand
+deactivate AddressBookParser
+@enduml

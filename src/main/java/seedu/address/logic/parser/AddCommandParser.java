@@ -4,6 +4,7 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -20,6 +21,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -42,21 +44,27 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DOB, PREFIX_PHONE, PREFIX_EMAIL,
                         PREFIX_ADDRESS, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT, PREFIX_NOK, PREFIX_TAG,
                         PREFIX_MEDICAL_HISTORY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_BLOODTYPE, PREFIX_APPOINTMENT)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DOB, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_BLOODTYPE,
+                PREFIX_APPOINTMENT) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DOB, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                 PREFIX_BLOODTYPE, PREFIX_APPOINTMENT);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        DateOfBirth dob = ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
-        Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
+        Optional<String> placeholder = argMultimap.getValue(PREFIX_EMAIL);
+        Email email;
+        if (placeholder.isPresent()) {
+            email = ParserUtil.parseEmail(placeholder.get());
+        } else {
+            email = ParserUtil.parseEmail("");
+        }
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get());
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());
@@ -69,7 +77,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<MedicalHistory> medicalHistoryList =
                 ParserUtil.parseMedicalHistories(argMultimap.getAllValues(PREFIX_MEDICAL_HISTORY));
 
-        Person person = new Person(name, phone, email, address, bloodType, appointment, tagList,
+        Person person = new Person(name, dob, phone, email, address, bloodType, appointment, tagList,
                 nextOfKin, medicalHistoryList);
 
         return new AddCommand(person);
