@@ -35,7 +35,7 @@ public class AssignCommandTest {
 
         Person updatedPatient = model.getFilteredPersonList().get(0);
         Set<seedu.address.model.tag.Tag> expectedTags = new HashSet<>(patient.getTags());
-        expectedTags.add(new Tag("NurseJOHNLEE"));
+        expectedTags.add(new Tag("Nurse JOHN LEE"));
 
         assertEquals(expectedTags, updatedPatient.getTags());
         assertEquals(String.format(AssignCommand.MESSAGE_SUCCESS, nurse.getName(), patient.getName()),

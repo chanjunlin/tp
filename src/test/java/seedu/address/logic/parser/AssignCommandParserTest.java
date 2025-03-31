@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 public class AssignCommandParserTest {
@@ -17,7 +18,7 @@ public class AssignCommandParserTest {
     public void parse_validArgs_returnsAssignCommand() throws Exception {
         AssignCommand expectedCommand = new AssignCommand(Index.fromOneBased(2),
                 Index.fromOneBased(1));
-        AssignCommand parsedCommand = parser.parse("2 1");
+        Command parsedCommand = parser.parse("2 1");
 
         assertEquals(expectedCommand, parsedCommand);
     }
