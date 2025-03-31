@@ -21,6 +21,9 @@ public class DateOfBirthTest {
     @Test
     public void isValidDate_validFormat_returnsTrue() {
         assertTrue(DateOfBirth.isValidDate("01/01/2001"));
+        assertTrue(DateOfBirth.isValidDate("31/01/2001"));
+        assertTrue(DateOfBirth.isValidDate("28/02/2001"));
+
     }
 
     @Test
@@ -69,5 +72,20 @@ public class DateOfBirthTest {
     public void toString_returnsCorrectFormat() {
         DateOfBirth dob = new DateOfBirth("31/12/2025");
         assertEquals("31/12/2025", dob.toString());
+    }
+
+    @Test
+    public void equals() {
+        DateOfBirth dob = new DateOfBirth("01/01/2001");
+
+        assertTrue(dob.equals(new DateOfBirth("01/01/2001")));
+
+        assertTrue(dob.equals(dob));
+
+        assertFalse(dob.equals(null));
+
+        assertFalse(dob.equals(5.0f));
+
+        assertFalse(dob.equals(new DateOfBirth("01/01/2002")));
     }
 }
