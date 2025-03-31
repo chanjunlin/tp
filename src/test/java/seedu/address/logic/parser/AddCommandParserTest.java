@@ -151,6 +151,11 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, NAME_DESC_AMY + DOB_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY + BLOOD_TYPE_AMY + APPOINTMENT_AMY + NOK_DESC_AMY,
                 new AddCommand(expectedPerson));
+
+        Person missingEmailPerson = new PersonBuilder(AMY).withTags().withEmail("").build();
+        assertParseSuccess(parser, NAME_DESC_AMY + DOB_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY
+                        + BLOOD_TYPE_AMY + APPOINTMENT_AMY + NOK_DESC_AMY,
+                new AddCommand(missingEmailPerson));
     }
 
     @Test
