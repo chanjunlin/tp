@@ -20,7 +20,7 @@ public class AssignCommand extends Command {
 
     public static final String COMMAND_WORD = "assign";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a nurse to a patient. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a nurse to a patient.\n"
             + "Parameters: PATIENT_INDEX NURSE_INDEX\n"
             + "Example: " + COMMAND_WORD + " 2 1";
 

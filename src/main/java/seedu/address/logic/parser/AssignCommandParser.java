@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
 import seedu.address.logic.commands.Command;
@@ -42,7 +44,7 @@ public class AssignCommandParser implements Parser<Command> {
             String[] splitArgs = args.trim().split("\\s+");
 
             if (splitArgs.length != 2) {
-                throw new ParseException("Usage: assign PATIENT_INDEX NURSE_INDEX");
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
             }
 
             Index patientIndex = ParserUtil.parseIndex(splitArgs[0]);
