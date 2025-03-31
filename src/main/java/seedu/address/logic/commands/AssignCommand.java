@@ -78,7 +78,7 @@ public class AssignCommand extends Command {
         }
 
         Set<Tag> updatedTags = new HashSet<>(patient.getTags());
-        updatedTags.add(new Tag("Nurse" + nurse.getName().fullName.replaceAll(" ", "")));
+        updatedTags.add(new Tag("Nurse " + nurse.getName().fullName));
 
         Person updatedPatient = new Person(
                 patient.getName(), patient.getDateOfBirth(), patient.getPhone(), patient.getEmail(),
