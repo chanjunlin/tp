@@ -84,7 +84,7 @@ public class SampleDataUtil {
                     LocalDate date = LocalDate.parse(parts[0], dateFormatter);
                     LocalTime time = LocalTime.parse(parts[1], timeFormatter);
                     try {
-                        Checkup checkup = new Checkup(date, time);
+                        Checkup checkup = new Checkup(date, time, true);
                         return checkup;
                     } catch (ParseException e) {
                         throw new RuntimeException(e);

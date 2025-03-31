@@ -25,6 +25,7 @@ public class Checkup {
     private static final LocalTime START_TIME = LocalTime.of(9, 0);
     private static final LocalTime END_TIME = LocalTime.of(17, 0);
     public final LocalDateTime checkupDateTime;
+    public final Boolean isAdding;
 
 
     /**
@@ -34,9 +35,10 @@ public class Checkup {
      * @param checkupTime The time of the checkup.
      * @throws ParseException If the checkup date or time is invalid.
      */
-    public Checkup(LocalDate checkupDate, LocalTime checkupTime) throws ParseException {
+    public Checkup(LocalDate checkupDate, LocalTime checkupTime, Boolean isAdd) throws ParseException {
         allNonNull(checkupDate, checkupTime);
-        checkArgument(isValidCheckup(checkupDate, checkupTime), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidCheckup(checkupDate, checkupTime, isAdd), MESSAGE_CONSTRAINTS);
+        this.isAdding = isAdd;
         this.checkupDateTime = createCheckupDateTime(checkupDate, checkupTime);
     }
 
@@ -59,13 +61,13 @@ public class Checkup {
      * @return True if the checkup date and time are valid; false otherwise.
      * @throws ParseException If the checkup date or time is invalid.
      */
-    public static boolean isValidCheckup(LocalDate checkupDate, LocalTime checkupTime)
+    public static boolean isValidCheckup(LocalDate checkupDate, LocalTime checkupTime, Boolean isAdd)
             throws ParseException {
         LocalDateTime checkupDateTime = createCheckupDateTime(checkupDate, checkupTime);
         if (!isWithinBusinessHours(checkupDateTime)) {
             throw new ParseException(MESSAGE_OUTSIDE_BUSINESS_HOURS);
         }
-        if (!isNotInPast(checkupDateTime)) {
+        if (!isNotInPast(checkupDateTime) && isAdd) {
             throw new ParseException(MESSAGE_PAST_DATE);
         }
         return true;

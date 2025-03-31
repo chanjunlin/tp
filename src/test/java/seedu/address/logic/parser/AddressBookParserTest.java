@@ -105,7 +105,7 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_schedule() throws Exception {
-        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " add 1 12/12/2025 1200")
+        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " add for patient 1 12/12/2025 1200")
                 instanceof ScheduleCommand);
     }
 
