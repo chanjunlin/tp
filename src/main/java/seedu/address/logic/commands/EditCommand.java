@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -51,6 +52,7 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DOB + "DOB] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
@@ -222,12 +224,16 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address,
+            return CollectionUtil.isAnyNonNull(name, dob, phone, email, address,
                     bloodType, appointment, tags, nextOfKin, medicalHistory);
         }
 
         public void setName(Name name) {
             this.name = name;
+        }
+
+        public Optional<Name> getName() {
+            return Optional.ofNullable(name);
         }
 
         public void setDateOfBirth(DateOfBirth dob) {
@@ -236,10 +242,6 @@ public class EditCommand extends Command {
 
         public Optional<DateOfBirth> getDateOfBirth() {
             return Optional.ofNullable(dob);
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
         }
 
         public void setPhone(Phone phone) {
