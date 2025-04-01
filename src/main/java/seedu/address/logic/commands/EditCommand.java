@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -51,6 +53,7 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DOB + "DOB] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
@@ -70,6 +73,14 @@ public class EditCommand extends Command {
     public static final String MESSAGE_INVALID_MEDICAL_HISTORY_DELETE = "Delete medical history in order "
                                                                       + "to change to nurse appointment."
                                                                       + " (e.g. edit 1 mh/ to remove medical history).";
+    public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT = "Unable to change appointment to a "
+                                                                               + "patient, as "
+                                                                               + "this nurse is assigned to a patient.";
+    public static final String MESSAGE_UNABLE_TO_CHANGE_NAME = "Unable to change name, "
+                                                              + "as this nurse is assigned to a patient.";
+    public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE = "Unable to change appointment to a "
+                                                                             + "nurse, as this patient is assigned "
+                                                                             + "to a nurse.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -101,6 +112,15 @@ public class EditCommand extends Command {
 
         ensureOnlyPatientCanHaveMedicalHistory(editedPerson);
 
+        if (editPersonDescriptor.getAppointment().isPresent()) {
+            ensurePatientHasNoAssignedNurse(personToEdit, model);
+            ensureNurseHasNoPatient(personToEdit, editedPerson, model);
+        }
+
+        if (editPersonDescriptor.getName().isPresent()) {
+            ensureChangeNameNurseIfNoPatient(personToEdit, model);
+        }
+
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -110,11 +130,70 @@ public class EditCommand extends Command {
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
+    // Ensure that a nurse can only change appointment to a patient if they have no patients assigned.
+    private void ensureNurseHasNoPatient(Person personToEdit, Person editedPerson,
+                                         Model personModel) throws CommandException {
+        requireNonNull(personToEdit);
+        requireNonNull(editedPerson);
+
+        Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        Appointment appointmentAfterEdit = editedPerson.getAppointment();
+        if (appointmentBeforeEdit.isNurse() && appointmentAfterEdit.isPatient()) {
+            String name = personToEdit.getName().toString();
+            boolean patientHasEditedNurse = personModel.getFilteredPersonList()
+                                                       .stream()
+                                                       .filter(person -> person.getAppointment().isPatient())
+                                                       .anyMatch(person -> person.getTags().stream()
+                                                       .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
+
+            if (patientHasEditedNurse) {
+                throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
+            }
+        }
+    }
+
+    // To ensure that a Nurse can only change name if they have no patients assigned.
+    private void ensureChangeNameNurseIfNoPatient(Person personToEdit, Model model) throws CommandException {
+        requireNonNull(personToEdit);
+        requireNonNull(model);
+
+        Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        String name = personToEdit.getName().toString();
+        boolean nurseHasPatientAssigned = model.getFilteredPersonList()
+                                               .stream()
+                                               .filter(person -> person.getAppointment().isPatient())
+                                               .anyMatch(person -> person.getTags().stream()
+                                               .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
+
+        if (appointmentBeforeEdit.isNurse() && nurseHasPatientAssigned) {
+            throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
+        }
+    }
+
+    // Ensure that a patient can change to a nurse if they have no medical history.
     private void ensureOnlyPatientCanHaveMedicalHistory(Person editedPerson) throws CommandException {
+        requireNonNull(editedPerson);
         boolean editedPersonIsNurse = editedPerson.isNurse();
         boolean editedPersonHasMedicalHistory = editedPerson.hasMedicalHistory();
         if (editedPersonIsNurse && editedPersonHasMedicalHistory) {
-            throw new CommandException(MESSAGE_INVALID_MEDICAL_HISTORY + "\n" + MESSAGE_INVALID_MEDICAL_HISTORY_DELETE);
+            throw new CommandException(MESSAGE_INVALID_MEDICAL_HISTORY + "\n"
+                                                                       + MESSAGE_INVALID_MEDICAL_HISTORY_DELETE);
+        }
+    }
+
+    // Ensure that a patient can change to a nurse if they have no assigned nurse.
+    private void ensurePatientHasNoAssignedNurse(Person personToEdit, Model personModel) throws CommandException {
+        String name = personToEdit.getName().toString();
+        boolean hasNurseAssigned = personModel.getFilteredPersonList()
+                                              .stream()
+                                              .filter(person -> person.getName()
+                                                                             .toString()
+                                                                             .equalsIgnoreCase(name))
+                                              .anyMatch(person -> person.getTags().stream()
+                                              .anyMatch(tag -> tag.tagName.startsWith("Nurse ")));
+        boolean changeToPatient = editPersonDescriptor.getAppointment().get().isPatient();
+        if (personToEdit.isPatient() && hasNurseAssigned && !changeToPatient) {
+            throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE);
         }
     }
 
@@ -147,14 +226,20 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         BloodType updatedBloodType = editPersonDescriptor.getBloodType().orElse(personToEdit.getBloodType());
         Appointment updatedAppointment = editPersonDescriptor.getAppointment().orElse(personToEdit.getAppointment());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().map(HashSet::new)
+                                                             .orElse(new HashSet<>(personToEdit.getTags()));
         NextOfKin nextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
         Set<MedicalHistory> updatedMedicalHistory = editPersonDescriptor.getMedicalHistory()
                                                                         .orElse(personToEdit.getMedicalHistory());
         Set<Checkup> currentCheckups = editPersonDescriptor.getCheckups().orElse(personToEdit.getCheckups());
 
+        if (personToEdit.isPatient()) {
+            updatedTags.addAll(personToEdit.getTags().stream().filter(tag -> tag.tagName.startsWith("Nurse"))
+                                       .collect(Collectors.toSet()));
+        }
+
         return new Person(updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedAddress, updatedBloodType,
-                updatedAppointment, updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
+                          updatedAppointment, updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
     }
 
     @Override
@@ -222,12 +307,16 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address,
+            return CollectionUtil.isAnyNonNull(name, dob, phone, email, address,
                     bloodType, appointment, tags, nextOfKin, medicalHistory);
         }
 
         public void setName(Name name) {
             this.name = name;
+        }
+
+        public Optional<Name> getName() {
+            return Optional.ofNullable(name);
         }
 
         public void setDateOfBirth(DateOfBirth dob) {
@@ -236,10 +325,6 @@ public class EditCommand extends Command {
 
         public Optional<DateOfBirth> getDateOfBirth() {
             return Optional.ofNullable(dob);
-        }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
         }
 
         public void setPhone(Phone phone) {
@@ -343,6 +428,7 @@ public class EditCommand extends Command {
 
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
+                    && Objects.equals(dob, otherEditPersonDescriptor.dob)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
@@ -350,13 +436,15 @@ public class EditCommand extends Command {
                     && Objects.equals(appointment, otherEditPersonDescriptor.appointment)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(nextOfKin, otherEditPersonDescriptor.nextOfKin)
-                    && Objects.equals(medicalHistory, otherEditPersonDescriptor.medicalHistory);
+                    && Objects.equals(medicalHistory, otherEditPersonDescriptor.medicalHistory)
+                    && Objects.equals(checkups, otherEditPersonDescriptor.checkups);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .add("name", name)
+                    .add("dob", dob)
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
