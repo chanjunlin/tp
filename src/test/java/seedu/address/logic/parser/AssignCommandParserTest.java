@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.AssignDeleteCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -49,6 +50,27 @@ public class AssignCommandParserTest {
     public void parse_noArgs_throwsParseException() {
         ParseException exception = assertThrows(ParseException.class, () -> parser.parse(""));
         assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE),
+                exception.getMessage());
+    }
+
+    @Test
+    public void parse_assignDeleteMissingArgs_throwsParseException() {
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse("delete john lee"));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignDeleteCommand.MESSAGE_USAGE),
+                exception.getMessage());
+    }
+
+    @Test
+    public void parse_assignDeleteInvalidPatientIndex_throwsParseException() {
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse("delete john lee a"));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignDeleteCommand.MESSAGE_USAGE),
+                exception.getMessage());
+    }
+
+    @Test
+    public void parse_assignDeleteNoArgs_throwsParseException() {
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse("delete"));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignDeleteCommand.MESSAGE_USAGE),
                 exception.getMessage());
     }
 }
