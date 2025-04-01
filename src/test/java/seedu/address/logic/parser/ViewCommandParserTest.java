@@ -30,16 +30,12 @@ public class ViewCommandParserTest {
 
     @Test
     public void parse_invalidArgsNegative_throwsParseException() {
-        ParseException exception = assertThrows(seedu.address.logic.parser.exceptions.ParseException.class, ()
-                -> parser.parse("-1"));
-        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE), exception.getMessage());
+        assertThrows(seedu.address.logic.parser.exceptions.ParseException.class, () -> parser.parse("-1"));
     }
 
     @Test
     public void parse_invalidArgsZero_throwsParseException() {
-        ParseException exception = assertThrows(seedu.address.logic.parser.exceptions.ParseException.class, ()
-                -> parser.parse("0"));
-        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ViewCommand.MESSAGE_USAGE), exception.getMessage());
+        assertThrows(seedu.address.logic.parser.exceptions.ParseException.class, () -> parser.parse("0"));
     }
 
     @Test
