@@ -113,10 +113,15 @@ public class EditCommand extends Command {
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         ensureOnlyPatientCanHaveMedicalHistory(editedPerson);
-        //ensureNotSameAppointment(personToEdit, editedPerson);
-        ensurePatientHasNoAssignedNurse(personToEdit, model);
-        ensureNurseHasNoPatient(personToEdit, editedPerson, model);
-        ensureChangeNameNurseIfNoPatient(personToEdit, model);
+
+        if (editPersonDescriptor.getAppointment().isPresent()) {
+            ensurePatientHasNoAssignedNurse(personToEdit, model);
+            ensureNurseHasNoPatient(personToEdit, editedPerson, model);
+        }
+
+        if (editPersonDescriptor.getName().isPresent()) {
+            ensureChangeNameNurseIfNoPatient(personToEdit, model);
+        }
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
@@ -133,21 +138,19 @@ public class EditCommand extends Command {
         requireNonNull(personToEdit);
         requireNonNull(editedPerson);
 
-        if (editPersonDescriptor.getAppointment().isPresent()) {
-            Appointment appointmentBeforeEdit = personToEdit.getAppointment();
-            Appointment appointmentAfterEdit = editedPerson.getAppointment();
-            if (appointmentBeforeEdit.isNurse() && appointmentAfterEdit.isPatient()) {
-                String name = personToEdit.getName().toString();
-                boolean patientHasEditedNurse = personModel.getFilteredPersonList()
-                                                           .stream()
-                                                           .filter(person -> person.getAppointment().isPatient())
-                                                           .anyMatch(person -> person.getTags().stream()
-                                                           .anyMatch(tag -> tag.tagName
-                                                                                   .equals("Nurse " + name)));
+        Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        Appointment appointmentAfterEdit = editedPerson.getAppointment();
+        if (appointmentBeforeEdit.isNurse() && appointmentAfterEdit.isPatient()) {
+            String name = personToEdit.getName().toString();
+            boolean patientHasEditedNurse = personModel.getFilteredPersonList()
+                                                       .stream()
+                                                       .filter(person -> person.getAppointment().isPatient())
+                                                       .anyMatch(person -> person.getTags().stream()
+                                                       .anyMatch(tag -> tag.tagName
+                                                                               .equals("Nurse " + name)));
 
-                if (patientHasEditedNurse) {
-                    throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
-                }
+            if (patientHasEditedNurse) {
+                throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
             }
         }
     }
@@ -157,18 +160,16 @@ public class EditCommand extends Command {
         requireNonNull(personToEdit);
         requireNonNull(model);
 
-        if (editPersonDescriptor.getName().isPresent()) {
-            Appointment appointmentBeforeEdit = personToEdit.getAppointment();
-            String name = personToEdit.getName().toString();
-            boolean nurseHasPatientAssigned = model.getFilteredPersonList()
-                                                   .stream()
-                                                   .filter(person -> person.getAppointment().isPatient())
-                                                   .anyMatch(person -> person.getTags().stream()
-                                                   .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
+        Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        String name = personToEdit.getName().toString();
+        boolean nurseHasPatientAssigned = model.getFilteredPersonList()
+                                               .stream()
+                                               .filter(person -> person.getAppointment().isPatient())
+                                               .anyMatch(person -> person.getTags().stream()
+                                               .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
 
-            if (appointmentBeforeEdit.isNurse() && nurseHasPatientAssigned) {
-                throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
-            }
+        if (appointmentBeforeEdit.isNurse() && nurseHasPatientAssigned) {
+            throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
         }
     }
 
@@ -185,35 +186,17 @@ public class EditCommand extends Command {
 
     // Ensure that a patient can change to a nurse if they have no assigned nurse.
     private void ensurePatientHasNoAssignedNurse(Person personToEdit, Model personModel) throws CommandException {
-        if (editPersonDescriptor.getAppointment().isPresent()) {
-            String name = personToEdit.getName().toString();
-            boolean hasNurseAssigned = personModel.getFilteredPersonList()
-                                                  .stream()
-                                                  .filter(person -> person.getName()
-                                                                                 .toString()
-                                                                                 .equalsIgnoreCase(name))
-                                                  .anyMatch(person -> person.getTags().stream()
-                                                  .anyMatch(tag -> tag.tagName.startsWith("Nurse ")));
-            boolean changeToPatient = editPersonDescriptor.getAppointment().get().isPatient();
-            if (personToEdit.isPatient() && hasNurseAssigned && !changeToPatient) {
-                throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE);
-            }
-        }
-    }
-
-    private void ensureNotSameAppointment(Person personToEdit, Person editedPerson) throws CommandException {
-        requireNonNull(personToEdit);
-        requireNonNull(editedPerson);
-        if (editPersonDescriptor.getAppointment().isPresent()) {
-            boolean newAppointmentSameAsOld = personToEdit.getAppointment().equals(editedPerson.getAppointment());
-            if (newAppointmentSameAsOld) {
-                if (personToEdit.isNurse()) {
-                    throw new CommandException(MESSAGE_PERSON_IS_ALREADY_A_NURSE);
-                }
-                if (personToEdit.isPatient()) {
-                    throw new CommandException(MESSAGE_PERSON_IS_ALREADY_A_PATIENT);
-                }
-            }
+        String name = personToEdit.getName().toString();
+        boolean hasNurseAssigned = personModel.getFilteredPersonList()
+                                              .stream()
+                                              .filter(person -> person.getName()
+                                                                             .toString()
+                                                                             .equalsIgnoreCase(name))
+                                              .anyMatch(person -> person.getTags().stream()
+                                              .anyMatch(tag -> tag.tagName.startsWith("Nurse ")));
+        boolean changeToPatient = editPersonDescriptor.getAppointment().get().isPatient();
+        if (personToEdit.isPatient() && hasNurseAssigned && !changeToPatient) {
+            throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE);
         }
     }
 
