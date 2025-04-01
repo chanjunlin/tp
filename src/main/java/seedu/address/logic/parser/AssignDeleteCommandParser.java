@@ -28,6 +28,13 @@ public class AssignDeleteCommandParser implements Parser<AssignDeleteCommand> {
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignDeleteCommand.MESSAGE_USAGE));
             }
 
+            try {
+                Integer.parseInt(splitArgs[splitArgs.length - 1]);
+            } catch (NumberFormatException e) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignDeleteCommand.MESSAGE_USAGE));
+            }
+
             StringBuilder nurseNameBuilder = new StringBuilder();
             for (int i = 0; i < splitArgs.length - 1; i++) {
                 if (i > 0) {

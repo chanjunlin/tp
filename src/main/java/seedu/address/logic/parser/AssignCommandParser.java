@@ -47,6 +47,12 @@ public class AssignCommandParser implements Parser<Command> {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
             }
 
+            try {
+                Integer.parseInt(splitArgs[1]);
+            } catch (NumberFormatException e) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE));
+            }
+
             Index patientIndex = ParserUtil.parseIndex(splitArgs[0]);
             Index nurseIndex = ParserUtil.parseIndex(splitArgs[1]);
 

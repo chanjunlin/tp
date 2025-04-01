@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import org.junit.jupiter.api.Test;
 
@@ -25,21 +26,29 @@ public class AssignCommandParserTest {
 
     @Test
     public void parse_missingArgs_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse("2"));
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse("2"));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE),
+                exception.getMessage());
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse("2 a"));
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse("2 a"));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE),
+                exception.getMessage());
     }
 
     @Test
     public void parse_tooManyArgs_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse("1 2 3"));
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse("1 2 3"));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE),
+                exception.getMessage());
     }
 
     @Test
     public void parse_noArgs_throwsParseException() {
-        assertThrows(ParseException.class, () -> parser.parse(""));
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse(""));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AssignCommand.MESSAGE_USAGE),
+                exception.getMessage());
     }
 }
