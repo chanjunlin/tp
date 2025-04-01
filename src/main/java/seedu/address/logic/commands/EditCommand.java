@@ -75,12 +75,21 @@ public class EditCommand extends Command {
                                                                       + " (e.g. edit 1 mh/ to remove medical history).";
     public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT = "Unable to change appointment to a "
                                                                                + "patient, as "
-                                                                               + "this nurse is assigned to a patient.";
+                                                                               + "this nurse is assigned to a patient."
+                                                                               + "\n"
+                                                                               + "Please remove all assigned patients "
+                                                                               + "to this nurse before changing "
+                                                                               + "appointment to patient.";
     public static final String MESSAGE_UNABLE_TO_CHANGE_NAME = "Unable to change name, "
-                                                              + "as this nurse is assigned to a patient.";
+                                                              + "as this nurse is assigned to a patient."
+                                                              + "\n"
+                                                              + "Please remove all assigned patients to this nurse "
+                                                              + "before changing name.";
     public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE = "Unable to change appointment to a "
                                                                              + "nurse, as this patient is assigned "
-                                                                             + "to a nurse.";
+                                                                             + "to a nurse." + "\n"
+                                                                             + "Please remove all assigned nurses "
+                                                                             + "before changing appointment to nurse.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -137,8 +146,9 @@ public class EditCommand extends Command {
         requireNonNull(editedPerson);
 
         Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        boolean isNurse = appointmentBeforeEdit.toString().equalsIgnoreCase("nurse");
         Appointment appointmentAfterEdit = editedPerson.getAppointment();
-        if (appointmentBeforeEdit.isNurse() && appointmentAfterEdit.isPatient()) {
+        if (isNurse && appointmentAfterEdit.isPatient()) {
             String name = personToEdit.getName().toString();
             boolean patientHasEditedNurse = personModel.getFilteredPersonList()
                                                        .stream()
@@ -158,6 +168,7 @@ public class EditCommand extends Command {
         requireNonNull(model);
 
         Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        boolean isNurse = appointmentBeforeEdit.toString().equalsIgnoreCase("nurse");
         String name = personToEdit.getName().toString();
         boolean nurseHasPatientAssigned = model.getFilteredPersonList()
                                                .stream()
@@ -165,7 +176,7 @@ public class EditCommand extends Command {
                                                .anyMatch(person -> person.getTags().stream()
                                                .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
 
-        if (appointmentBeforeEdit.isNurse() && nurseHasPatientAssigned) {
+        if (isNurse && nurseHasPatientAssigned) {
             throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
         }
     }
