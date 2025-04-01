@@ -77,7 +77,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setAppointment(ParserUtil.parseAppointment(
                     argMultimap.getValue(PREFIX_APPOINTMENT).get()));
         }
-
         if (argMultimap.getValue(PREFIX_NOK).isPresent()) {
             editPersonDescriptor.setNextOfKin(ParserUtil.parseNextOfKin(argMultimap.getValue(PREFIX_NOK).get()));
         }

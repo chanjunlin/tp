@@ -42,8 +42,7 @@ public class TypicalPersons {
             .withNextOfKin("John 92231333")
             .withTags("NurseBensonMeier")
             .withMedicalHistory("Diabetes")
-            .withDateOfBirth("01/01/2001")
-            .build();
+            .withDateOfBirth("01/01/2001").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier")
             .withDateOfBirth("01/01/2001")
             .withAddress("311, Clementi Ave 2, #02-25")
