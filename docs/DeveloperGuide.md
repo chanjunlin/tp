@@ -2,14 +2,44 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-{:toc}
+# MediBook Developer's Guide
+
+## Table of Contents
+
+1. [Acknowledgements](#acknowledgements)
+2. [Settting up, getting started](#setting-up-getting-started)
+3. [Design](#design)
+   * [Architecture](#architecture)
+   * [UI Component](#ui-component)
+   * [Logic Component](#logic-component)
+   * [Model Component](#model-component)
+   * [Storage Component](#storage-component)
+5. [Implementation](#implementation)
+   * [Add](#add-feature)
+   * [Edit](#edit-feature)
+   * [List](#list-feature)
+   * [Find](#find-feature)
+   * [Assign](#assign-feature)
+   * [Schedule](#schedule-feature)
+6. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+7. [Appendix: Requirements](#appendix-requirements)
+   * [Product Scope](#product-scope)
+   * [User Stories](#user-stories)
+   * [Use Cases](#use-cases)
+   * [Non-Functional Requirements](#non-functional-requirements)
+   * [Glossary](#glossary)
+8. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+   * [Launch and Shutdown](#launch-and-shutdown)
+   * [Deleting a Person](#deleting-a-person)
+   * [Saving Data](#saving-data)
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* [AB3](https://github.com/nus-cs2103-AY2425S2/tp) for being the base we build our project on.
+* [JavaFX](https://openjfx.io/) for creating the Graphic User Interface of MediBook.
+* [JUnit5](https://github.com/junit-team/junit5) for testing capability.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -20,15 +50,16 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
-
+<!--
 <div markdown="span" class="alert alert-primary">
 
 :bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 </div>
+-->
 
 ### Architecture
 
-<img src="images/ArchitectureDiagram.png" width="280" />
+<img src="images/ArchitectureDiagram.png" width="280"/>
 
 The ***Architecture Diagram*** given above explains the high-level design of the App.
 
@@ -127,13 +158,6 @@ The `Model` component,
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
-
-
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
@@ -160,8 +184,8 @@ This section describes some noteworthy details on how certain features are imple
 The `add` command allows the user to add a new person to the address book.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `AddCommand` object.
-3. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
+1. `AddressBookParser` parses the command and returns an `AddCommand` object.
+1. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
 
 ![Sequence Diagram](...)
 
@@ -174,9 +198,9 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 The `edit` command allows the user to edit an existing person in the address book.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `EditCommandParser` object.
-3. `EditCommandParser#parse()` creates an `EditCommand` object.
-4. `EditCommand#execute()` edits the person in the model and returns a `CommandResult`.
+1. `AddressBookParser` parses the command and returns an `EditCommandParser` object.
+1. `EditCommandParser#parse()` creates an `EditCommand` object.
+1. `EditCommand#execute()` edits the person in the model and returns a `CommandResult`.
 
 ![Sequence Diagram](images/EditSequenceDiagram.png)
 
@@ -189,19 +213,19 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 The `list` command allows users to display a subset of people in the address book based on optional filters.
 
 It supports the following use cases:
-- `list` — Lists **all persons** in the address book (patients and nurses).
-- `list nurse` or `list patient` — Lists **only nurses** or **only patients**, respectively.
-- `list checkup` — Lists all persons with scheduled **checkups**, sorted by earliest checkup date.
+* `list` — Lists **all persons** in the address book (patients and nurses).
+* `list nurse` or `list patient` — Lists **only nurses** or **only patients**, respectively.
+* `list checkup` — Lists all persons with scheduled **checkups**, sorted by earliest checkup date.
 
 #### Execution Flow:
 1. `LogicManager` receives the command text (e.g., `"list checkup"`) and passes it to `AddressBookParser`.
-2. `AddressBookParser` uses a `ListCommandParser` to interpret the command.
-3. `ListCommandParser#parse()` constructs a `ListCommand` object, based on the input string.
-4. `ListCommand#execute()` evaluates the internal flags:
+1. `AddressBookParser` uses a `ListCommandParser` to interpret the command.
+1. `ListCommandParser#parse()` constructs a `ListCommand` object, based on the input string.
+1. `ListCommand#execute()` evaluates the internal flags:
     - If the command was `list checkup`, it calls `updateFilteredPersonListByEarliestCheckup(...)` with a `PersonHasCheckupPredicate`.
     - If no filter was provided, it lists all persons using `Model.PREDICATE_SHOW_ALL_PERSONS`.
     - If a specific appointment filter was provided (e.g., `"nurse"`), it filters with `PersonHasAppointmentPredicate`.
-5. A `CommandResult` is returned with a success message indicating what was listed.
+1. A `CommandResult` is returned with a success message indicating what was listed.
 
 ![Sequence Diagram](images/ListCommandSequenceDiagram.png)
 
@@ -212,27 +236,27 @@ We chose to centralize filtering logic inside `ListCommand`, separating parsing 
 ### Find Feature
 
 The `find` command enables users to search for specific entities in the address book, including:
-- Nurses assigned to the patients.
-- Patients associated with the nurses.
-- Users whose names contain the specified search terms.
+* Nurses assigned to the patients.
+* Patients associated with the nurses.
+* Users whose names contain the specified search terms.
 
 This functionality improves user experience by allowing quick access to relevant information.
 
 #### Execution Flow:
 1. `LogicManager` receives the command text from the user and passes it to `AddressBookParser`.
-2. Depending on the arguments, `AddressBookParser` will return one of the following:
+1. Depending on the arguments, `AddressBookParser` will return one of the following:
     - `FindNurseCommand`: for searching nurses assigned to a specific patient.
     - `FindPatientCommand`: for searching patients assigned to a specific nurse.
     - `FindCommand`: a general command for searching based on keywords in user names.
-3. `AddressBookParser` parses the command and returns the appropriate `FindCommand` object.
-4. `FindCommand#execute()` retrieves the relevant entries from the model and returns a `CommandResult`.
-5. For `FindNurseCommand`, it finds and returns all nurses assigned to the specified patient.
-6. For `FindPatientCommand`, it finds and returns all patients assigned to the specified nurse.
-7. For `FindCommand`, it allows the user to search by keywords. For example, executing `find tom harry` will return all users that contain either "tom" or "harry" in their names.
+1. `AddressBookParser` parses the command and returns the appropriate `FindCommand` object.
+1. `FindCommand#execute()` retrieves the relevant entries from the model and returns a `CommandResult`.
+1. For `FindNurseCommand`, it finds and returns all nurses assigned to the specified patient.
+1. For `FindPatientCommand`, it finds and returns all patients assigned to the specified nurse.
+1. For `FindCommand`, it allows the user to search by keywords. For example, executing `find tom harry` will return all users that contain either "tom" or "harry" in their names.
 
 Using this command, users can effortlessly navigate and manage their address book, finding relevant information quickly and efficiently.
 
-![Sequence Diagram](diagrams/FindScheduleSequenceDiagram.puml)
+![Sequence Diagram](images/FindCommandSequenceDiagram.png)
 
 #### Design considerations:
 
@@ -243,8 +267,8 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 The `assign` command allows the user to assign a nurse to a patient.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `AssignCommand` object.
-3. `AssignCommand#execute()` assigns the nurse to the patient and returns a `CommandResult`.
+1. `AddressBookParser` parses the command and returns an `AssignCommand` object.
+1. `AssignCommand#execute()` assigns the nurse to the patient and returns a `CommandResult`.
 
 ![Sequence Diagram](images/AssignSequenceDiagram.png)
 
@@ -257,8 +281,8 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 The `schedule` command allows the user to create a checkup between a patient and a nurse.
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
-2. `AddressBookParser` parses the command and returns an `ScheduleCommand` object.
-3. `ScheduleCommand#execute()` creates or deletes the checkup from the patient and returns a `CommandResult`.
+1. `AddressBookParser` parses the command and returns an `ScheduleCommand` object.
+1. `ScheduleCommand#execute()` creates or deletes the checkup from the patient and returns a `CommandResult`.
 
 ![Sequence Diagram](images/ScheduleSequenceDiagram.png)
 
@@ -295,9 +319,10 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-1) Manage nurse and patients faster than a typical mouse/GUI driven app
-2) Allows faster creation and storage of details compared to traditional pen and paper methods
-3) Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
+1. Manage nurse and patients faster than a typical mouse/GUI driven app 
+1. Allows faster creation and storage of details compared to traditional pen and paper methods
+1. Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
+1. Saves time from having to log into centralised system from healthcare system in Singapore each time data is needed.
 
 ### User stories
 
@@ -334,14 +359,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a nurse / patient**
+**Use case 1: Delete a nurse / patient**
 
 **MSS**
 
 1.  User requests to list nurses / patients
-2.  AddressBook shows the list of nurses / patients
-3.  User requests to delete a specific nurse / patient in the list
-4.  AddressBook deletes the nurse / patient
+1.  AddressBook shows the list of nurses / patients
+1.  User requests to delete a specific nurse / patient in the list
+1.  AddressBook deletes the nurse / patient
 
     Use case ends.
 
@@ -357,14 +382,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: Add a nurse / patient**
+**Use case 2: Add a nurse / patient**
 
 **MSS**
 
 1.  User requests to list nurses / patients
-2.  AddressBook shows the list of nurses / patients
-3.  User requests to add a nurse / patient in the list
-4.  AddressBook adds the nurse / patient
+1.  AddressBook shows the list of nurses / patients
+1.  User requests to add a nurse / patient in the list
+1.  AddressBook adds the nurse / patient
 
     Use case ends.
 
@@ -380,14 +405,14 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: Edit a nurse / patient**
+**Use case 3: Edit a nurse / patient**
 
 **MSS**
 
 1. User requests to list nurses / patients
-2. AddressBook shows the list of nurses / patients
-3. User requests to edit a nurse's / patient's details
-4. AddressBook edits the nurse's / patient's details
+1. AddressBook shows the list of nurses / patients
+1. User requests to edit a nurse's / patient's details
+1. AddressBook edits the nurse's / patient's details
 
     Use case ends.
 
@@ -403,12 +428,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: Exit the app**
+**Use case 4: Exit the app**
 
 **MSS**
 
 1. User requests to exit app
-2. AddressBook closes
+1. AddressBook closes
 
     Use case ends.
 
@@ -422,8 +447,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Non-Functional Requirements
 
 1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+1.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+1.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 ### Glossary
 
@@ -431,6 +456,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Appointment**: The role of the person
 * **Manager**: Manages the nurses
 * **Nurse**: Tends to the patients
+* **Checkup**: A scheduled appointment for nurse to visit and treat the patient.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -481,5 +507,5 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
-   2. Delete the file and restart the app to recover and start with a small list of sample contacts._
+   1. Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
+   1. Delete the file and restart the app to recover and start with a small list of sample contacts.
