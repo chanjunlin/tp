@@ -8,6 +8,7 @@ import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -55,6 +56,13 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DOB} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDateOfBirth(String dob) {
+        descriptor.setDateOfBirth(new DateOfBirth(dob));
+        return this;
+    }
     /**
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
      */

@@ -1,7 +1,6 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_USAGE;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,8 +17,16 @@ import seedu.address.model.ModelManager;
  * Parses input arguments and creates a ScheduleCommand.
  */
 public class ScheduleCommandParser implements Parser<ScheduleCommand> {
-    private static final String DATE_VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
-    private static final String TIME_VALIDATION_REGEX = "^([01][0-9]|2[0-3])[0-5][0-9]$";
+    public static final String DATE_VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
+    public static final String TIME_VALIDATION_REGEX = "^([01][0-9]|2[0-3])[0-5][0-9]$";
+    public static final String MISSING_FIRST_PARAMETER = "Please include 'add for patient' or "
+            + "'delete for patient' after 'schedule'";
+    public static final String MISSING_INDEX = "Please include 'index' of patient";
+    public static final String MISSING_DATE = "Please include 'date'";
+    public static final String MISSING_TIME = "Please include 'time'";
+    public static final String INVALID_DATE_FORMAT = "Invalid date format. Use dd/MM/yyyy";
+    public static final String INVALID_DAY_FOR_MONTH = "Invalid day for the given month/year";
+    public static final String INVALID_TIME_FORMAT = "Invalid time values. Use HHmm";
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     /**
@@ -46,13 +53,20 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
 
     public boolean getCheckupAction(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
-        if (parsedArgument[0].equals(ScheduleCommand.DELETE_SCHEDULE_COMMAND)) {
-            return false;
-        } else if (parsedArgument[0].equals(ScheduleCommand.ADD_SCHEDULE_COMMAND)) {
-            return true;
-        } else {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+        try {
+            String scheduleCommand = parsedArgument[0] + " " + parsedArgument[1] + " " + parsedArgument[2];
+            logger.info(scheduleCommand);
+            if (scheduleCommand.equals(ScheduleCommand.DELETE_SCHEDULE_COMMAND)) {
+                return false;
+            } else if (scheduleCommand.equals(ScheduleCommand.ADD_SCHEDULE_COMMAND)) {
+                return true;
+            } else {
+                throw new ParseException(MISSING_FIRST_PARAMETER);
+            }
+        } catch (Exception e) {
+            throw new ParseException(MISSING_FIRST_PARAMETER);
         }
+
     }
 
     /**
@@ -64,7 +78,11 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public Index getPatientIndex(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
-        return ParserUtil.parseIndex(parsedArgument[1]);
+        try {
+            return ParserUtil.parseIndex(parsedArgument[3]);
+        } catch (Exception e) {
+            throw new ParseException(MISSING_INDEX);
+        }
     }
 
     /**
@@ -76,14 +94,16 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public LocalDate getCheckupDate(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
-        String dateString = parsedArgument[2];
-
-        if (!dateString.matches(DATE_VALIDATION_REGEX)) {
-            throw new ParseException("Invalid date format. Use dd/MM/yyyy");
-        }
 
         try {
+            String dateString = parsedArgument[4];
+
+            if (!dateString.matches(DATE_VALIDATION_REGEX)) {
+                throw new ParseException(INVALID_DATE_FORMAT);
+            }
             return getLocalDate(dateString);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ParseException(MISSING_DATE);
         } catch (Exception e) {
             throw new ParseException(e.getMessage());
         }
@@ -96,7 +116,7 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         int year = Integer.parseInt(dateParts[2]);
 
         if (day < 1 || day > LocalDate.of(year, month, 1).lengthOfMonth()) {
-            throw new ParseException("Invalid day for the given month/year");
+            throw new ParseException(INVALID_DAY_FOR_MONTH);
         }
 
         return LocalDate.of(year, month, day);
@@ -111,12 +131,16 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public LocalTime getCheckupTime(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
-        String timeString = parsedArgument[3];
-        if (!timeString.matches(TIME_VALIDATION_REGEX)) {
-            throw new ParseException("Invalid time values. Use HHmm");
+        try {
+            String timeString = parsedArgument[5];
+            if (!timeString.matches(TIME_VALIDATION_REGEX)) {
+                throw new ParseException(INVALID_TIME_FORMAT);
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+            return LocalTime.parse(timeString, formatter);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ParseException(MISSING_TIME);
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-        return LocalTime.parse(timeString, formatter);
     }
 
     /**
@@ -128,9 +152,6 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public String[] parseArguments(String trimmedArgs) throws ParseException {
         String[] parsedArguments = trimmedArgs.split("\\s+");
-        if (parsedArguments.length != 4) {
-            throw new ParseException(MESSAGE_USAGE);
-        }
         return parsedArguments;
     }
 }

@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
@@ -23,13 +24,13 @@ import seedu.address.model.person.Person;
  */
 public class ScheduleCommand extends Command {
     public static final String COMMAND_WORD = "schedule";
-    public static final String ADD_SCHEDULE_COMMAND = "add";
-    public static final String DELETE_SCHEDULE_COMMAND = "delete";
+    public static final String ADD_SCHEDULE_COMMAND = "add for patient";
+    public static final String DELETE_SCHEDULE_COMMAND = "delete for patient";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Schedules an appointment for a patient with a nurse.\n"
             + "Parameters: ACTION PATIENT_INDEX DATE TIME\n"
-            + "Example: " + COMMAND_WORD + " add 1 01/01/2025 1400";
+            + "Example: " + COMMAND_WORD + " " + ADD_SCHEDULE_COMMAND + " 1 01/01/2025 1400";
 
     public static final String MESSAGE_CHECKUP_CREATED = "Appointment for Patient %s has been "
             + "successfully created on %s at %s";
@@ -37,6 +38,8 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_CHECKUP_DELETED = "Appointment for Patient %s has been "
             + "successfully deleted from %s at %s";
     public static final String MESSAGE_CHECKUP_DOES_NOT_EXIST = "Appointment does not exist";
+    public static final String MISSING_ASSIGNED_NURSE = "Check up has been created for a patient without a nurse, "
+             + "REMEMBER to assign a nurse promptly after this!";
     private final Index patientIndex;
     private final LocalDate checkupDate;
     private final LocalTime checkupTime;
@@ -111,7 +114,7 @@ public class ScheduleCommand extends Command {
      * @throws ParseException If the checkup cannot be created due to invalid data.
      */
     public Checkup createCheckup() throws ParseException {
-        return new Checkup(checkupDate, checkupTime);
+        return new Checkup(checkupDate, checkupTime, isAdding);
     }
 
     /**
@@ -143,9 +146,9 @@ public class ScheduleCommand extends Command {
         }
 
         Person updatedPatient = new Person(
-                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(),
-                patient.getBloodType(), patient.getAppointment(), patient.getTags(), patient.getNextOfKin(),
-                patient.getMedicalHistory(), patientCheckups);
+                patient.getName(), patient.getDateOfBirth(), patient.getPhone(), patient.getEmail(),
+                patient.getAddress(), patient.getBloodType(), patient.getAppointment(), patient.getTags(),
+                patient.getNextOfKin(), patient.getMedicalHistory(), patientCheckups);
         model.setPerson(patient, updatedPatient);
     }
 
@@ -154,20 +157,88 @@ public class ScheduleCommand extends Command {
             throw new CommandException(MESSAGE_CHECKUP_DOES_NOT_EXIST);
         }
     }
+
     /**
      * Generates a success message after the checkup is scheduled.
      *
      * @param patient The patient for whom the checkup was scheduled.
      * @return A CommandResult containing the success message.
      */
-    private CommandResult generateSuccessMessage(Person patient) {
+    public CommandResult generateSuccessMessage(Person patient) {
+        String dateStr = formatDate(checkupDate);
+        String timeStr = formatTime(checkupTime);
+
+        String baseMessage = isAdding ? generateCheckupCreatedMessage(patient, dateStr, timeStr)
+                : generateCheckupDeletedMessage(patient, dateStr, timeStr);
+
+        return new CommandResult(baseMessage);
+    }
+
+    /**
+     * Generates a success message after a checkup is created.
+     *
+     * @param patient The patient for whom the checkup was created.
+     * @param dateStr The date of the checkup in "dd/MM/yyyy" format.
+     * @param timeStr The time of the checkup in "HH:mm" format.
+     * @return A formatted success message indicating the checkup creation status.
+     */
+    public String generateCheckupCreatedMessage(Person patient, String dateStr, String timeStr) {
+        boolean hasNurseAssigned = checkNurseAssignment(patient);
+
+        String message = String.format(MESSAGE_CHECKUP_CREATED, patient.getName(), dateStr, timeStr);
+
+        if (!hasNurseAssigned) {
+            message += "\n" + MISSING_ASSIGNED_NURSE;
+        }
+
+        return message;
+    }
+
+    /**
+     * Generates a success message after a checkup is deleted.
+     *
+     * @param patient The patient for whom the checkup was deleted.
+     * @param dateStr The date of the checkup in "dd/MM/yyyy" format.
+     * @param timeStr The time of the checkup in "HH:mm" format.
+     * @return A formatted success message indicating the deletion status of the checkup.
+     */
+    public String generateCheckupDeletedMessage(Person patient, String dateStr, String timeStr) {
+        return String.format(MESSAGE_CHECKUP_DELETED, patient.getName(), dateStr, timeStr);
+    }
+
+    /**
+     * Formats a given LocalDate object into a string representation.
+     *
+     * @param date The LocalDate object to format.
+     * @return A string representation of the date in "dd/MM/yyyy" format.
+     */
+    public String formatDate(LocalDate date) {
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(dateFormatter);
+    }
+
+    /**
+     * Formats a given LocalTime object into a string representation.
+     *
+     * @param time The LocalTime object to format.
+     * @return A string representation of the time in "HH:mm" format.
+     */
+    public String formatTime(LocalTime time) {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        return time.format(timeFormatter);
+    }
 
-        String dateStr = this.checkupDate.format(dateFormatter);
-        String timeStr = this.checkupTime.format(timeFormatter);
-
-        return new CommandResult(String.format((isAdding) ? MESSAGE_CHECKUP_CREATED : MESSAGE_CHECKUP_DELETED,
-                patient.getName(), dateStr, timeStr));
+    /**
+     * Checks if a nurse is assigned to the specified patient based on their tags.
+     *
+     * @param patient The patient whose tags will be checked for nurse assignments.
+     * @return True if the patient has at least one nurse assigned; false otherwise.
+     */
+    public boolean checkNurseAssignment(Person patient) {
+        List<String> nurseList = patient.getTags().stream()
+                .filter(tag -> tag.tagName.startsWith("Nurse"))
+                .map(tag -> tag.tagName.substring(5))
+                .collect(Collectors.toList());
+        return !nurseList.isEmpty();
     }
 }
