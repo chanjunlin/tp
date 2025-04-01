@@ -24,7 +24,7 @@ public class NextOfKin {
             this.value = "Next of Kin not provided";
         } else {
             checkArgument(isValidNextOfKin(input), MESSAGE_CONSTRAINTS);
-            this.value = input.trim();
+            this.value = normalize(input);
         }
     }
 
@@ -37,12 +37,15 @@ public class NextOfKin {
         if (input.equals("Next of Kin not provided")) {
             return true;
         }
-        String[] parts = input.trim().split(" ", 2);
-        if (parts.length < 2) {
+        String trimmedInput = input.trim();
+        int lastSpaceIndex = trimmedInput.lastIndexOf(' ');
+        if (lastSpaceIndex == -1) {
             return false;
         }
-        String name = parts[0];
-        String phone = parts[1];
+
+        String name = trimmedInput.substring(0, lastSpaceIndex);
+        String phone = trimmedInput.substring(lastSpaceIndex + 1);
+
         return Name.isValidName(name) && Phone.isValidPhone(phone);
     }
 
@@ -69,4 +72,12 @@ public class NextOfKin {
     public int hashCode() {
         return value.hashCode();
     }
+
+    /**
+     * Normalizes whitespace in the input by trimming and collapsing multiple spaces into one.
+     */
+    private String normalize(String input) {
+        return input.trim().replaceAll("\\s+", " ");
+    }
+
 }
