@@ -431,6 +431,7 @@ public class EditCommand extends Command {
 
             EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
             return Objects.equals(name, otherEditPersonDescriptor.name)
+                    && Objects.equals(dob, otherEditPersonDescriptor.dob)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
@@ -438,13 +439,15 @@ public class EditCommand extends Command {
                     && Objects.equals(appointment, otherEditPersonDescriptor.appointment)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(nextOfKin, otherEditPersonDescriptor.nextOfKin)
-                    && Objects.equals(medicalHistory, otherEditPersonDescriptor.medicalHistory);
+                    && Objects.equals(medicalHistory, otherEditPersonDescriptor.medicalHistory)
+                    && Objects.equals(checkups, otherEditPersonDescriptor.checkups);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
                     .add("name", name)
+                    .add("dob", dob)
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
