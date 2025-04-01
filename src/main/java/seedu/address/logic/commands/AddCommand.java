@@ -25,16 +25,17 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+            + "Fields in square brackets are optional\n"
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DOB + "DOB "
             + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
             + PREFIX_BLOODTYPE + "BLOODTYPE "
             + PREFIX_APPOINTMENT + "APPOINTMENT "
-            + "[" + PREFIX_NOK + "NEXT_OF_KIN_NAME_PHONE]"
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_NOK + "NEXT_OF_KIN_NAME_PHONE] "
             + "[" + PREFIX_TAG + "TAG]... "
             + "[" + PREFIX_MEDICAL_HISTORY + "MEDICAL_HISTORY]...\n"
             + "Example: " + COMMAND_WORD + " "
