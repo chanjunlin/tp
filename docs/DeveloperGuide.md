@@ -155,93 +155,118 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### Add Feature
 
-#### Proposed Implementation
+The `add` command allows the user to add a new person to the address book.
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
+2. `AddressBookParser` parses the command and returns an `AddCommand` object.
+3. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
+![Sequence Diagram](...)
 
 #### Design considerations:
 
-**Aspect: How undo & redo executes:**
+We chose to implement parsing with a `ParserUtil` helper class to simplify each command parser. An alternative would be using a central parser for all commands, but this was less modular.
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+### Edit Feature
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+The `edit` command allows the user to edit an existing person in the address book.
 
-_{more aspects and alternatives to be added}_
+1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
+2. `AddressBookParser` parses the command and returns an `EditCommandParser` object.
+3. `EditCommandParser#parse()` creates an `EditCommand` object.
+4. `EditCommand#execute()` edits the person in the model and returns a `CommandResult`.
 
-### \[Proposed\] Data archiving
+![Sequence Diagram](images/EditSequenceDiagram.png)
 
-_{Explain here how the data archiving feature will be implemented}_
+#### Design considerations:
+
+We chose to implement parsing with a `ParserUtil` helper class to simplify each command parser. An alternative would be using a central parser for all commands, but this was less modular.
+
+### List Feature
+
+The `list` command allows users to display a subset of people in the address book based on optional filters.
+
+It supports the following use cases:
+- `list` — Lists **all persons** in the address book (patients and nurses).
+- `list nurse` or `list patient` — Lists **only nurses** or **only patients**, respectively.
+- `list checkup` — Lists all persons with scheduled **checkups**, sorted by earliest checkup date.
+
+#### Execution Flow:
+1. `LogicManager` receives the command text (e.g., `"list checkup"`) and passes it to `AddressBookParser`.
+2. `AddressBookParser` uses a `ListCommandParser` to interpret the command.
+3. `ListCommandParser#parse()` constructs a `ListCommand` object, based on the input string.
+4. `ListCommand#execute()` evaluates the internal flags:
+    - If the command was `list checkup`, it calls `updateFilteredPersonListByEarliestCheckup(...)` with a `PersonHasCheckupPredicate`.
+    - If no filter was provided, it lists all persons using `Model.PREDICATE_SHOW_ALL_PERSONS`.
+    - If a specific appointment filter was provided (e.g., `"nurse"`), it filters with `PersonHasAppointmentPredicate`.
+5. A `CommandResult` is returned with a success message indicating what was listed.
+
+![Sequence Diagram](images/ListCommandSequenceDiagram.png)
+
+#### Design considerations:
+
+We chose to centralize filtering logic inside `ListCommand`, separating parsing (`ListCommandParser`) from behavior. This approach improves maintainability and makes it easy to extend filtering options (e.g., by tag or medical history) in the future.
+
+### Find Feature
+
+The `find` command enables users to search for specific entities in the address book, including:
+- Nurses assigned to the patients.
+- Patients associated with the nurses.
+- Users whose names contain the specified search terms.
+
+This functionality improves user experience by allowing quick access to relevant information.
+
+#### Execution Flow:
+1. `LogicManager` receives the command text from the user and passes it to `AddressBookParser`.
+2. Depending on the arguments, `AddressBookParser` will return one of the following:
+    - `FindNurseCommand`: for searching nurses assigned to a specific patient.
+    - `FindPatientCommand`: for searching patients assigned to a specific nurse.
+    - `FindCommand`: a general command for searching based on keywords in user names.
+3. `AddressBookParser` parses the command and returns the appropriate `FindCommand` object.
+4. `FindCommand#execute()` retrieves the relevant entries from the model and returns a `CommandResult`.
+5. For `FindNurseCommand`, it finds and returns all nurses assigned to the specified patient.
+6. For `FindPatientCommand`, it finds and returns all patients assigned to the specified nurse.
+7. For `FindCommand`, it allows the user to search by keywords. For example, executing `find tom harry` will return all users that contain either "tom" or "harry" in their names.
+
+Using this command, users can effortlessly navigate and manage their address book, finding relevant information quickly and efficiently.
+
+![Sequence Diagram](diagrams/FindScheduleSequenceDiagram.puml)
+
+#### Design considerations:
+
+We chose to implement parsing with a `ParserUtil` helper class to simplify each command parser. An alternative would be using a central parser for all commands, but this was less modular.
+
+### Assign Feature
+
+The `assign` command allows the user to assign a nurse to a patient.
+
+1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
+2. `AddressBookParser` parses the command and returns an `AssignCommand` object.
+3. `AssignCommand#execute()` assigns the nurse to the patient and returns a `CommandResult`.
+
+![Sequence Diagram](images/AssignSequenceDiagram.png)
+
+#### Design considerations:
+
+We chose to implement parsing with a `ParserUtil` helper class to simplify each command parser. An alternative would be using a central parser for all commands, but this was less modular.
+
+### Schedule Feature
+
+The `schedule` command allows the user to create a checkup between a patient and a nurse.
+
+1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
+2. `AddressBookParser` parses the command and returns an `ScheduleCommand` object.
+3. `ScheduleCommand#execute()` creates or deletes the checkup from the patient and returns a `CommandResult`.
+
+![Sequence Diagram](images/ScheduleSequenceDiagram.png)
+
+#### Design considerations:
+
+We chose to implement parsing with a `ParserUtil` helper class to simplify each command parser. An alternative would be using a central parser for all commands, but this was less modular.
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------
@@ -262,14 +287,17 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* Manager or nurse at a private nurse agency
+* has a need to manage a significant number of nurses and/or patients
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**:
+1) Manage nurse and patients faster than a typical mouse/GUI driven app
+2) Allows faster creation and storage of details compared to traditional pen and paper methods
+3) Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
 
 ### User stories
 
@@ -299,21 +327,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Forgetful Nurse               | schedule automatic reminders for task like checkups and medications times            | task are always done on time                                                                    |
 | `*`      | Nurse during a midnight shift | activate night mode interface with darker colours and larger text to enhance visuals | reduce eye strain while ensuring accuracy when recording patient data in dimly lit environments |
 | `*`      | Manager                       | log in using my staff credential                                                     | Securely access patient records                                                                 |
-																							
+
 *{More to be added}*
 
 ### Use cases
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+**Use case: Delete a nurse / patient**
 
 **MSS**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list nurses / patients
+2.  AddressBook shows the list of nurses / patients
+3.  User requests to delete a specific nurse / patient in the list
+4.  AddressBook deletes the nurse / patient
 
     Use case ends.
 
@@ -329,7 +357,67 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: Add a nurse / patient**
+
+**MSS**
+
+1.  User requests to list nurses / patients
+2.  AddressBook shows the list of nurses / patients
+3.  User requests to add a nurse / patient in the list
+4.  AddressBook adds the nurse / patient
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The user enters incorrect command format.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Edit a nurse / patient**
+
+**MSS**
+
+1. User requests to list nurses / patients
+2. AddressBook shows the list of nurses / patients
+3. User requests to edit a nurse's / patient's details
+4. AddressBook edits the nurse's / patient's details
+
+    Use case ends.
+
+**Extensions**
+
+* 2a. The list is empty.
+
+    Use case ends.
+
+* 3a. The user enters incorrect command format.
+
+    * 3a1. AddressBook shows an error message.
+
+      Use case resumes at step 2.
+
+**Use case: Exit the app**
+
+**MSS**
+
+1. User requests to exit app
+2. AddressBook closes
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The user enters incorrect command format.
+    * 1a1. AddressBook shows an error message.
+
+      Use case resumes at step 1.
 
 ### Non-Functional Requirements
 
@@ -337,11 +425,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-*{More to be added}*
-
 ### Glossary
 
-* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type))
+* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type, next-of-kin))
 * **Appointment**: The role of the person
 * **Manager**: Manages the nurses
 * **Nurse**: Tends to the patients
@@ -395,6 +481,5 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
-
-1. _{ more test cases …​ }_
+   1. _Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
+   2. Delete the file and restart the app to recover and start with a small list of sample contacts._

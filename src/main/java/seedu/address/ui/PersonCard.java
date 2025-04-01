@@ -33,13 +33,23 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label dob;
+    @FXML
     private Label phone;
     @FXML
     private Label address;
     @FXML
     private Label email;
     @FXML
+    private Label bloodType;
+    @FXML
+    private Label appointment;
+    @FXML
+    private Label nextOfKin;
+    @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane checkups;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -49,11 +59,21 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
+        dob.setText(person.getDateOfBirth().toString());
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        bloodType.setText(person.getBloodType().bloodType);
+        appointment.setText(person.getAppointment().appointment);
+        nextOfKin.setText(person.getNextOfKin().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        person.getCheckups().stream()
+                .sorted(Comparator.comparing(checkup -> checkup.checkupDateTime))
+                .forEach(checkup -> {
+                    Label checkupLabel = new Label(checkup.toString());
+                    checkups.getChildren().add(checkupLabel);
+                });
     }
 }

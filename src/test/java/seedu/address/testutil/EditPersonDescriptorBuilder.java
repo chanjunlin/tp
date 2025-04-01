@@ -6,8 +6,13 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Appointment;
+import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -28,7 +33,7 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details
+     * Returns an {@code EditPersonDescriptor} with fields containing {@code person}'s details.
      */
     public EditPersonDescriptorBuilder(Person person) {
         descriptor = new EditPersonDescriptor();
@@ -36,7 +41,11 @@ public class EditPersonDescriptorBuilder {
         descriptor.setPhone(person.getPhone());
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
+        descriptor.setBloodType(person.getBloodType());
+        descriptor.setAppointment(person.getAppointment());
         descriptor.setTags(person.getTags());
+        descriptor.setNextOfKin(person.getNextOfKin());
+        descriptor.setMedicalHistory(person.getMedicalHistory());
     }
 
     /**
@@ -47,6 +56,13 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code DOB} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withDateOfBirth(String dob) {
+        descriptor.setDateOfBirth(new DateOfBirth(dob));
+        return this;
+    }
     /**
      * Sets the {@code Phone} of the {@code EditPersonDescriptor} that we are building.
      */
@@ -72,6 +88,22 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
+     * Sets the {@code BloodType} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withBloodType(String bloodType) {
+        descriptor.setBloodType(new BloodType(bloodType));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Appointment} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withAppointment(String appointment) {
+        descriptor.setAppointment(new Appointment(appointment));
+        return this;
+    }
+
+    /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code EditPersonDescriptor}
      * that we are building.
      */
@@ -80,6 +112,28 @@ public class EditPersonDescriptorBuilder {
         descriptor.setTags(tagSet);
         return this;
     }
+
+    /**
+     * Parses the {@code medicalHistory} into a {@code Set<MedicalHistory>}
+     * and set it to the {@code EditPersonDescriptor}
+     * that we are building.
+     */
+    public EditPersonDescriptorBuilder withMedicalHistory(String... medicalHistory) {
+        Set<MedicalHistory> mHset = Stream.of(medicalHistory).map(MedicalHistory::new).collect(Collectors.toSet());
+        descriptor.setMedicalHistory(mHset);
+        return this;
+    }
+
+    /**
+     * Parses the {@code nextOfKin} string and sets it to the {@code EditPersonDescriptor}
+     * that we are building.
+     * The input should be in the format "Name Phone", e.g., "Jane Doe 91234567".
+     */
+    public EditPersonDescriptorBuilder withNextOfKin(String nextOfKin) {
+        descriptor.setNextOfKin(new NextOfKin(nextOfKin));
+        return this;
+    }
+
 
     public EditPersonDescriptor build() {
         return descriptor;

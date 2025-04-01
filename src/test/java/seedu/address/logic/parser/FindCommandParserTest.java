@@ -8,7 +8,10 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindNurseCommand;
+import seedu.address.logic.commands.FindPatientCommand;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
@@ -21,14 +24,63 @@ public class FindCommandParserTest {
     }
 
     @Test
+    public void parse_nurseArgs_returnsFindNurseCommand() {
+        // test when using "nurse"
+        FindNurseCommand expectedFindNurseCommand =
+                new FindNurseCommand(Index.fromZeroBased(0));
+        assertParseSuccess(parser, "nurse of patient 1", expectedFindNurseCommand);
+
+        // test when using "Nurse"
+        expectedFindNurseCommand =
+                new FindNurseCommand(Index.fromZeroBased(0));
+        assertParseSuccess(parser, "Nurse of patient 1", expectedFindNurseCommand);
+    }
+
+    @Test
+    public void parse_patientArgs_returnsFindPatientCommand() {
+        // test when using "patient"
+        FindPatientCommand expectedFindPatientCommand =
+                new FindPatientCommand(Index.fromZeroBased(0));
+        assertParseSuccess(parser, "patient of nurse 1", expectedFindPatientCommand);
+
+        // test when using "Patient"
+        expectedFindPatientCommand =
+                new FindPatientCommand(Index.fromZeroBased(0));
+        assertParseSuccess(parser, "Patient of nurse 1", expectedFindPatientCommand);
+    }
+
+    @Test
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         FindCommand expectedFindCommand =
-                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+                new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList("alice", "bob")));
         assertParseSuccess(parser, "Alice Bob", expectedFindCommand);
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
     }
 
+    @Test
+    public void parse_nurseMissingIndex_returnsParseException() {
+        String nurseMissingIndexErrorMessage = "Usage: find nurse of patient PATIENT_INDEX";
+        assertParseFailure(parser, "nurse of patient", nurseMissingIndexErrorMessage);
+    }
+
+    @Test
+    public void parse_patientMissingIndex_returnsParseException() {
+        String patientMissingIndexErrorMessage = "Usage: find patient of nurse NURSE_INDEX";
+        assertParseFailure(parser, "patient of nurse", patientMissingIndexErrorMessage);
+    }
+
+    @Test
+    public void parse_nurseWrongArgument_returnsNumberFormatException() {
+        String errorMessage = "Index is not a non-zero unsigned integer.";
+        assertParseFailure(parser, "nurse of patient two", errorMessage);
+    }
+
+    @Test
+    public void parse_patientWrongArgument_returnsNumberFormatException() {
+        String errorMessage = "Index is not a non-zero unsigned integer.";
+        assertParseFailure(parser, "patient of nurse two", errorMessage);
+    }
 }
