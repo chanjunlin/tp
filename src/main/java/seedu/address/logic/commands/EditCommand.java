@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_APPOINTMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BLOODTYPE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICAL_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -30,6 +31,7 @@ import seedu.address.model.checkup.Checkup;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.BloodType;
+import seedu.address.model.person.DateOfBirth;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.MedicalHistory;
 import seedu.address.model.person.Name;
@@ -51,6 +53,7 @@ public class EditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DOB + "DOB] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
@@ -134,13 +137,13 @@ public class EditCommand extends Command {
             Appointment appointmentBeforeEdit = personToEdit.getAppointment();
             Appointment appointmentAfterEdit = editedPerson.getAppointment();
             if (appointmentBeforeEdit.isNurse() && appointmentAfterEdit.isPatient()) {
-                String nameNoSpaces = personToEdit.getName().toString().replaceAll(" ", "");
+                String name = personToEdit.getName().toString();
                 boolean patientHasEditedNurse = personModel.getFilteredPersonList()
                                                            .stream()
                                                            .filter(person -> person.getAppointment().isPatient())
                                                            .anyMatch(person -> person.getTags().stream()
                                                            .anyMatch(tag -> tag.tagName
-                                                                                   .equals("Nurse" + nameNoSpaces)));
+                                                                                   .equals("Nurse " + name)));
 
                 if (patientHasEditedNurse) {
                     throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
@@ -156,12 +159,12 @@ public class EditCommand extends Command {
 
         if (editPersonDescriptor.getName().isPresent()) {
             Appointment appointmentBeforeEdit = personToEdit.getAppointment();
-            String nameNoSpaces = personToEdit.getName().toString().replaceAll(" ", "");
+            String name = personToEdit.getName().toString();
             boolean nurseHasPatientAssigned = model.getFilteredPersonList()
                                                    .stream()
                                                    .filter(person -> person.getAppointment().isPatient())
                                                    .anyMatch(person -> person.getTags().stream()
-                                                   .anyMatch(tag -> tag.tagName.equals("Nurse" + nameNoSpaces)));
+                                                   .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
 
             if (appointmentBeforeEdit.isNurse() && nurseHasPatientAssigned) {
                 throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
@@ -183,14 +186,14 @@ public class EditCommand extends Command {
     // Ensure that a patient can change to a nurse if they have no assigned nurse.
     private void ensurePatientHasNoAssignedNurse(Person personToEdit, Model personModel) throws CommandException {
         if (editPersonDescriptor.getAppointment().isPresent()) {
-            String nameNoSpaces = personToEdit.getName().toString();
+            String name = personToEdit.getName().toString();
             boolean hasNurseAssigned = personModel.getFilteredPersonList()
                                                   .stream()
                                                   .filter(person -> person.getName()
                                                                                  .toString()
-                                                                                 .equalsIgnoreCase(nameNoSpaces))
+                                                                                 .equalsIgnoreCase(name))
                                                   .anyMatch(person -> person.getTags().stream()
-                                                  .anyMatch(tag -> tag.tagName.startsWith("Nurse")));
+                                                  .anyMatch(tag -> tag.tagName.startsWith("Nurse ")));
             boolean changeToPatient = editPersonDescriptor.getAppointment().get().isPatient();
             if (personToEdit.isPatient() && hasNurseAssigned && !changeToPatient) {
                 throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE);
@@ -237,6 +240,7 @@ public class EditCommand extends Command {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        DateOfBirth updatedDateOfBirth = editPersonDescriptor.getDateOfBirth().orElse(personToEdit.getDateOfBirth());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
@@ -251,11 +255,11 @@ public class EditCommand extends Command {
 
         if (personToEdit.isPatient()) {
             updatedTags.addAll(personToEdit.getTags().stream().filter(tag -> tag.tagName.startsWith("Nurse"))
-                    .collect(Collectors.toSet()));
+                                       .collect(Collectors.toSet()));
         }
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedBloodType, updatedAppointment,
-                updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
+        return new Person(updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedAddress, updatedBloodType,
+                          updatedAppointment, updatedTags, nextOfKin, updatedMedicalHistory, currentCheckups);
     }
 
     @Override
@@ -288,6 +292,7 @@ public class EditCommand extends Command {
      */
     public static class EditPersonDescriptor {
         private Name name;
+        private DateOfBirth dob;
         private Phone phone;
         private Email email;
         private Address address;
@@ -306,6 +311,7 @@ public class EditCommand extends Command {
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
+            setDateOfBirth(toCopy.dob);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
@@ -321,7 +327,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address,
+            return CollectionUtil.isAnyNonNull(name, dob, phone, email, address,
                     bloodType, appointment, tags, nextOfKin, medicalHistory);
         }
 
@@ -331,6 +337,14 @@ public class EditCommand extends Command {
 
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
+        }
+
+        public void setDateOfBirth(DateOfBirth dob) {
+            this.dob = dob;
+        }
+
+        public Optional<DateOfBirth> getDateOfBirth() {
+            return Optional.ofNullable(dob);
         }
 
         public void setPhone(Phone phone) {

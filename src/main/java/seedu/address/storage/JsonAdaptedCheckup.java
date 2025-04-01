@@ -52,6 +52,6 @@ public class JsonAdaptedCheckup {
         LocalDate checkupDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         LocalTime checkupTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
 
-        return new Checkup(checkupDate, checkupTime);
+        return new Checkup(checkupDate, checkupTime, true);
     }
 }

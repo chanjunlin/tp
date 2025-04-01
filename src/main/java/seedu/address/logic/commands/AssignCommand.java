@@ -20,7 +20,7 @@ public class AssignCommand extends Command {
 
     public static final String COMMAND_WORD = "assign";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a nurse to a patient. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Assigns a nurse to a patient.\n"
             + "Parameters: PATIENT_INDEX NURSE_INDEX\n"
             + "Example: " + COMMAND_WORD + " 2 1";
 
@@ -78,12 +78,12 @@ public class AssignCommand extends Command {
         }
 
         Set<Tag> updatedTags = new HashSet<>(patient.getTags());
-        updatedTags.add(new Tag("Nurse" + nurse.getName().fullName.replaceAll(" ", "")));
+        updatedTags.add(new Tag("Nurse " + nurse.getName().fullName));
 
         Person updatedPatient = new Person(
-                patient.getName(), patient.getPhone(), patient.getEmail(), patient.getAddress(), patient.getBloodType(),
-                patient.getAppointment(), updatedTags, patient.getNextOfKin(), patient.getMedicalHistory(),
-                patient.getCheckups());
+                patient.getName(), patient.getDateOfBirth(), patient.getPhone(), patient.getEmail(),
+                patient.getAddress(), patient.getBloodType(), patient.getAppointment(), updatedTags,
+                patient.getNextOfKin(), patient.getMedicalHistory(), patient.getCheckups());
         model.setPerson(patient, updatedPatient);
         return new CommandResult(String.format(MESSAGE_SUCCESS, nurse.getName(), patient.getName()));
     }

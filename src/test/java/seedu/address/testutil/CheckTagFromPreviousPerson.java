@@ -47,6 +47,7 @@ public class CheckTagFromPreviousPerson {
         }
 
         return new Person(editedPerson.getName(),
+                          editedPerson.getDateOfBirth(),
                           editedPerson.getPhone(),
                           editedPerson.getEmail(),
                           editedPerson.getAddress(),
@@ -54,6 +55,7 @@ public class CheckTagFromPreviousPerson {
                           editedPerson.getAppointment(),
                           updatedTags,
                           editedPerson.getNextOfKin(),
-                          editedPerson.getMedicalHistory());
+                          editedPerson.getMedicalHistory(),
+                          editedPerson.getCheckups());
     }
 }
