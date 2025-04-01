@@ -78,8 +78,6 @@ public class EditCommand extends Command {
                                                                                + "this nurse is assigned to a patient.";
     public static final String MESSAGE_UNABLE_TO_CHANGE_NAME = "Unable to change name, "
                                                               + "as this nurse is assigned to a patient.";
-    public static final String MESSAGE_PERSON_IS_ALREADY_A_NURSE = "This person is already a nurse.";
-    public static final String MESSAGE_PERSON_IS_ALREADY_A_PATIENT = "This person is already a patient.";
     public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE = "Unable to change appointment to a "
                                                                              + "nurse, as this patient is assigned "
                                                                              + "to a nurse.";
@@ -146,8 +144,7 @@ public class EditCommand extends Command {
                                                        .stream()
                                                        .filter(person -> person.getAppointment().isPatient())
                                                        .anyMatch(person -> person.getTags().stream()
-                                                       .anyMatch(tag -> tag.tagName
-                                                                               .equals("Nurse " + name)));
+                                                       .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
 
             if (patientHasEditedNurse) {
                 throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
