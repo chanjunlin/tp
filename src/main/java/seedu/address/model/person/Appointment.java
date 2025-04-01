@@ -41,6 +41,13 @@ public class Appointment {
         return this.toString().equalsIgnoreCase("nurse");
     }
 
+    /**
+     * Returns true if the appointment is patient and false otherwise.
+     */
+    public boolean isPatient() {
+        return this.toString().equalsIgnoreCase("patient");
+    }
+
     @Override
     public String toString() {
         return appointment;
