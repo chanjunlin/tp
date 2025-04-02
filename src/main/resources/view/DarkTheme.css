@@ -366,6 +366,6 @@
 }
 
 .split-pane:vertical > .split-pane-divider {
-    -fx-background-color: transparent; /* or match your theme */
-    -fx-padding: 0; /* optional, to remove space */
+    -fx-background-color: transparent;
+    -fx-padding: 0;
 }
