@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.commands.FindPatientCommand.MESSAGE_INVALID_NURSE;
 import static seedu.address.logic.commands.FindPatientCommand.MESSAGE_NO_PATIENT_ASSIGNED;
 import static seedu.address.logic.commands.FindPatientCommand.MESSAGE_PATIENT_FOUND;
@@ -17,6 +16,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Appointment;
+import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
@@ -27,17 +28,21 @@ public class FindPatientCommandTest {
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validIndex_success() {
+    public void execute_validIndex_success() throws CommandException {
+        Model model1 = new ModelManager();
+        Person nurse = new PersonBuilder().withName("john lee").withAppointment("Nurse").build();
+        Person patient = new PersonBuilder().withName("alice doe").withAppointment("Patient")
+                .withTags("Nurse JOHN LEE").build();
+
+        model1.addPerson(nurse);
+        model1.addPerson(patient);
+
         Index validNurseIndex = Index.fromZeroBased(1);
         FindPatientCommand command = new FindPatientCommand(validNurseIndex);
 
-        try {
-            CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "BENSON MEIER", "ALICE PAULINE"),
-                    result.getFeedbackToUser());
-        } catch (CommandException e) {
-            fail("Execution should not throw an exception: " + e.getMessage());
-        }
+        CommandResult result = command.execute(model1);
+        assertEquals(String.format(MESSAGE_PATIENT_FOUND, "JOHN LEE", "ALICE DOE"),
+                result.getFeedbackToUser());
     }
 
     @Test
@@ -79,35 +84,42 @@ public class FindPatientCommandTest {
     }
 
     @Test
-    public void execute_withoutFilter() {
+    public void execute_withoutFilter() throws CommandException {
+        Model model1 = new ModelManager();
+        Person nurse = new PersonBuilder().withName("john lee").withAppointment("Nurse").build();
+        Person patient = new PersonBuilder().withName("alice doe").withAppointment("Patient")
+                .withTags("Nurse JOHN LEE").build();
+
+        model1.addPerson(nurse);
+        model1.addPerson(patient);
+
         Index validNurseIndex = Index.fromZeroBased(1);
         FindPatientCommand findCommand = new FindPatientCommand(validNurseIndex);
 
-        try {
-            Command listCommand = new ListCommand(null);
-            listCommand.execute(model);
-            CommandResult result1 = findCommand.execute(model);
-            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "BENSON MEIER", "ALICE PAULINE"),
-                    result1.getFeedbackToUser());
-        } catch (CommandException e) {
-            fail("Execution should not throw an exception: " + e.getMessage());
-        }
+        Command listCommand = new ListCommand(null);
+        listCommand.execute(model1);
+        CommandResult result1 = findCommand.execute(model1);
+        assertEquals(String.format(MESSAGE_PATIENT_FOUND, "JOHN LEE", "ALICE DOE"),
+                result1.getFeedbackToUser());
     }
 
     @Test
-    public void execute_withFilter() {
+    public void execute_withFilter() throws CommandException {
+        Model model1 = new ModelManager();
+        Person nurse = new PersonBuilder().withName("john lee").withAppointment("Nurse").build();
+        Person patient = new PersonBuilder().withName("alice doe").withAppointment("Patient")
+                .withTags("Nurse JOHN LEE").build();
+
+        model1.addPerson(nurse);
+        model1.addPerson(patient);
+
         Index validNurseIndex = Index.fromZeroBased(0);
         FindPatientCommand findCommand = new FindPatientCommand(validNurseIndex);
 
-        try {
-            Command listNurseCommand = new ListCommand(new Appointment("nurse"));
-            listNurseCommand.execute(model);
-            CommandResult result2 = findCommand.execute(model);
-            assertEquals(String.format(MESSAGE_PATIENT_FOUND, "BENSON MEIER", "ALICE PAULINE"),
-                    result2.getFeedbackToUser());
-        } catch (CommandException e) {
-            fail("Execution should not throw an exception: " + e.getMessage());
-        }
+        Command listNurseCommand = new ListCommand(new Appointment("nurse"));
+        listNurseCommand.execute(model1);
+        CommandResult result2 = findCommand.execute(model1);
+        assertEquals(String.format(MESSAGE_PATIENT_FOUND, "JOHN LEE", "ALICE DOE"),
+                result2.getFeedbackToUser());
     }
-
 }
