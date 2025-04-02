@@ -59,6 +59,7 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
    * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
 
    * `schedule 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
+
    * `view 4` : Displays the medical history of the patient at the 4th index in the current list.
 
    * `clear` : Deletes all contacts.
