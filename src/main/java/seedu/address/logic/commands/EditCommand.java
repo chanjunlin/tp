@@ -127,11 +127,9 @@ public class EditCommand extends Command {
             ensurePatientHasNoAssignedNurse(personToEdit, model);
             ensureNurseHasNoPatient(personToEdit, editedPerson, model);
         }
-
         if (editPersonDescriptor.getName().isPresent()) {
             ensureChangeNameNurseIfNoPatient(personToEdit, model);
         }
-
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -161,7 +159,8 @@ public class EditCommand extends Command {
                                                        .stream()
                                                        .filter(person -> person.getAppointment().isPatient())
                                                        .anyMatch(person -> person.getTags().stream()
-                                                       .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
+                                                                .anyMatch(tag -> tag.tagName.equals("Nurse "
+                                                                                                         + name)));
             logger.info("Patient has edited nurse: " + patientHasEditedNurse);
             if (patientHasEditedNurse) {
                 throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
@@ -184,7 +183,7 @@ public class EditCommand extends Command {
                                                .stream()
                                                .filter(person -> person.getAppointment().isPatient())
                                                .anyMatch(person -> person.getTags().stream()
-                                               .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
+                                                        .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
         logger.info("Nurse has patient assigned: " + nurseHasPatientAssigned);
         if (isNurse && nurseHasPatientAssigned) {
             throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
