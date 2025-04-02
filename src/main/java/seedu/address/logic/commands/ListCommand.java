@@ -24,12 +24,18 @@ public class ListCommand extends Command {
     private final Appointment appointmentFilter;
     private boolean filterByCheckup = false;
 
+    /**
+     * Constructs a ListCommand that filters persons by the given appointment type (e.g., Nurse or Patient).
+     *
+     * @param appointmentFilter The appointment type to filter by, or null to show all persons.
+     */
     public ListCommand(Appointment appointmentFilter) {
         this.appointmentFilter = appointmentFilter;
     }
 
     /**
-     * test
+     * Constructs a ListCommand that filters persons based on whether they have a checkup.
+     *
      * @param filterByCheckup test
      */
     public ListCommand(boolean filterByCheckup) {
@@ -70,7 +76,9 @@ public class ListCommand extends Command {
     }
 
     /**
-     * Returns the current appointment filter set by user.
+     * Returns the current appointment filter set by the user.
+     *
+     * @return the current appointment filter, or null if showing all persons.
      */
     public static Appointment getAppointmentFilter() {
         return currentAppointmentFilter;
