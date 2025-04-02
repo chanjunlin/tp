@@ -68,12 +68,26 @@ public class PersonCard extends UiPart<Region> {
         nextOfKin.setText(person.getNextOfKin().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label tagLabel = new Label(tag.tagName);
+                    tagLabel.getStyleClass().add(getTagColour(tag.tagName));
+                    tags.getChildren().add(tagLabel);
+                });
         person.getCheckups().stream()
                 .sorted(Comparator.comparing(checkup -> checkup.checkupDateTime))
                 .forEach(checkup -> {
                     Label checkupLabel = new Label(checkup.toString());
                     checkups.getChildren().add(checkupLabel);
                 });
+    }
+
+    private String getTagColour(String tagName) {
+        String tagNameLower = tagName.toLowerCase();
+        switch (tagNameLower) {
+        case "nurse":
+            return "green";
+        default:
+            return "white";
+        }
     }
 }
