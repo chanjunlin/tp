@@ -55,34 +55,16 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
-        }
-        if (argMultimap.getValue(PREFIX_DOB).isPresent()) {
-            editPersonDescriptor.setDateOfBirth(ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB).get()));
-        }
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            editPersonDescriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            editPersonDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
-        }
-        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            editPersonDescriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
-        }
-        if (argMultimap.getValue(PREFIX_BLOODTYPE).isPresent()) {
-            editPersonDescriptor.setBloodType(ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get()));
-        }
-        if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
-            editPersonDescriptor.setAppointment(ParserUtil.parseAppointment(
-                    argMultimap.getValue(PREFIX_APPOINTMENT).get()));
-        }
-        if (argMultimap.getValue(PREFIX_NOK).isPresent()) {
-            editPersonDescriptor.setNextOfKin(ParserUtil.parseNextOfKin(argMultimap.getValue(PREFIX_NOK).get()));
-        }
+        parseName(editPersonDescriptor, argMultimap);
+        parseDateOfBirth(editPersonDescriptor, argMultimap);
+        parsePhone(editPersonDescriptor, argMultimap);
+        parseEmail(editPersonDescriptor, argMultimap);
+        parseAddress(editPersonDescriptor, argMultimap);
+        parseBloodType(editPersonDescriptor, argMultimap);
+        parseAppointment(editPersonDescriptor, argMultimap);
+        parseNextOfKin(editPersonDescriptor, argMultimap);
 
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
-
         parseMedicalHistoryForEdit(argMultimap.getAllValues(PREFIX_MEDICAL_HISTORY))
                                    .ifPresent(editPersonDescriptor::setMedicalHistory);
 
@@ -91,6 +73,54 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         return new EditCommand(index, editPersonDescriptor);
+    }
+
+    private void parseName(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            descriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
+        }
+    }
+
+    private void parseDateOfBirth(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_DOB).isPresent()) {
+            descriptor.setDateOfBirth(ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB).get()));
+        }
+    }
+
+    private void parsePhone(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            descriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
+        }
+    }
+
+    private void parseEmail(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            descriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
+        }
+    }
+
+    private void parseAddress(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            descriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
+        }
+    }
+
+    private void parseBloodType(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_BLOODTYPE).isPresent()) {
+            descriptor.setBloodType(ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get()));
+        }
+    }
+
+    private void parseAppointment(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
+            descriptor.setAppointment(ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get()));
+        }
+    }
+
+    private void parseNextOfKin(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
+        if (argMultimap.getValue(PREFIX_NOK).isPresent()) {
+            descriptor.setNextOfKin(ParserUtil.parseNextOfKin(argMultimap.getValue(PREFIX_NOK).get()));
+        }
     }
 
     /**
