@@ -58,7 +58,10 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 
    * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
 
-   * `schedule 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
+   * `schedule add for patient 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
+
+   * `schedule delete for patient 2 25/05/2025 1100` : Deletes a check-up for the patient shown at the 2nd position of the list at the given date and time.
+
    * `view 4` : Displays the medical history of the patient at the 4th index in the current list.
 
    * `clear` : Deletes all contacts.
@@ -148,7 +151,7 @@ Examples:
 
 Edits an existing person (patient or nurse) in the address book.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list (filtered or unfiltered). The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -233,12 +236,18 @@ Format: `assign PATIENT_INDEX NURSE_INDEX`
 
 ### Schedule checkups : `schedule`
 
-Schedules a checkup for the patient
+Schedules a checkup for the patient:
+* Can add a checkup
+* Can delete a checkup (that exists)
 
-Format: `schedule INDEX DATE TIME`
+Format:
+- `schedule add for patient INDEX DATE TIME`
+- `schedule delete for patient INDEX DATE TIME`
 
 Examples:
-* `schedule 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm
+* `schedule add for patient 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm
+* `schedule delete for patient 1 12/12/2025 1200` deletes a checkup for patient at index 1 on 12/12/2025 at 12:00pm
+
 
 ### Viewing a nurse or patient : `view`
 

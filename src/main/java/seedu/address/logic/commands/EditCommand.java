@@ -19,8 +19,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
@@ -75,15 +77,25 @@ public class EditCommand extends Command {
                                                                       + " (e.g. edit 1 mh/ to remove medical history).";
     public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT = "Unable to change appointment to a "
                                                                                + "patient, as "
-                                                                               + "this nurse is assigned to a patient.";
+                                                                               + "this nurse is assigned to a patient."
+                                                                               + "\n"
+                                                                               + "Please remove all assigned patients "
+                                                                               + "to this nurse before changing "
+                                                                               + "appointment to patient.";
     public static final String MESSAGE_UNABLE_TO_CHANGE_NAME = "Unable to change name, "
-                                                              + "as this nurse is assigned to a patient.";
+                                                              + "as this nurse is assigned to a patient."
+                                                              + "\n"
+                                                              + "Please remove all assigned patients to this nurse "
+                                                              + "before changing name.";
     public static final String MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE = "Unable to change appointment to a "
                                                                              + "nurse, as this patient is assigned "
-                                                                             + "to a nurse.";
+                                                                             + "to a nurse." + "\n"
+                                                                             + "Please remove all assigned nurses "
+                                                                             + "before changing appointment to nurse.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private final Logger logger = LogsCenter.getLogger(getClass());
 
     /**
      * @param index of the person in the filtered person list to edit.
@@ -100,7 +112,6 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
@@ -116,11 +127,9 @@ public class EditCommand extends Command {
             ensurePatientHasNoAssignedNurse(personToEdit, model);
             ensureNurseHasNoPatient(personToEdit, editedPerson, model);
         }
-
         if (editPersonDescriptor.getName().isPresent()) {
             ensureChangeNameNurseIfNoPatient(personToEdit, model);
         }
-
         if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
@@ -137,15 +146,22 @@ public class EditCommand extends Command {
         requireNonNull(editedPerson);
 
         Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        logger.info("Appointment before edit: " + appointmentBeforeEdit);
+        boolean isNurse = appointmentBeforeEdit.toString().equalsIgnoreCase("nurse");
         Appointment appointmentAfterEdit = editedPerson.getAppointment();
-        if (appointmentBeforeEdit.isNurse() && appointmentAfterEdit.isPatient()) {
+        logger.info("Appointment after edit: " + appointmentAfterEdit);
+        boolean isPatient = appointmentAfterEdit.toString().equalsIgnoreCase("patient");
+
+        if (isNurse && isPatient) {
             String name = personToEdit.getName().toString();
+            logger.info("Name: " + name);
             boolean patientHasEditedNurse = personModel.getFilteredPersonList()
                                                        .stream()
                                                        .filter(person -> person.getAppointment().isPatient())
                                                        .anyMatch(person -> person.getTags().stream()
-                                                       .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
-
+                                                                .anyMatch(tag -> tag.tagName.equals("Nurse "
+                                                                                                         + name)));
+            logger.info("Patient has edited nurse: " + patientHasEditedNurse);
             if (patientHasEditedNurse) {
                 throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_PATIENT);
             }
@@ -158,14 +174,18 @@ public class EditCommand extends Command {
         requireNonNull(model);
 
         Appointment appointmentBeforeEdit = personToEdit.getAppointment();
+        logger.info("Appointment before edit: " + appointmentBeforeEdit);
+        boolean isNurse = appointmentBeforeEdit.toString().equalsIgnoreCase("nurse");
+        logger.info("Is it a nurse: " + isNurse);
         String name = personToEdit.getName().toString();
+        logger.info("Name: " + name);
         boolean nurseHasPatientAssigned = model.getFilteredPersonList()
                                                .stream()
                                                .filter(person -> person.getAppointment().isPatient())
                                                .anyMatch(person -> person.getTags().stream()
-                                               .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
-
-        if (appointmentBeforeEdit.isNurse() && nurseHasPatientAssigned) {
+                                                        .anyMatch(tag -> tag.tagName.equals("Nurse " + name)));
+        logger.info("Nurse has patient assigned: " + nurseHasPatientAssigned);
+        if (isNurse && nurseHasPatientAssigned) {
             throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_NAME);
         }
     }
@@ -192,7 +212,9 @@ public class EditCommand extends Command {
                                               .anyMatch(person -> person.getTags().stream()
                                               .anyMatch(tag -> tag.tagName.startsWith("Nurse ")));
         boolean changeToPatient = editPersonDescriptor.getAppointment().get().isPatient();
-        if (personToEdit.isPatient() && hasNurseAssigned && !changeToPatient) {
+        boolean isPatient = personToEdit.getAppointment().toString().equalsIgnoreCase("patient");
+
+        if (isPatient && hasNurseAssigned && !changeToPatient) {
             throw new CommandException(MESSAGE_UNABLE_TO_CHANGE_APPOINTMENT_TO_NURSE);
         }
     }
@@ -235,7 +257,7 @@ public class EditCommand extends Command {
 
         if (personToEdit.isPatient()) {
             updatedTags.addAll(personToEdit.getTags().stream().filter(tag -> tag.tagName.startsWith("Nurse"))
-                                       .collect(Collectors.toSet()));
+                                                              .collect(Collectors.toSet()));
         }
 
         return new Person(updatedName, updatedDateOfBirth, updatedPhone, updatedEmail, updatedAddress, updatedBloodType,
