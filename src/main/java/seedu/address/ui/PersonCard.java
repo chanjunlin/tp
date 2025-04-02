@@ -77,7 +77,7 @@ public class PersonCard extends UiPart<Region> {
         setBloodTypeText(person);
         appointment.setText(person.getAppointment().appointment.toUpperCase());
         setAppointmentLabel(appointment.getText());
-        nextOfKin.setText("Next of kin: " + person.getNextOfKin().value);
+        setNextOfKin(person);
         displayTags(person);
         displayCheckups(person);
     }
@@ -194,6 +194,11 @@ public class PersonCard extends UiPart<Region> {
         phone.setGraphic(textFlow);
     }
 
-
-
+    public void setNextOfKin(Person person) {
+        Text nextOfKinLabelText = new Text("Next of kin: ");
+        nextOfKinLabelText.setStyle("-fx-font-weight: bold;");
+        Text nextOfKindValueText = new Text(person.getNextOfKin().toString());
+        TextFlow textFlow = new TextFlow(nextOfKinLabelText, nextOfKindValueText);
+        phone.setGraphic(textFlow);
+    }
 }
