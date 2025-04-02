@@ -55,6 +55,12 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `assign 1 2`: Assigns the patient at index 1 to the nurse at index 2 shown in the current list.
+   
+   * `assign delete john doe 3` : Removes assigned nurse John Doe from the patient at index 3.
+   
+   * `find j` : Finds all contacts whose first/middle/last names start with the letter 'j'.
+
+   * `find patient of 1` : Finds the patients assigned to the nurse at index 1.
 
    * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
 
@@ -62,7 +68,7 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 
    * `schedule delete for patient 2 25/05/2025 1100` : Deletes a check-up for the patient shown at the 2nd position of the list at the given date and time.
 
-   * `view 4` : Displays the medical history of the patient at the 4th index in the current list.
+   * `view 4` : Displays the medical history of the person at the index 4 in the current list. If the person is a patient with medical history, the medical history will also be shown.
 
    * `clear` : Deletes all contacts.
 
@@ -100,7 +106,7 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
@@ -111,7 +117,7 @@ Format: `help`
 
 Adds a person (nurse or patient) to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags and medical history (including 0)
@@ -139,19 +145,19 @@ Formats:
 
 Examples:
 
-`list` → Shows every entry in the address book.
+`list` : Shows every entry in the address book.
 
-`list patient` → Shows only persons with the appointment role Patient.
+`list patient` : Shows only persons with the appointment role Patient.
 
-`list nurse` → Shows only persons with the appointment role Nurse.
+`list nurse` : Shows only persons with the appointment role Nurse.
 
-`list checkup` → Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
+`list checkup` : Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
 
 ### Editing a person : `edit`
 
 Edits an existing person (patient or nurse) in the address book.
 
-Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list (filtered or unfiltered). The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -168,35 +174,48 @@ Examples:
 
 ### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds persons whose names contain any of the given keywords or prefixes.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Both full words and prefixes will be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
 * `find John` returns `john` and `John Doe`
+* `find al` returns `Alex Yeoh`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Finding patient
+### Finding patient `find patient of nurse`
+
+Finds patients under a specified assigned nurse.
 
 Format: `find patient of nurse INDEX`
 
-Examples:
-* `find patient of nurse 1` returns `Patient Alice Pauline`
+* Finds patients who have the nurse at `INDEX` assigned to them.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
 
-### Finding nurse
+Examples:
+* `find patient of nurse 1`
+
+### Finding nurse `find nurse of patient`
+
+Finds nurse(s) assigned to a specified patient.
 
 Format: `find nurse of patient INDEX`
 
+* Finds the nurse(s) assigned to the patient at `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
 Examples:
-* `find nurse of patient 2` returns `Nurse Benson Meier`
+* `find nurse of patient 2`
 
 ### Deleting a person : `delete`
 
@@ -224,7 +243,7 @@ Exits the program.
 
 Format: `exit`
 
-### Assigning a nurse to a patient : `assign`
+### Assign a nurse to a patient : `assign`
 
 Assigns a specified nurse to a specified patient.
 
@@ -234,24 +253,45 @@ Format: `assign PATIENT_INDEX NURSE_INDEX`
 * `NURSE_INDEX` and `PATIENT_INDEX` both refer to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-### Schedule checkups : `schedule`
+Examples:
+* `assign 2 1` assigns the nurse at index 1 to the patient at index 2.
 
-Schedules a checkup for the patient:
-* Can add a checkup
-* Can delete a checkup (that exists)
+### Delete nurse assignment from a patient : `assign delete`
+
+Removes a specified assigned nurse from a specified patient.
+
+Format: `assign delete NURSE_NAME PATIENT_INDEX`
+
+* Removes the assigned nurse with name `NURSE_NAME` from the patient at `PATIENT_INDEX`.
+* `NURSE_NAME` needs to match the full name shown on the patient's assigned nurse tag, but is case-insensitive.
+* `PATIENT_INDEX` refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `assign delete john doe 2` removes the assignment of Nurse JOHN DOE from the patient at index 2.
+
+### Schedule checkup appointments : `schedule add for patient` / `schedule delete for patient`
+
+Schedules a checkup appointment for the patient, or deletes an existing checkup appointment.
+
+Actions:
+* Add a checkup
+* Delete a checkup (that exists)
 
 Format:
 - `schedule add for patient INDEX DATE TIME`
 - `schedule delete for patient INDEX DATE TIME`
 
+* `INDEX` refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
 Examples:
 * `schedule add for patient 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm
 * `schedule delete for patient 1 12/12/2025 1200` deletes a checkup for patient at index 1 on 12/12/2025 at 12:00pm
 
-
 ### Viewing a nurse or patient : `view`
 
-View details of specified nurse or patient. Shows medical history of patient specified (if any).
+Displays details of specified person. If specified person is a patient with medical history, the medical history will be shown.
 
 Format: `view INDEX`
 
@@ -273,10 +313,6 @@ If your changes to the data file makes its format invalid, AddressBook will disc
 Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -297,13 +333,16 @@ _Details coming soon ..._
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Find Patient** | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1`
+**Find Nurse** | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2`
 **List** | `list` `list nurse` `list patient` `list checkup`
 **Help** | `help`
 **Assign** | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`
-**Schedule** | `schedule PATIENT_INDEX DATE_TIME`
+**Assign Delete** | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2`
+**Schedule** | `schedule add for patient PATIENT_INDEX DATE_TIME`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`
 **View** | `view INDEX`<br> e.g., `view 2`
