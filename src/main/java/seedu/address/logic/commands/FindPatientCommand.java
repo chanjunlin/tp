@@ -96,9 +96,8 @@ public class FindPatientCommand extends FindCommand {
 
     private boolean isPatientAssignedToNurse(Person patient, Person nurse) {
         Set<Tag> tags = patient.getTags();
-        String nurseNameWithoutSpaces = nurse.getName().toString().replace(" " , "")
-                .toUpperCase();
+        String nurseName = nurse.getName().toString().toUpperCase();
         return tags.stream()
-                .anyMatch(tag -> tag.tagName.toUpperCase().equals("NURSE" + nurseNameWithoutSpaces));
+                .anyMatch(tag -> tag.tagName.toUpperCase().equals("NURSE " + nurseName));
     }
 }
