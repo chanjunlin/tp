@@ -351,7 +351,7 @@
     -fx-font-size: 11;
 }
 
-# checkups {
+#checkups {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
@@ -363,4 +363,9 @@
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: transparent; /* or match your theme */
+    -fx-padding: 0; /* optional, to remove space */
 }
