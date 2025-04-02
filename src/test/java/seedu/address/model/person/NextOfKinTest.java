@@ -64,10 +64,9 @@ public class NextOfKinTest {
     @Test
     public void isValidNextOfKin_edgeCases() {
         assertFalse(NextOfKin.isValidNextOfKin("Jane91234567")); // No space
-        assertFalse(NextOfKin.isValidNextOfKin("Jane 91"));    // Invalid phone
+        assertFalse(NextOfKin.isValidNextOfKin("Jane 91")); // Invalid phone
         assertFalse(NextOfKin.isValidNextOfKin("12345 91234567")); // Invalid name
     }
-
 
     @Test
     public void toString_validInput_correctFormat() {
