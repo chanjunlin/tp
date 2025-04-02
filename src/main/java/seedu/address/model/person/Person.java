@@ -171,6 +171,13 @@ public class Person {
     }
 
     /**
+     * Returns true if the appointment is patient and false otherwise.
+     */
+    public boolean isPatient() {
+        return this.getAppointment().toString().equalsIgnoreCase("patient");
+    }
+
+    /**
      * Returns true if the person has medical history and false otherwise.
      */
     public boolean hasMedicalHistory() {

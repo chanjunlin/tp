@@ -15,7 +15,7 @@ public class Address {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "\\S.*";
 
     public final String value;
 
@@ -26,8 +26,9 @@ public class Address {
      */
     public Address(String address) {
         requireNonNull(address);
-        checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
-        value = address;
+        String trimmedAddress = trimAndNormalizeWhitespace(address);
+        checkArgument(isValidAddress(trimmedAddress), MESSAGE_CONSTRAINTS);
+        value = trimmedAddress;
     }
 
     /**
@@ -35,6 +36,16 @@ public class Address {
      */
     public static boolean isValidAddress(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Trims leading/trailing whitespaces and normalizes multiple consecutive spaces to a single space.
+     *
+     * @param address the original address string
+     * @return the trimmed and normalized address string
+     */
+    private static String trimAndNormalizeWhitespace(String address) {
+        return address.trim().replaceAll("\\s+", " ");
     }
 
     @Override

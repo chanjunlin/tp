@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_INVALID_PATIENT;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_CREATED;
+import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_DELETED;
+import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_DOES_NOT_EXIST;
+import static seedu.address.logic.commands.ScheduleCommand.MISSING_ASSIGNED_NURSE;
 import static seedu.address.model.checkup.Checkup.MESSAGE_PAST_DATE;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -25,14 +28,19 @@ import seedu.address.model.person.Person;
 
 public class ScheduleCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private Person patient;
+    private Person patientZero;
+    private Person patientTwo;
     private ScheduleCommand command;
+    private ScheduleCommand diffTimeCommad;
+    private ScheduleCommand deleteCommand;
     private Index invalidIndex;
     private Index invalidPatientIndex;
-    private Index patientIndex;
+    private Index patientIndexZero;
+    private Index patientIndexTwo;
     private LocalDate checkupDate;
     private LocalDate pastDate;
-    private LocalTime checkupTime;
+    private LocalTime checkupTimeTen;
+    private LocalTime checkupTimeOne;
     private DateTimeFormatter dateFormatter;
     private Boolean addCheckup;
     private Boolean deleteCheckup;
@@ -40,43 +48,81 @@ public class ScheduleCommandTest {
     @BeforeEach
     public void setUp() {
         model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        patient = model.getFilteredPersonList().get(0);
+        patientZero = model.getFilteredPersonList().get(0);
+        patientTwo = model.getFilteredPersonList().get(2);
 
         invalidIndex = Index.fromZeroBased(1000000);
         invalidPatientIndex = Index.fromZeroBased(1);
-        patientIndex = Index.fromZeroBased(0);
+        patientIndexZero = Index.fromZeroBased(0);
+        patientIndexTwo = Index.fromZeroBased(2);
         checkupDate = LocalDate.of(2025, 12, 24);
         pastDate = LocalDate.of(2025, 1, 1);
-        checkupTime = LocalTime.of(10, 0);
+        checkupTimeTen = LocalTime.of(10, 0);
+        checkupTimeOne = LocalTime.of(13, 0);
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         addCheckup = true;
         deleteCheckup = false;
-        ;
-        command = new ScheduleCommand(addCheckup, patientIndex, checkupDate, checkupTime);
+
+        command = new ScheduleCommand(addCheckup, patientIndexZero, checkupDate, checkupTimeTen);
+        diffTimeCommad = new ScheduleCommand(addCheckup, patientIndexTwo, checkupDate, checkupTimeOne);
+
+        deleteCommand = new ScheduleCommand(deleteCheckup, patientIndexZero, checkupDate, checkupTimeTen);
     }
 
     @Test
     public void validPatientIndex_nonConflictingCheckup() {
-        Person patient = model.getFilteredPersonList().get(0);
+
+        // checkup scheduled successfully for patient with assigned nurse
         try {
             CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patient.getName(),
+            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patientZero.getName(),
                             checkupDate.format(dateFormatter),
-                            checkupTime),
+                            checkupTimeTen),
                     result.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());
         }
+
+        // checkup scheduled successfully for patient without assigned nurse
+        try {
+            CommandResult result = diffTimeCommad.execute(model);
+            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patientTwo.getName(),
+                            checkupDate.format(dateFormatter),
+                            checkupTimeOne) + "\n" + MISSING_ASSIGNED_NURSE,
+                    result.getFeedbackToUser());
+        } catch (CommandException e) {
+            fail("Execution should not throw an exception: " + e.getMessage());
+        }
+
+        // checkup deleted successfully for patient with assigned nurse
+        try {
+            CommandResult result = deleteCommand.execute(model);
+            assertEquals(String.format(MESSAGE_CHECKUP_DELETED, patientZero.getName(),
+                            checkupDate.format(dateFormatter),
+                            checkupTimeTen),
+                    result.getFeedbackToUser());
+        } catch (CommandException e) {
+            fail("Execution should not throw an exception: " + e.getMessage());
+        }
+
+        // checkup deleted failed because checkup is not present
+        CommandException exception = assertThrows(CommandException.class, () -> {
+            deleteCommand.execute(model);
+        });
+
+        assertEquals(String.format(MESSAGE_CHECKUP_DOES_NOT_EXIST),
+                exception.getMessage());
+
     }
 
     @Test
     public void validPatientIndex_conflictingCheckup() {
         try {
             CommandResult result = command.execute(model);
-            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patient.getName(),
+            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patientZero.getName(),
                             checkupDate.format(dateFormatter),
-                            checkupTime),
+                            checkupTimeTen),
                     result.getFeedbackToUser());
         } catch (CommandException e) {
             fail("Execution should not throw an exception: " + e.getMessage());
@@ -90,7 +136,7 @@ public class ScheduleCommandTest {
 
     @Test
     public void validPatientIndex_pastDateTime() {
-        Command pastDateCommand = new ScheduleCommand(addCheckup, patientIndex, pastDate, checkupTime);
+        Command pastDateCommand = new ScheduleCommand(addCheckup, patientIndexZero, pastDate, checkupTimeTen);
         CommandException exception = assertThrows(CommandException.class, () -> {
             pastDateCommand.execute(model);
         });
@@ -100,7 +146,8 @@ public class ScheduleCommandTest {
 
     @Test
     public void invalidPatientIndex() {
-        Command invalidPatientCommand = new ScheduleCommand(addCheckup, invalidPatientIndex, checkupDate, checkupTime);
+        Command invalidPatientCommand = new ScheduleCommand(addCheckup, invalidPatientIndex, checkupDate,
+                checkupTimeTen);
         CommandException exception = assertThrows(CommandException.class, () -> {
             invalidPatientCommand.execute(model);
         });
@@ -110,7 +157,7 @@ public class ScheduleCommandTest {
 
     @Test
     public void invalidIndex() {
-        Command invalidIndexCommand = new ScheduleCommand(addCheckup, invalidIndex, checkupDate, checkupTime);
+        Command invalidIndexCommand = new ScheduleCommand(addCheckup, invalidIndex, checkupDate, checkupTimeTen);
         CommandException exception = assertThrows(CommandException.class, () -> {
             invalidIndexCommand.execute(model);
         });
