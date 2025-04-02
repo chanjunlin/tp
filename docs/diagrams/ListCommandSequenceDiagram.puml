@@ -47,13 +47,15 @@ activate ListCommand
 
 alt filterByCheckup == true
     ListCommand -> Model : updateFilteredPersonListByEarliestCheckup(new PersonHasCheckupPredicate())
+    activate Model
 else appointmentFilter == null
     ListCommand -> Model : updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS)
 else filter by appointment
     ListCommand -> Model : updateFilteredPersonList(new PersonHasAppointmentPredicate(appointmentFilter))
 end
-activate Model
+
 Model --> ListCommand
+
 deactivate Model
 
 create CommandResult

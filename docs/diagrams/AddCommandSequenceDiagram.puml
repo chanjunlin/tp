@@ -1,0 +1,66 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":AddCommandParser" as AddCommandParser LOGIC_COLOR
+participant "a:AddCommand" as AddCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("add n/John ...")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("add n/John ...")
+activate AddressBookParser
+
+create AddCommandParser
+AddressBookParser -> AddCommandParser : new AddCommandParser()
+activate AddCommandParser
+AddCommandParser --> AddressBookParser
+deactivate AddCommandParser
+
+AddressBookParser -> AddCommandParser : parse("n/John ...")
+activate AddCommandParser
+
+create AddCommand
+AddCommandParser -> AddCommand : new AddCommand(person)
+activate AddCommand
+AddCommand --> AddCommandParser
+deactivate AddCommand
+
+AddCommandParser --> AddressBookParser : a
+deactivate AddCommandParser
+destroy AddCommandParser
+
+AddressBookParser --> LogicManager : a
+deactivate AddressBookParser
+
+LogicManager -> AddCommand : execute(m)
+activate AddCommand
+alt model.hasPerson(toAdd) == true
+    AddCommand -> AddCommand : throw CommandException
+else
+    AddCommand -> Model : addPerson(toAdd)
+    activate Model
+    Model --> AddCommand
+    deactivate Model
+
+    AddCommand -> CommandResult : new CommandResult(...)
+    activate CommandResult
+    CommandResult --> AddCommand
+    deactivate CommandResult
+end
+AddCommand --> LogicManager
+deactivate AddCommand
+
+
+[<-- LogicManager
+deactivate LogicManager
+@enduml
