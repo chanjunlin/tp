@@ -145,7 +145,7 @@
 
 .status-bar {
     -fx-background-color: derive(#ffffff, 30%);
-    -fx-border-color: #6f789f;
+    -fx-border-color: #563b9b;
     -fx-border-width: 2px;
 }
 
@@ -450,3 +450,4 @@
 .menu-button:hover {
     -fx-background-color: linear-gradient(to bottom, #e8e8e8, #cfcfcf);
 }
+
