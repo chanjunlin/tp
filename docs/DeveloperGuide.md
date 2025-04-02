@@ -7,28 +7,28 @@ title: Developer Guide
 ## Table of Contents
 
 1. [Acknowledgements](#acknowledgements)
-2. [Settting up, getting started](#setting-up-getting-started)
-3. [Design](#design)
+1. [Settting up, getting started](#setting-up-getting-started)
+1. [Design](#design)
    * [Architecture](#architecture)
    * [UI Component](#ui-component)
    * [Logic Component](#logic-component)
    * [Model Component](#model-component)
    * [Storage Component](#storage-component)
-5. [Implementation](#implementation)
+1. [Implementation](#implementation)
    * [Add](#add-feature)
    * [Edit](#edit-feature)
    * [List](#list-feature)
    * [Find](#find-feature)
    * [Assign](#assign-feature)
    * [Schedule](#schedule-feature)
-6. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
-7. [Appendix: Requirements](#appendix-requirements)
+1. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+1. [Appendix: Requirements](#appendix-requirements)
    * [Product Scope](#product-scope)
    * [User Stories](#user-stories)
    * [Use Cases](#use-cases)
    * [Non-Functional Requirements](#non-functional-requirements)
    * [Glossary](#glossary)
-8. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+1. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
    * [Launch and Shutdown](#launch-and-shutdown)
    * [Deleting a Person](#deleting-a-person)
    * [Saving Data](#saving-data)
@@ -50,12 +50,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
-<!--
-<div markdown="span" class="alert alert-primary">
-
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
-</div>
--->
 
 ### Architecture
 
@@ -126,8 +120,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
-</div>
+**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 
 How the `Logic` component works:
 
@@ -215,11 +208,11 @@ The `list` command allows users to display a subset of people in the address boo
 It supports the following use cases:
 * `list` — Lists **all persons** in the address book (patients and nurses).
 * `list nurse` or `list patient` — Lists **only nurses** or **only patients**, respectively.
-* `list checkup` — Lists all persons with scheduled **checkups**, sorted by earliest checkup date.
+* `list checkup` — Lists all patients with scheduled **checkups**, sorted by earliest checkup date.
 
 #### Execution Flow:
 1. `LogicManager` receives the command text (e.g., `"list checkup"`) and passes it to `AddressBookParser`.
-1. `AddressBookParser` uses a `ListCommandParser` to interpret the command.
+1. `AddressBookParser` parses the command and returns an `ListCommandParser` object.
 1. `ListCommandParser#parse()` constructs a `ListCommand` object, based on the input string.
 1. `ListCommand#execute()` evaluates the internal flags:
     - If the command was `list checkup`, it calls `updateFilteredPersonListByEarliestCheckup(...)` with a `PersonHasCheckupPredicate`.
@@ -243,12 +236,12 @@ The `find` command enables users to search for specific entities in the address 
 This functionality improves user experience by allowing quick access to relevant information.
 
 #### Execution Flow:
-1. `LogicManager` receives the command text from the user and passes it to `AddressBookParser`.
-1. Depending on the arguments, `AddressBookParser` will return one of the following:
-    - `FindNurseCommand`: for searching nurses assigned to a specific patient.
-    - `FindPatientCommand`: for searching patients assigned to a specific nurse.
-    - `FindCommand`: a general command for searching based on keywords in user names.
-1. `AddressBookParser` parses the command and returns the appropriate `FindCommand` object.
+1. `LogicManager` receives the command text (e.g. `find nurse of patient 8`) from the user and passes it to `AddressBookParser`.
+1. `AddressBookParser` parses the command and returns a `FindCommandParser` object.
+1. Depending on the arguments, `FindCommandParser#parse()` will return one of the following:
+   * `FindNurseCommand`: for searching nurses assigned to a specific patient.
+   * `FindPatientCommand`: for searching patients assigned to a specific nurse.
+   * `FindCommand`: a general command for searching based on keywords in contacts' names.
 1. `FindCommand#execute()` retrieves the relevant entries from the model and returns a `CommandResult`.
 1. For `FindNurseCommand`, it finds and returns all nurses assigned to the specified patient.
 1. For `FindPatientCommand`, it finds and returns all patients assigned to the specified nurse.
@@ -266,6 +259,8 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 The `assign` command allows the user to assign a nurse to a patient.
 
+#### Execution Flow:
+
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
 1. `AddressBookParser` parses the command and returns an `AssignCommand` object.
 1. `AssignCommand#execute()` assigns the nurse to the patient and returns a `CommandResult`.
@@ -279,6 +274,8 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 ### Schedule Feature
 
 The `schedule` command allows the user to create a checkup between a patient and a nurse.
+
+#### Execution Flow:
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
 1. `AddressBookParser` parses the command and returns an `ScheduleCommand` object.
@@ -357,7 +354,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `MediBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case 1: Delete a nurse / patient**
 
