@@ -1,12 +1,14 @@
 package seedu.address.ui;
 
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 
 /**
@@ -16,6 +18,10 @@ public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
 
+    public final Person person;
+
+    private final Logger logger = LogsCenter.getLogger(getClass());
+
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -23,8 +29,6 @@ public class PersonCard extends UiPart<Region> {
      *
      * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
      */
-
-    public final Person person;
 
     @FXML
     private HBox cardPane;
@@ -68,7 +72,17 @@ public class PersonCard extends UiPart<Region> {
         nextOfKin.setText(person.getNextOfKin().value);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label tagLabel = new Label(tag.tagName);
+                    if (tag.tagName.toLowerCase().startsWith("nurse")) {
+                        tagLabel.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: #000000; -fx-padding: 1 3 1 3;"
+                                          + "-fx-border-radius: 2; -fx-background-radius: 2; -fx-font-size: 11;");
+                    } else {
+                        tagLabel.getStyleClass().add("white");
+                    }
+                    logger.info("Tag detected: " + tag.tagName);
+                    tags.getChildren().add(tagLabel);
+                });
         person.getCheckups().stream()
                 .sorted(Comparator.comparing(checkup -> checkup.checkupDateTime))
                 .forEach(checkup -> {
