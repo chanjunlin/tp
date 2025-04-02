@@ -59,8 +59,8 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
    * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
 
    * `schedule add for patient 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
-   
-   * `schedule delete for patient 2 25/05/2025 1100` : Deletes a check-up for the patient shown at the 2nd position of the list at the given date and time.  
+
+   * `schedule delete for patient 2 25/05/2025 1100` : Deletes a check-up for the patient shown at the 2nd position of the list at the given date and time.
 
    * `view 4` : Displays the medical history of the patient at the 4th index in the current list.
 
@@ -240,9 +240,9 @@ Schedules a checkup for the patient:
 * Can add a checkup
 * Can delete a checkup (that exists)
 
-Format: 
+Format:
 - `schedule add for patient INDEX DATE TIME`
-- `schedule delete for patient INDEX DATE TIME` 
+- `schedule delete for patient INDEX DATE TIME`
 
 Examples:
 * `schedule add for patient 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm

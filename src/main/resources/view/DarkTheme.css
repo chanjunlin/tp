@@ -359,6 +359,11 @@
     -fx-font-size: 11;
 }
 
+.split-pane:vertical > .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
 .command-box-container {
     -fx-padding: 10;
     -fx-background-color: #dce7ff;
