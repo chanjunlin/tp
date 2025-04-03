@@ -47,7 +47,7 @@ public class Messages {
                 .append(person.getBloodType())
                 .append("; Appointment: ")
                 .append(person.getAppointment());
-        //nokBuilder()
+        nokBuilder(builder, person);
         tagBuilder(builder, person);
         medicalHistoryBuilder(builder, person);
         return builder.toString();

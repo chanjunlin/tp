@@ -17,18 +17,21 @@ public class ListCommandParser implements Parser<ListCommand> {
     public ListCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim().toLowerCase();
 
-        if (trimmedArgs.isEmpty()) {
-            return new ListCommand(null); // Show all persons if no filter is given
+        boolean isEmpty = trimmedArgs.isEmpty();
+        boolean isCheckup = trimmedArgs.equals("checkup");
+        boolean isValidAppointment = Appointment.isValidAppointment(trimmedArgs);
+
+        if (isEmpty) {
+            return new ListCommand(null);
         }
 
-        if (trimmedArgs.equals("checkup")) {
+        if (isCheckup) {
             return new ListCommand(true);
         }
 
-        if (!Appointment.isValidAppointment(trimmedArgs)) {
+        if (!isValidAppointment) {
             throw new ParseException("Invalid input type! Only 'nurse', 'patient' or 'checkup' are allowed.");
         }
-
 
         return new ListCommand(new Appointment(trimmedArgs));
     }

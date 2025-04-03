@@ -123,14 +123,21 @@ public class EditCommand extends Command {
 
         ensureOnlyPatientCanHaveMedicalHistory(editedPerson);
 
-        if (editPersonDescriptor.getAppointment().isPresent()) {
+        boolean isAppointmentBeingEdited = editPersonDescriptor.getAppointment().isPresent();
+        boolean isNameBeingEdited = editPersonDescriptor.getName().isPresent();
+        boolean isRenamingToExistingPerson = !personToEdit.isSamePerson(editedPerson)
+                && model.hasPerson(editedPerson);
+
+        if (isAppointmentBeingEdited) {
             ensurePatientHasNoAssignedNurse(personToEdit, model);
             ensureNurseHasNoPatient(personToEdit, editedPerson, model);
         }
-        if (editPersonDescriptor.getName().isPresent()) {
+
+        if (isNameBeingEdited) {
             ensureChangeNameNurseIfNoPatient(personToEdit, model);
         }
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+
+        if (isRenamingToExistingPerson) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
