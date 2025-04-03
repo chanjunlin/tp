@@ -23,7 +23,7 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
 
         return Arrays.stream(nameParts)
                 .anyMatch(namePart -> keywords.stream()
-                        .anyMatch(keyword -> namePart.toUpperCase().startsWith(keyword.toUpperCase())));
+                        .anyMatch(keyword -> namePart.toUpperCase().contains(keyword.toUpperCase())));
     }
 
     @Override

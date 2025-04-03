@@ -48,7 +48,7 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Patient` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe dob/01/01/2025 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Patient` : Adds a contact named `John Doe` to the Address Book.
 
    * `edit 2 b/AB-` : Edits the blood type of the 2nd contact shown in the current list.
 
@@ -58,15 +58,15 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
    
    * `assign delete john doe 3` : Removes assigned nurse John Doe from the patient at index 3.
    
-   * `find j` : Finds all contacts whose first/middle/last names start with the letter 'j'.
+   * `find j` : Finds all contacts whose names start contains the letter 'j'.
 
-   * `find patient of 1` : Finds the patients assigned to the nurse at index 1.
+   * `find patient of nurse 1` : Finds the patients assigned to the nurse at index 1 of the currently shown list.
 
-   * `find nurse of 2` : Finds the nurses assigned to the 2nd contact shown in the list if they are a patient.
+   * `find nurse of patient 2` : Finds the nurses assigned to the patient at index 2 on the currently shown list.
 
-   * `schedule add for patient 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd position of the list at the given date and time.
+   * `schedule add for patient 2 25/05/2025 1100` : Schedules a check-up for the patient shown at the 2nd index of the currently shown list at the given date and time.
 
-   * `schedule delete for patient 2 25/05/2025 1100` : Deletes a check-up for the patient shown at the 2nd position of the list at the given date and time.
+   * `schedule delete for patient 2 25/05/2025 1100` : Deletes a check-up for the patient shown at the 2nd index of the list at the given date and time.
 
    * `view 4` : Displays the medical history of the person at the index 4 in the current list. If the person is a patient with medical history, the medical history will also be shown.
 
@@ -82,7 +82,7 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Notes about the command format:**<br>
+**Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
@@ -98,7 +98,7 @@ MediBook is a desktop app for managing patient and nurse records, optimized for 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -115,27 +115,25 @@ Format: `help`
 
 ### Adding a person: `add`
 
-Adds a person (nurse or patient) to the address book.
+Adds a person to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+Format: `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags and medical history (including 0)
-</div>
+*Note*: A person can have any number of tags and medical history (including 0)
 
 * Medical history is only for patients, an error will occur if you try to add a nurse with medical history.
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal maniac mh/Insane, but not dangerous b/B+ ap/Patient`
+* `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend`
+* `add n/Betsy Crowe dob/01/01/2001 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/No Family mh/Insane, but not dangerous b/B+ ap/Patient`
 
-### Listing all persons : `list`
+### Listing persons: `list`
 
 Displays a list of persons in the address book. You can choose to list all persons, only patients, only nurses or all patients with checkups.
 
 Formats:
 
-`list` — Lists all persons (patients and nurses).
+`list` — Lists all persons.
 
 `list patient` — Lists only patients.
 
@@ -153,13 +151,13 @@ Examples:
 
 `list checkup` : Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
 
-### Editing a person : `edit`
+### Editing a person: `edit`
 
-Edits an existing person (patient or nurse) in the address book.
+Edits an existing person in the address book.
 
 Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list (filtered or unfiltered). The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags or medical history, the existing tags or medical history of the person will be removed i.e adding of tags or medical history is not cumulative.
@@ -171,6 +169,7 @@ Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/ mh/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags and medical history.
+* `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index.
 
 ### Locating persons by name: `find`
 
@@ -181,19 +180,19 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The search is case-insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Both full words and prefixes will be matched e.g. `Han` will match `Hans`
+* Any name containing the prefix will be matched e.g. `Han` and `ns` will match `HANS`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
 * `find John` returns `john` and `John Doe`
-* `find al` returns `Alex Yeoh`
+* `find al` returns `Alex Yeoh` and `Sally`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
-### Finding patient `find patient of nurse`
+### Finding patient `find patient of nurse `
 
-Finds patients under a specified assigned nurse.
+Finds patients assigned under a specified nurse.
 
 Format: `find patient of nurse INDEX`
 
