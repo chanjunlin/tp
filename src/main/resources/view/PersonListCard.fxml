@@ -35,7 +35,7 @@
       <Label fx:id="address" styleClass="cell_small_label" />
       <Label fx:id="email" styleClass="cell_small_label" />
       <Label fx:id="bloodType" styleClass="cell_small_label" />
-      <Label fx:id="nextOfKin" styleClass="cell_small_label" text="\$next of kin" />
+      <Label fx:id="nextOfKin" styleClass="cell_small_label" />
     </VBox>
   </GridPane>
 </HBox>
