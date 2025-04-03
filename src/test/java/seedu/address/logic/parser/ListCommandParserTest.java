@@ -21,6 +21,7 @@ public class ListCommandParserTest {
         assertTrue(parser.parse("").equals(new ListCommand(null)));
         assertTrue(parser.parse("nurse").equals(new ListCommand(new Appointment("Nurse"))));
         assertTrue(parser.parse("patient").equals(new ListCommand(new Appointment("Patient"))));
+        assertTrue(parser.parse("checkup").equals(new ListCommand(true)));
     }
 
     @Test
@@ -28,5 +29,18 @@ public class ListCommandParserTest {
         assertThrows(ParseException.class, () -> parser.parse("xyz"));
         assertThrows(ParseException.class, () -> parser.parse("123"));
         assertThrows(ParseException.class, () -> parser.parse("nurse patient"));
+    }
+
+    @Test
+    public void parse_caseInsensitiveInput_returnsCorrectCommand() throws Exception {
+        assertTrue(parser.parse("NuRSe").equals(new ListCommand(new Appointment("Nurse"))));
+        assertTrue(parser.parse("PaTient").equals(new ListCommand(new Appointment("Patient"))));
+        assertTrue(parser.parse("CheCkUp").equals(new ListCommand(true)));
+    }
+
+    @Test
+    public void parse_inputWithExtraWhitespace_returnsCorrectCommand() throws Exception {
+        assertTrue(parser.parse("  nurse ").equals(new ListCommand(new Appointment("Nurse"))));
+        assertTrue(parser.parse("  ").equals(new ListCommand(null)));
     }
 }

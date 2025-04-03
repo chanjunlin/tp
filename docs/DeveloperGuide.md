@@ -180,7 +180,7 @@ The `add` command allows the user to add a new person to the address book.
 1. `AddressBookParser` parses the command and returns an `AddCommand` object.
 1. `AddCommand#execute()` adds the person to the model and returns a `CommandResult`.
 
-![Sequence Diagram](...)
+![Sequence Diagram](images/AddCommandSequenceDiagram.png)
 
 #### Design considerations:
 
@@ -316,7 +316,7 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 * is reasonably comfortable using CLI apps
 
 **Value proposition**:
-1. Manage nurse and patients faster than a typical mouse/GUI driven app 
+1. Manage nurse and patients faster than a typical mouse/GUI driven app
 1. Allows faster creation and storage of details compared to traditional pen and paper methods
 1. Enables easy transfer and tracking of patients compared to current system where it is inefficient to do so
 1. Saves time from having to log into centralised system from healthcare system in Singapore each time data is needed.

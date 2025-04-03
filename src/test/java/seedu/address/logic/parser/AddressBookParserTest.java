@@ -25,6 +25,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ScheduleCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -102,12 +103,18 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list Nurse"));
         assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list Patient"));
+        assertEquals(new ListCommand(true), parser.parseCommand("list checkup"));
     }
 
     @Test
     public void parseCommand_schedule() throws Exception {
         assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " add for patient 1 12/12/2025 1200")
                 instanceof ScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_view() throws Exception {
+        assertTrue(parser.parseCommand("view 1") instanceof ViewCommand);
     }
 
     @Test

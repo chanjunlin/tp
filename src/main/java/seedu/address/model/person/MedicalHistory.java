@@ -23,8 +23,12 @@ public class MedicalHistory {
         this.medicalHistory = medicalHistory;
     }
 
+    /**
+     * Returns true if a given string is a valid medical history and false otherwise.
+     */
     public static boolean isValidMedicalHistory(String test) {
-        return test.matches(VALIDATION_REGEX);
+        boolean notEmpty = !(test.trim().isEmpty());
+        return notEmpty && test.matches(VALIDATION_REGEX);
     }
 
     @Override

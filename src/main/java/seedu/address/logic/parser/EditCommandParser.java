@@ -75,48 +75,104 @@ public class EditCommandParser implements Parser<EditCommand> {
         return new EditCommand(index, editPersonDescriptor);
     }
 
+    /**
+     * Parses the name field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the name is invalid
+     */
     private void parseName(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             descriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
         }
     }
 
+    /**
+     * Parses the date of birth field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the date of birth is invalid
+     */
     private void parseDateOfBirth(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_DOB).isPresent()) {
             descriptor.setDateOfBirth(ParserUtil.parseDateOfBirth(argMultimap.getValue(PREFIX_DOB).get()));
         }
     }
 
+    /**
+     * Parses the phone field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the phone number is invalid
+     */
     private void parsePhone(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
             descriptor.setPhone(ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get()));
         }
     }
 
+    /**
+     * Parses the email field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the email is invalid
+     */
     private void parseEmail(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             descriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
     }
 
+    /**
+     * Parses the address field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the address is invalid
+     */
     private void parseAddress(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             descriptor.setAddress(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get()));
         }
     }
 
+    /**
+     * Parses the blood type field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the blood type is invalid
+     */
     private void parseBloodType(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_BLOODTYPE).isPresent()) {
             descriptor.setBloodType(ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get()));
         }
     }
 
+    /**
+     * Parses the appointment field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the appointment is invalid
+     */
     private void parseAppointment(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_APPOINTMENT).isPresent()) {
             descriptor.setAppointment(ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get()));
         }
     }
 
+    /**
+     * Parses the next of kin field from the argument multimap and sets it in the descriptor if present.
+     *
+     * @param descriptor the {@code EditPersonDescriptor} to update
+     * @param argMultimap the tokenized user input arguments
+     * @throws ParseException if the next of kin is invalid
+     */
     private void parseNextOfKin(EditPersonDescriptor descriptor, ArgumentMultimap argMultimap) throws ParseException {
         if (argMultimap.getValue(PREFIX_NOK).isPresent()) {
             descriptor.setNextOfKin(ParserUtil.parseNextOfKin(argMultimap.getValue(PREFIX_NOK).get()));
