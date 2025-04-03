@@ -536,7 +536,38 @@ testers are expected to do more *exploratory* testing.
             1. Patients contacts can be converted to Nurse appointment if it does not contain any medical history
             1. Expected: Changes the patients appointment to a nurse if there is no medical history. Returns an error if the patient does have medical history.
 ### Listing persons
+1. Listing all patients
+   1. Test case: `list patient`<br>
+    Expected: The displayed list will update to show only the patients persons stored.
+1. Listing all nurses
+   1. Test case: `list nurse`<br>
+      Expected: The displayed list will update to show only the nurse persons stored.
+1. Listing all checkups
+   1. Test case: `list checkup`<br>
+   Expected: The displayed list will update to show only the patients with scheduled checkups, sorted by earliest to latest checkup.
+
+
 ### Finding persons
+1. Finding a person by the name
+   1. Prerequisites: List some persons using any variant of the list command.
+   1. Test case: `find al`<br>
+   Expected: The displayed list will update to show persons whose names contains "al" (if any).
+
+1. Finding assigned nurses of a patient
+   1. Prerequisites: List some persons using `list` or `list patient` to have any patients on the list.
+   1. Test case 1: `find nurse of patient 2`<br>
+      Expected: The names of the assigned nurses of the patient at 2 will be given in the result box.
+   2. Test case 2: `find nurse of patient 3`<br>
+    1. Case: The patient at index 3 has no assigned nurse<br>
+    Expected: Error message in result box saying No nurse assigned to the patient at index 3.
+    1. Case: The patient at index 3 is not a patient<br>
+   Expected: Error message in result box saying person at index 3 is not a patient.
+
+1. Finding assigned patients of a nurse
+   1. Prerequisites: List some persons using `list` or `list nurse`, person at index 3 is a nurse and has assigned patients
+   2. Test case 1: `find patient of nurse 3`<br>
+   Expected: The result box will display the names of the patients assigned to the nurse at index 3.
+
 ### Assigning a nurse / patient
 ### Schedule checkups
 
@@ -551,3 +582,10 @@ testers are expected to do more *exploratory* testing.
 
 ## **Appendix: Planned Enhancements**
 
+These are some features / improvements our team has planned to implement in the future due to lack of time.
+1. Assigning severity to patients
+2. Adjusting the severity of patients
+3. Allow sorting of the list to more filters e.g. Severity or age
+4. Allow reminders for checkups or missing assigned nurse
+5. Support for Dark mode
+6. Ability to adjust working hours for scheduling checkups or disable the working hours feature completely.
