@@ -153,7 +153,7 @@ public class ScheduleCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> {
             clashCommand.execute(model);
         });
-        assertEquals(String.format(MESSAGE_CHECKUP_CLASH, "24/12/2025", "10:15"), exception.getMessage());
+        assertEquals(String.format(MESSAGE_CHECKUP_CLASH, "24/12/2025 10:00"), exception.getMessage());
     }
 
     @Test

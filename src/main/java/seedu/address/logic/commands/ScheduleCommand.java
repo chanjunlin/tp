@@ -42,7 +42,7 @@ public class ScheduleCommand extends Command {
     public static final String MESSAGE_CHECKUP_DOES_NOT_EXIST = "Appointment does not exist";
     public static final String MISSING_ASSIGNED_NURSE = "Check up has been created for a patient without a nurse, "
              + "REMEMBER to assign a nurse promptly after this!";
-    public static final String MESSAGE_CHECKUP_CLASH = "There's a checkup scheduled on %s at %s! Please choose another"
+    public static final String MESSAGE_CHECKUP_CLASH = "There's a checkup scheduled on %s! Please choose another"
         + " time / date";
     private final Index patientIndex;
     private final LocalDate checkupDate;
@@ -82,8 +82,7 @@ public class ScheduleCommand extends Command {
 
         Checkup checkupClash = isWithinThirtyMinutes(patient, this.checkupDate, this.checkupTime);
         if (checkupClash != null && isAdding) {
-            throw new CommandException(String.format(MESSAGE_CHECKUP_CLASH, formatDate(this.checkupDate),
-                    this.checkupTime));
+            throw new CommandException(String.format(MESSAGE_CHECKUP_CLASH, checkupClash.toString()));
         }
 
         try {
