@@ -276,8 +276,11 @@ Schedules a checkup appointment for the patient, or deletes an existing checkup 
 **Note** 
 * Checkups cannot be created before the current time.
 * Checkups can only be created during working hours (9am to 5pm).
+* Checkups are only allowed at times with minutes of ```0```, ```15```, ```30```, ```45```.
+* Checkups are not allowed if there's a checkup within 30 minutes of the desired checkup.
 * Date Time follows the format of DD/MM/YYYY HHMM.
 * A warning will be given if the target patient does not have a assigned nurse.
+
 
 Actions:
 * Add a checkup.
