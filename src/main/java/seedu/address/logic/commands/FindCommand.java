@@ -2,11 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Person;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -21,6 +24,8 @@ public class FindCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
+    private static Predicate<Person> lastFindPredicate;
+
     private final NameContainsKeywordsPredicate predicate;
 
     public FindCommand(NameContainsKeywordsPredicate predicate) {
@@ -30,6 +35,7 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        lastFindPredicate = predicate;
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
@@ -55,5 +61,14 @@ public class FindCommand extends Command {
         return new ToStringBuilder(this)
                 .add("predicate", predicate)
                 .toString();
+    }
+
+    /**
+     * Returns the last find predicate used.
+     *
+     * @return The last find predicate.
+     */
+    public static Predicate<Person> getLastFindPredicate() {
+        return lastFindPredicate;
     }
 }

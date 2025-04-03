@@ -28,7 +28,6 @@ public class FindNurseCommand extends FindCommand {
     public static final String MESSAGE_INVALID_PATIENT = "The person at index %d is not a patient.";
     public static final String MESSAGE_NO_NURSE_ASSIGNED = "No nurse assigned to the patient at index %d.";
     public static final String MESSAGE_NURSE_FOUND = "Nurse(s) assigned to patient %s: %s.";
-
     private final Index patientIndex;
 
     /**
@@ -70,8 +69,9 @@ public class FindNurseCommand extends FindCommand {
 
         Person patient = lastShownList.get(patientIndex.getZeroBased());
 
-        if (!patient.getAppointment().toString().equalsIgnoreCase("Patient")) {
-            throw new CommandException(String.format(MESSAGE_INVALID_PATIENT, patientIndex.getOneBased()));
+        if (!patient.isPatient()) {
+            throw new CommandException(String.format(MESSAGE_INVALID_PATIENT,
+                    patientIndex.getOneBased()));
         }
 
         return patient;

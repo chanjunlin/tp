@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_INVALID_PATIENT;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,9 +38,12 @@ public class ScheduleCommand extends Command {
 
     public static final String MESSAGE_CHECKUP_DELETED = "Appointment for Patient %s has been "
             + "successfully deleted from %s at %s";
+    public static final String MESSAGE_CHECKUP_DUPLICATE = "A checkup is already scheduled at this datetime.";
     public static final String MESSAGE_CHECKUP_DOES_NOT_EXIST = "Appointment does not exist";
     public static final String MISSING_ASSIGNED_NURSE = "Check up has been created for a patient without a nurse, "
              + "REMEMBER to assign a nurse promptly after this!";
+    public static final String MESSAGE_CHECKUP_CLASH = "There's a checkup scheduled on %s! Please choose another"
+        + " time / date";
     private final Index patientIndex;
     private final LocalDate checkupDate;
     private final LocalTime checkupTime;
@@ -73,7 +77,12 @@ public class ScheduleCommand extends Command {
         Person patient = getPatientFromModel(model);
 
         if (hasConflictingCheckup(patient) && isAdding) {
-            throw new CommandException("A checkup is already scheduled at this datetime.");
+            throw new CommandException(MESSAGE_CHECKUP_DUPLICATE);
+        }
+
+        Checkup checkupClash = isWithinThirtyMinutes(patient, this.checkupDate, this.checkupTime);
+        if (checkupClash != null && isAdding) {
+            throw new CommandException(String.format(MESSAGE_CHECKUP_CLASH, checkupClash.toString()));
         }
 
         try {
@@ -127,6 +136,35 @@ public class ScheduleCommand extends Command {
         LocalDateTime newDateTime = LocalDateTime.of(checkupDate, checkupTime);
         return patient.getCheckups().stream()
                 .anyMatch(existingCheckup -> existingCheckup.getDateTime().equals(newDateTime));
+    }
+
+    /**
+     * Checks if the given time falls within +-30 minutes of any checkup's LocalDateTime.
+     * This method compares the provided `date` and `time` (which are combined into a `LocalDateTime`)
+     * against the `LocalDateTime` of each checkup in the patient's set of checkups. It returns `true`
+     * if any checkup's `LocalDateTime` is within ±30 minutes of the provided `timeToCheck`, and `false` otherwise.
+     *
+     * @param patient The patient whose checkups are being checked.
+     * @param date The date of the time to check.
+     * @param time The time to check against the patient's checkups.
+     * @return true if the given time falls within ±30 minutes of any checkup's LocalDateTime,
+     *         false otherwise.
+     */
+    public Checkup isWithinThirtyMinutes(Person patient, LocalDate date, LocalTime time) {
+        Set<Checkup> checkups = patient.getCheckups();
+
+        LocalDateTime timeToCheck = date.atTime(time);
+
+        for (Checkup checkup : checkups) {
+            LocalDateTime checkupTime = checkup.getDateTime();
+            Duration duration = Duration.between(checkupTime, timeToCheck);
+            long seconds = duration.getSeconds();
+
+            if (Math.abs(seconds) < 1800) {
+                return checkup;
+            }
+        }
+        return null;
     }
 
     /**

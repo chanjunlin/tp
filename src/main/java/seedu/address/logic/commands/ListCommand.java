@@ -20,6 +20,7 @@ public class ListCommand extends Command {
                                                          + " List are sorted by earliest checkup date.";
 
     private static Appointment currentAppointmentFilter = null;
+    private static boolean checkupFilterActive = false;
 
     private final Appointment appointmentFilter;
     private boolean filterByCheckup = false;
@@ -50,8 +51,10 @@ public class ListCommand extends Command {
 
         if (filterByCheckup) {
             model.updateFilteredPersonListByEarliestCheckup(new PersonHasCheckupPredicate());
+            checkupFilterActive = true;
             return new CommandResult(MESSAGE_SUCCESS_CHECKUP);
         }
+        checkupFilterActive = false;
 
         if (isListingAll) {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
@@ -84,5 +87,14 @@ public class ListCommand extends Command {
      */
     public static Appointment getAppointmentFilter() {
         return currentAppointmentFilter;
+    }
+
+    /**
+     * Returns whether the checkup filter is active.
+     *
+     * @return true if the checkup filter is active, false otherwise.
+     */
+    public static boolean isCheckupFilterActive() {
+        return checkupFilterActive;
     }
 }

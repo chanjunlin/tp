@@ -43,6 +43,13 @@ public class CheckupTest {
     }
 
     @Test
+    public void constructor_isNotFifteen_throwsParseException() {
+        LocalDate checkupDate = LocalDate.of(2020, 1, 1);
+        LocalTime checkupTime = LocalTime.of(10, 11);
+        assertThrows(ParseException.class, () -> new Checkup(checkupDate, checkupTime, true));
+    }
+
+    @Test
     public void equals_sameCheckup_returnsTrue() throws ParseException {
         Checkup checkup1 = new Checkup(LocalDate.of(2025, 12, 24),
                 LocalTime.of(10, 0), true);

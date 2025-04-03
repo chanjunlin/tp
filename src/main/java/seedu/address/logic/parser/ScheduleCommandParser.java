@@ -52,10 +52,17 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         return new ScheduleCommand(action, patientIndex, checkupDate, checkupTime);
     }
 
+    /**
+     * Parses the given {@code String} representation of the arugments and return a boolean value
+     *
+     * @param trimmedArgs The user input args to be parsed.
+     * @return True or False, based on the string.
+     * @throws ParseException If the string doesn't match either one of the two scenarios.
+     */
     public boolean getCheckupAction(String trimmedArgs) throws ParseException {
         String[] parsedArgument = parseArguments(trimmedArgs);
         try {
-            String scheduleCommand = parsedArgument[0] + " " + parsedArgument[1] + " " + parsedArgument[2];
+            String scheduleCommand = getCommandString(parsedArgument);
             logger.info(scheduleCommand);
             if (scheduleCommand.equals(ScheduleCommand.DELETE_SCHEDULE_COMMAND)) {
                 return false;
@@ -67,7 +74,16 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         } catch (Exception e) {
             throw new ParseException(MISSING_FIRST_PARAMETER + "\n" + MESSAGE_USAGE);
         }
+    }
 
+    /**
+     * Parsed the given String[] to return the type of command for schedule
+     *
+     * @param parsedArgument the user input args to be parsed
+     * @return Returns the first three words of the user input
+     */
+    public String getCommandString(String[] parsedArgument) {
+        return parsedArgument[0] + " " + parsedArgument[1] + " " + parsedArgument[2];
     }
 
     /**

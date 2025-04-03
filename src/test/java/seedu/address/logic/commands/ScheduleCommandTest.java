@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_INVALID_PATIENT;
+import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_CLASH;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_CREATED;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_DELETED;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_DOES_NOT_EXIST;
@@ -58,7 +59,7 @@ public class ScheduleCommandTest {
         checkupDate = LocalDate.of(2025, 12, 24);
         pastDate = LocalDate.of(2025, 1, 1);
         checkupTimeTen = LocalTime.of(10, 0);
-        checkupTimeOne = LocalTime.of(13, 0);
+        checkupTimeOne = LocalTime.of(10, 15);
         dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         addCheckup = true;
@@ -132,6 +133,27 @@ public class ScheduleCommandTest {
             command.execute(model);
         });
         assertEquals("A checkup is already scheduled at this datetime.", exception.getMessage());
+    }
+
+    @Test
+    public void validPatientIndex_hasCheckupClash() {
+        try {
+            CommandResult result = command.execute(model);
+            assertEquals(String.format(MESSAGE_CHECKUP_CREATED, patientZero.getName(),
+                            checkupDate.format(dateFormatter),
+                            checkupTimeTen),
+                    result.getFeedbackToUser());
+        } catch (CommandException e) {
+            fail("Execution should not throw an exception: " + e.getMessage());
+        }
+        Command clashCommand = new ScheduleCommand(addCheckup,
+                patientIndexZero,
+                LocalDate.of(2025, 12, 24),
+                LocalTime.of(10, 15));
+        CommandException exception = assertThrows(CommandException.class, () -> {
+            clashCommand.execute(model);
+        });
+        assertEquals(String.format(MESSAGE_CHECKUP_CLASH, "24/12/2025 10:00"), exception.getMessage());
     }
 
     @Test

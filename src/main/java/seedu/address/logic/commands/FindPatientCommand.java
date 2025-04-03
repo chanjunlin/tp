@@ -37,9 +37,9 @@ public class FindPatientCommand extends FindCommand {
     private final Index nurseIndex;
 
     /**
-     * Test
+     * Creates a FindPatientCommand to find patients assigned to the nurse at the specified index.
      *
-     * @param nurseIndex Test
+     * @param nurseIndex The index of the nurse whose patients need to be found.
      */
     public FindPatientCommand(Index nurseIndex) {
         super(new NameContainsKeywordsPredicate(Arrays.asList("patient")));
@@ -65,12 +65,24 @@ public class FindPatientCommand extends FindCommand {
                 String.join(", ", patientNames)));
     }
 
+    /**
+     * Gets the current appointment filter, if any, from the ListCommand.
+     *
+     * @return The current PersonHasAppointmentPredicate, or null if no filter is set.
+     */
     private PersonHasAppointmentPredicate getCurrentPredicate() {
         return ListCommand.getAppointmentFilter() != null
                 ? new PersonHasAppointmentPredicate(ListCommand.getAppointmentFilter())
                 : null;
     }
 
+    /**
+     * Retrieves the nurse from the model based on the nurse index.
+     *
+     * @param model The model to fetch the filtered list of persons from.
+     * @return The person representing the nurse at the specified index.
+     * @throws CommandException If the nurse index is invalid or the person at the index is not a nurse.
+     */
     private Person getNurseFromModel(Model model) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
 
@@ -87,6 +99,13 @@ public class FindPatientCommand extends FindCommand {
         return nurse;
     }
 
+    /**
+     * Gets the names of the patients assigned to the given nurse.
+     *
+     * @param nurse The nurse whose assigned patients need to be found.
+     * @param model The model to get the list of persons from.
+     * @return A list of patient names assigned to the nurse.
+     */
     private List<String> getAssignedPatientNames(Person nurse, Model model) {
         return model.getFilteredPersonList().stream()
                 .filter(person -> isPatientAssignedToNurse(person, nurse))
@@ -94,6 +113,14 @@ public class FindPatientCommand extends FindCommand {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Checks if a patient is assigned to a nurse based on tags.
+     *
+     * @param patient The patient to check.
+     * @param nurse The nurse to check if the patient is assigned to.
+     * @return true if the patient is assigned to the nurse, false otherwise.
+     */
     private boolean isPatientAssignedToNurse(Person patient, Person nurse) {
         Set<Tag> tags = patient.getTags();
         String nurseName = nurse.getName().toString().toUpperCase();
