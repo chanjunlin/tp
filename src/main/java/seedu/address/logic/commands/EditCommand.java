@@ -40,6 +40,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.PersonHasAppointmentPredicate;
+import seedu.address.model.person.PersonHasCheckupPredicate;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
@@ -235,6 +236,9 @@ public class EditCommand extends Command {
         if (ListCommand.getAppointmentFilter() != null) {
             // If list is filtered by appointment.
             model.updateFilteredPersonList(new PersonHasAppointmentPredicate(ListCommand.getAppointmentFilter()));
+        } else if (ListCommand.isCheckupFilterActive()) {
+            // If list is filtered by checkup.
+            model.updateFilteredPersonListByEarliestCheckup(new PersonHasCheckupPredicate());
         } else if (ViewCommand.getLastShownListPredicate() != null) {
             // If list is filtered by view command.
             model.updateFilteredPersonList(ViewCommand.getLastShownListPredicate());
