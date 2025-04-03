@@ -70,7 +70,8 @@ public class FindNurseCommand extends FindCommand {
         Person patient = lastShownList.get(patientIndex.getZeroBased());
 
         if (!patient.isPatient()) {
-            throw new CommandException(String.format(MESSAGE_INVALID_PATIENT, patientIndex.getOneBased()));
+            throw new CommandException(String.format(MESSAGE_INVALID_PATIENT,
+                    patientIndex.getOneBased()));
         }
 
         return patient;
