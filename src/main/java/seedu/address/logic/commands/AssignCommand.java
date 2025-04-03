@@ -30,6 +30,10 @@ public class AssignCommand extends Command {
 
     public static final String MESSAGE_INVALID_NURSE = "The person at index %d is not a nurse.";
 
+    public static final String ROLE_PATIENT = "Patient";
+
+    public static final String ROLE_NURSE = "Nurse";
+
     private static final int MAX_NURSES_PER_PATIENT = 2;
 
     private final Index patientIndex;
@@ -52,24 +56,11 @@ public class AssignCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (patientIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        Person patient = getPersonFromIndex(lastShownList, patientIndex);
+        Person nurse = getPersonFromIndex(lastShownList, nurseIndex);
 
-        if (nurseIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person patient = lastShownList.get(patientIndex.getZeroBased());
-        Person nurse = lastShownList.get(nurseIndex.getZeroBased());
-
-        if (!patient.getAppointment().toString().equals("Patient")) {
-            throw new CommandException(String.format(MESSAGE_INVALID_PATIENT, patientIndex.getOneBased()));
-        }
-
-        if (!nurse.getAppointment().toString().equals("Nurse")) {
-            throw new CommandException(String.format(MESSAGE_INVALID_NURSE, nurseIndex.getOneBased()));
-        }
+        validateAppointmentType(patient, ROLE_PATIENT, patientIndex, MESSAGE_INVALID_PATIENT);
+        validateAppointmentType(nurse, ROLE_NURSE, nurseIndex, MESSAGE_INVALID_NURSE);
 
         long nurseCount = patient.getTags().stream().filter(tag -> tag.tagName.startsWith("Nurse")).count();
 
@@ -87,6 +78,33 @@ public class AssignCommand extends Command {
         model.setPerson(patient, updatedPatient);
         return new CommandResult(String.format(MESSAGE_SUCCESS, nurse.getName(), patient.getName()));
     }
+
+    /**
+     * Returns the person at the specified index from the list or throws if index is out of bounds.
+     */
+    private Person getPersonFromIndex(List<Person> list, Index index) throws CommandException {
+        if (index.getZeroBased() >= list.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        return list.get(index.getZeroBased());
+    }
+
+    /**
+     * Validates that the given person has the expected appointment type.
+     *
+     * @param person the person to validate
+     * @param expectedType the expected appointment string (e.g., "Patient", "Nurse")
+     * @param index the index of the person (for error messaging)
+     * @param errorMessageFormat the error message to throw if validation fails
+     * @throws CommandException if the appointment type does not match
+     */
+    private void validateAppointmentType(Person person, String expectedType, Index index, String errorMessageFormat)
+            throws CommandException {
+        if (!person.getAppointment().toString().equalsIgnoreCase(expectedType)) {
+            throw new CommandException(String.format(errorMessageFormat, index.getOneBased()));
+        }
+    }
+
 
     @Override
     public boolean equals(Object other) {

@@ -27,7 +27,7 @@ public class ViewCommandTest {
         CommandResult result = viewCommand.execute(model);
 
         String expected = String.format(ViewCommand.MESSAGE_SUCCESS, patient.getName()) + "\n\n"
-                + String.format(ViewCommand.MESSAGE_MEDICAL_HISTORY, patient.getName(), "High blood pressure");
+                + String.format(ViewCommand.MESSAGE_MEDICAL_HISTORY, patient.getName(), "\n- High blood pressure");
 
         assertEquals(expected, result.getFeedbackToUser());
     }

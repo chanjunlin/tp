@@ -43,21 +43,28 @@ public class BloodTypeTest {
 
     @Test
     public void equals() {
-        BloodType type = new BloodType("AB+");
+        BloodType big_caps_type = new BloodType("AB+");
+        BloodType small_caps_type = new BloodType("ab+");
 
         // same values -> returns true
-        assertTrue(type.equals(new BloodType("AB+")));
+        assertTrue(big_caps_type.equals(new BloodType("AB+")));
+        assertTrue(big_caps_type.equals(small_caps_type));
 
         // same object -> returns true
-        assertTrue(type.equals(type));
+        assertTrue(big_caps_type.equals(big_caps_type));
+        assertTrue(small_caps_type.equals(small_caps_type));
 
         // null -> returns false
-        assertFalse(type.equals(null));
+        assertFalse(big_caps_type.equals(null));
+        assertFalse(small_caps_type.equals(null));
 
         // different types -> returns false
-        assertFalse(type.equals(5.0f));
+        assertFalse(big_caps_type.equals(5.0f));
+        assertFalse(small_caps_type.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(type.equals(new BloodType("A-")));
+        assertFalse(big_caps_type.equals(new BloodType("A-")));
+        assertFalse(small_caps_type.equals(new BloodType("b-")));
+
     }
 }
