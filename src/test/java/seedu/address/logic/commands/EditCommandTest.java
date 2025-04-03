@@ -181,7 +181,7 @@ public class EditCommandTest {
     public void equals_checkPersonFields() {
         // different dob -> returns false
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(DESC_AMY)
-                .withDateOfBirth("01/01/2002").build();
+                                              .withDateOfBirth("01/01/2002").build();
         assertFalse(DESC_AMY.equals(descriptor));
 
         // different blood type -> returns false
