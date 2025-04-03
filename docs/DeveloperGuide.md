@@ -521,7 +521,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Editing a Person
 1. Editing any field of a person currently being displayed
-    1. Prerequisites: List all persons using the clist` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
     1. Test case: `edit 2 n/Samantha`<br>
        Expected: Changed the name of the person at index 2 of the displayed list to Samantha.
     1. Test case: Other fields to be edited:
@@ -535,10 +535,67 @@ testers are expected to do more *exploratory* testing.
        1. Appointment `edit 1 ap/nurse`
             1. Patients contacts can be converted to Nurse appointment if it does not contain any medical history
             1. Expected: Changes the patients appointment to a nurse if there is no medical history. Returns an error if the patient does have medical history.
+
 ### Listing persons
+1. Listing all people, people based on appointments (nurse or patient), or based on checkups scheduled
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   2. Test case: `list`<br>
+      Expected: Displays all contacts (nurses and patients).
+   2. Test case: `list patient`<br>
+      Expected: Displays all patients.
+   3. Test case: `list nurse`<br>
+      Expected: Displays all nurses.
+   4. Test case: `list checkup`<br>
+      Expected: Displays all patients with checkups scheduled, sorted from earliest to latest.
+
 ### Finding persons
-### Assigning a nurse / patient
+1. Finding people by name or part of name
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   2. Test case: `find <first name>`<br>
+      Expected: Displays contacts whose names contain `<first name>` in any part of their name.
+   3. Test case: `find <part of name>`<br>
+      Expected: Displays contacts whose names contain `<part of name>` in any part of their name.
+2. Finding nurse(s) assigned to a patient
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   2. Test case: `find nurse of patient PATIENT_INDEX`<br>
+      Expected: Displays nurse(s) assigned to patient at `PATIENT_INDEX`
+3. Finding patient(s) who have a specified nurse assigned to them
+
+### Assigning a nurse to a patient
+1. Assigning a nurse to a patient by their index numbers
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list (nurses and patients).
+   2. Test case: `assign PATIENT_INDEX NURSE_INDEX`<br>
+      Expected: Nurse at `NURSE_INDEX` gets assigned to patient at `PATIENT_INDEX`.
+   3. Test case: `assign`<br>
+      Expected: Shows an invalid command format error message with usage instructions.
+   4. Other incorrect commands to try:
+      1. Missing an argument: no `NURSE_INDEX` specified
+      2. Invalid index: using non-numeric characters for index values
+
+### Removing nurse assignment from a patient
+1. Removing the assignment of a nurse from a patient
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list. Patients with assigned nurses exist.
+   2. Test case: `assign delete NURSE_NAME PATIENT_INDEX`<br>
+      Expected: Removes the assigned nurse with name `NURSE_NAME` from the patient at `PATIENT_INDEX`.
+   3. Test case: `assign delete`<br>
+      Expected: Shows an invalid command format error message with usage instructions.
+   4. Other incorrect commands to try:
+      1. Missing an argument: no `NURSE_NAME` or `PATIENT_INDEX` specified
+      2. Invalid index: using non-numeric characters for the index value
+
 ### Schedule checkups
+
+### Viewing nurses / patients
+1. Viewing nurse or patient details
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   2. Test case: `view INDEX`<br>
+      Expected: Displays details for the contact at `INDEX`. If this contact is a patient and has medical history details, the medical history will be listed.
+   3. Test case: `view`<br>
+      Expected: Shows an invalid command format error message with usage instructions.
+   4. Other incorrect commands to try:
+      1. Missing index value
+      2. Invalid index: using non-numeric characters for the index value
+      3. Too many arguments: entering multiple index values
 
 ### Saving data
 
