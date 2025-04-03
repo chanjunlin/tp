@@ -149,7 +149,7 @@ public class ScheduleCommandTest {
         Command clashCommand = new ScheduleCommand(addCheckup,
                 patientIndexZero,
                 LocalDate.of(2025, 12, 24),
-                LocalTime.of(10,15));
+                LocalTime.of(10, 15));
         CommandException exception = assertThrows(CommandException.class, () -> {
             clashCommand.execute(model);
         });
