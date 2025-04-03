@@ -90,6 +90,11 @@ public class ViewCommand extends Command {
         return true;
     }
 
+    /**
+     * Returns the predicate used to filter the last shown list.
+     *
+     * @return Predicate for the last shown list.
+     */
     public static Predicate<Person> getLastShownListPredicate() {
         return lastShownListPredicate;
     }

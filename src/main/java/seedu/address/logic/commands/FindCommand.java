@@ -63,6 +63,11 @@ public class FindCommand extends Command {
                 .toString();
     }
 
+    /**
+     * Returns the last find predicate used.
+     *
+     * @return The last find predicate.
+     */
     public static Predicate<Person> getLastFindPredicate() {
         return lastFindPredicate;
     }
