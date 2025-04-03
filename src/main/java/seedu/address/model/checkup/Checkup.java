@@ -61,6 +61,7 @@ public class Checkup {
      *
      * @param checkupDate The date of the checkup.
      * @param checkupTime The time of the checkup.
+     * @param isAdd If the checkup is to be added or deleted.
      * @return True if the checkup date and time are valid; false otherwise.
      * @throws ParseException If the checkup date or time is invalid.
      */
