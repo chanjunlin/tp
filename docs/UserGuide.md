@@ -177,7 +177,7 @@ Finds persons whose names contain any of the given keywords or prefixes.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
+* The search is case-insensitive. e.g `hans` will match `HANS`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Any name containing the prefix will be matched e.g. `Han` and `ns` will match `HANS`
@@ -273,13 +273,19 @@ Examples:
 
 Schedules a checkup appointment for the patient, or deletes an existing checkup appointment.
 
+**Note** 
+* Checkups cannot be created before the current time.
+* Checkups can only be created during working hours (9am to 5pm).
+* Date Time follows the format of DD/MM/YYYY HHMM.
+* A warning will be given if the target patient does not have a assigned nurse.
+
 Actions:
-* Add a checkup
-* Delete a checkup (that exists)
+* Add a checkup.
+* Delete a checkup (that exists).
 
 Format:
-- `schedule add for patient INDEX DATE TIME`
-- `schedule delete for patient INDEX DATE TIME`
+* `schedule add for patient INDEX DATE TIME`
+* `schedule delete for patient INDEX DATE TIME`
 
 * `INDEX` refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -290,7 +296,7 @@ Examples:
 
 ### Viewing a nurse or patient : `view`
 
-Displays details of specified person. If specified person is a patient with medical history, the medical history will be shown.
+Displays details of specified person. If specified person is a patient with medical history, the medical history will be shown in the result display box.
 
 Format: `view INDEX`
 
@@ -344,3 +350,13 @@ Action | Format, Examples
 **Assign Delete** | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2`
 **Schedule** | `schedule add for patient PATIENT_INDEX DATE_TIME`<br>e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100`
 **View** | `view INDEX`<br> e.g., `view 2`
+
+## Colour Legend
+
+Field | Colour
+--------|------------------
+Patient Appointment | Light Blue
+Nurse Appointment | Orange
+Tag | Light Purple
+Checkup | Light brown
+Assigned Nurse | Green
