@@ -69,7 +69,7 @@ public class FindNurseCommand extends FindCommand {
 
         Person patient = lastShownList.get(patientIndex.getZeroBased());
 
-        if (!isPatient(patient)) {
+        if (!patient.isPatient()) {
             throw new CommandException(String.format(MESSAGE_INVALID_PATIENT, patientIndex.getOneBased()));
         }
 
@@ -87,15 +87,5 @@ public class FindNurseCommand extends FindCommand {
                 .filter(tag -> tag.tagName.startsWith("Nurse"))
                 .map(tag -> tag.tagName.substring(5))
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * Checks if the person is a patient based on their appointment type.
-     *
-     * @param person The person to check.
-     * @return True if the person is a patient, false otherwise.
-     */
-    private boolean isPatient(Person person) {
-        return person.getAppointment().toString().equalsIgnoreCase("Patient");
     }
 }
