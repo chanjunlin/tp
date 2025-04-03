@@ -162,7 +162,7 @@ public class EditCommand extends Command {
         if (isNurse && isPatient) {
             String name = personToEdit.getName().toString();
             logger.info("Name: " + name);
-            boolean patientHasEditedNurse = personModel.getFilteredPersonList()
+            boolean patientHasEditedNurse = personModel.getAddressBook().getPersonList()
                                                        .stream()
                                                        .filter(person -> person.getAppointment().isPatient())
                                                        .anyMatch(person -> person.getTags().stream()
@@ -186,7 +186,7 @@ public class EditCommand extends Command {
         logger.info("Is it a nurse: " + isNurse);
         String name = personToEdit.getName().toString();
         logger.info("Name: " + name);
-        boolean nurseHasPatientAssigned = model.getFilteredPersonList()
+        boolean nurseHasPatientAssigned = model.getAddressBook().getPersonList()
                                                .stream()
                                                .filter(person -> person.getAppointment().isPatient())
                                                .anyMatch(person -> person.getTags().stream()
@@ -211,7 +211,7 @@ public class EditCommand extends Command {
     // Ensure that a patient can change to a nurse if they have no assigned nurse.
     private void ensurePatientHasNoAssignedNurse(Person personToEdit, Model personModel) throws CommandException {
         String name = personToEdit.getName().toString();
-        boolean hasNurseAssigned = personModel.getFilteredPersonList()
+        boolean hasNurseAssigned = personModel.getAddressBook().getPersonList()
                                               .stream()
                                               .filter(person -> person.getName()
                                                                              .toString()
@@ -235,6 +235,12 @@ public class EditCommand extends Command {
         if (ListCommand.getAppointmentFilter() != null) {
             // If list is filtered by appointment.
             model.updateFilteredPersonList(new PersonHasAppointmentPredicate(ListCommand.getAppointmentFilter()));
+        } else if (ViewCommand.getLastShownListPredicate() != null) {
+            // If list is filtered by view command.
+            model.updateFilteredPersonList(ViewCommand.getLastShownListPredicate());
+        } else if (FindCommand.getLastFindPredicate() != null) {
+            // If list is filtered by find command.
+            model.updateFilteredPersonList(FindCommand.getLastFindPredicate());
         } else {
             // If list isn't filtered by appointment.
             model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
