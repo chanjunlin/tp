@@ -31,7 +31,16 @@ title: Developer Guide
 1. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
    * [Launch and Shutdown](#launch-and-shutdown)
    * [Deleting a Person](#deleting-a-person)
+   * [Editing a Person](#editing-a-person)
+   * [Listing Persons](#listing-persons)
+   * [Finding Persons](#finding-persons)
+   * [Assigning a nurse to a patient](#assigning-a-nurse-to-a-patient)
+   * [Removing nurse assignment from a patient](#removing-nurse-assignment-from-a-patient)
+   * [Schedule Checkups](#schedule-checkups)
+   * [View nurses / patients](#viewing-nurses--patients)
    * [Saving Data](#saving-data)
+1. [Appendix: Effort](#appendix-effort)
+1. [Appendix: Planned Enhancements](#appendix-planned-enhancements)
 
 --------------------------------------------------------------------------------------------------------------------
 
