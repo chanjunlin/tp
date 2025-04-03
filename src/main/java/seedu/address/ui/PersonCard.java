@@ -199,6 +199,6 @@ public class PersonCard extends UiPart<Region> {
         nextOfKinLabelText.setStyle("-fx-font-weight: bold;");
         Text nextOfKindValueText = new Text(person.getNextOfKin().toString());
         TextFlow textFlow = new TextFlow(nextOfKinLabelText, nextOfKindValueText);
-        phone.setGraphic(textFlow);
+        nextOfKin.setGraphic(textFlow);
     }
 }
