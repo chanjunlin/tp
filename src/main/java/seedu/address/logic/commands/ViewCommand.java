@@ -58,8 +58,8 @@ public class ViewCommand extends Command {
                     ? "No medical history available."
                     : viewedPerson.getMedicalHistory().stream()
                     .map(MedicalHistory::toString)
-                    .map(history -> history.replace("[", "").replace("]", ""))
-                    .collect(Collectors.joining(", "));
+                    .map(history -> "\n- " + history.replace("[", "").replace("]", ""))
+                    .collect(Collectors.joining(""));
             String medicalHistoryMessage = String.format(MESSAGE_MEDICAL_HISTORY, viewedPerson.getName(),
                     medicalHistory);
             responseMessage += "\n\n" + medicalHistoryMessage;
