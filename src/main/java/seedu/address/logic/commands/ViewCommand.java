@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import seedu.address.commons.core.index.Index;
@@ -28,6 +29,8 @@ public class ViewCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Displaying details for: %s.";
     public static final String MESSAGE_MEDICAL_HISTORY = "Medical History for %s: %s";
 
+    private static Predicate<Person> lastShownListPredicate;
+
     private final Index index;
 
     /**
@@ -50,7 +53,8 @@ public class ViewCommand extends Command {
 
         Person viewedPerson = lastShownList.get(index.getZeroBased());
 
-        model.updateFilteredPersonList(person -> person.equals(viewedPerson));
+        lastShownListPredicate = person -> person.isSamePerson(viewedPerson);
+        model.updateFilteredPersonList(lastShownListPredicate);
 
         String responseMessage = String.format(MESSAGE_SUCCESS, viewedPerson.getName());
         if (viewedPerson.getAppointment().toString().equals("Patient")) {
@@ -83,5 +87,9 @@ public class ViewCommand extends Command {
             return false;
         }
         return true;
+    }
+
+    public static Predicate<Person> getLastShownListPredicate() {
+        return lastShownListPredicate;
     }
 }
