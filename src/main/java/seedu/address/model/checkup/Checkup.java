@@ -18,6 +18,8 @@ public class Checkup {
 
     public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric";
     public static final String MESSAGE_INVALID_DATETIME = "Time slot is not available";
+    public static final String MESSAGE_FIFTEEN = "Please use a time in blocks of 00, 15, 30, or 45 minutes"
+        + " (e.g., 1000, 1015, 1030, 1045).";
     public static final String MESSAGE_OUTSIDE_BUSINESS_HOURS =
             "Checkup must be scheduled between 9:00 AM and 5:00 PM";
     public static final String MESSAGE_PAST_DATE =
@@ -33,6 +35,7 @@ public class Checkup {
      *
      * @param checkupDate The date of the checkup.
      * @param checkupTime The time of the checkup.
+     * @param isAdd If the checkup is getting added or deleted from the patient
      * @throws ParseException If the checkup date or time is invalid.
      */
     public Checkup(LocalDate checkupDate, LocalTime checkupTime, Boolean isAdd) throws ParseException {
@@ -70,6 +73,9 @@ public class Checkup {
         if (!isNotInPast(checkupDateTime) && isAdd) {
             throw new ParseException(MESSAGE_PAST_DATE);
         }
+        if (!isNotFifteen(checkupDateTime) && isAdd) {
+            throw new ParseException(MESSAGE_FIFTEEN);
+        }
         return true;
     }
 
@@ -93,6 +99,17 @@ public class Checkup {
     private static boolean isWithinBusinessHours(LocalDateTime dateTime) {
         LocalTime time = dateTime.toLocalTime();
         return !time.isBefore(START_TIME) && !time.isAfter(END_TIME);
+    }
+
+    /**
+     * Checks if the provided checkup time is in blocks of 15 minutes.
+     *
+     * @param dateTime The time to check.
+     * @return true if the checkup time is in blocks of 15 minutes, false otherwise.
+     */
+    private static boolean isNotFifteen(LocalDateTime dateTime) {
+        int minutes = dateTime.getMinute();
+        return minutes % 15 == 0;
     }
 
     /**

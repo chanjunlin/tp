@@ -28,7 +28,6 @@ public class FindNurseCommand extends FindCommand {
     public static final String MESSAGE_INVALID_PATIENT = "The person at index %d is not a patient.";
     public static final String MESSAGE_NO_NURSE_ASSIGNED = "No nurse assigned to the patient at index %d.";
     public static final String MESSAGE_NURSE_FOUND = "Nurse(s) assigned to patient %s: %s.";
-
     private final Index patientIndex;
 
     /**
@@ -70,7 +69,7 @@ public class FindNurseCommand extends FindCommand {
 
         Person patient = lastShownList.get(patientIndex.getZeroBased());
 
-        if (!patient.getAppointment().toString().equalsIgnoreCase("Patient")) {
+        if (!isPatient(patient)) {
             throw new CommandException(String.format(MESSAGE_INVALID_PATIENT, patientIndex.getOneBased()));
         }
 
@@ -88,5 +87,15 @@ public class FindNurseCommand extends FindCommand {
                 .filter(tag -> tag.tagName.startsWith("Nurse"))
                 .map(tag -> tag.tagName.substring(5))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Checks if the person is a patient based on their appointment type.
+     *
+     * @param person The person to check.
+     * @return True if the person is a patient, false otherwise.
+     */
+    private boolean isPatient(Person person) {
+        return person.getAppointment().toString().equalsIgnoreCase("Patient");
     }
 }
