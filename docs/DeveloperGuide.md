@@ -455,6 +455,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Nurse**: Tends to the patients
 * **Checkup**: A scheduled appointment for nurse to visit and treat the patient.
 
+### Requirements implemented ###
+
+### Requirements yet to be implemented ###
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
@@ -501,8 +505,40 @@ testers are expected to do more *exploratory* testing.
 ### Adding a person
 1. Adding a person while all persons are being shown
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-   2. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend`
-    
+   1. Test case: `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/AB+ ap/Patient nok/Jane 91234567 t/newcomer mh/Diabetes mh/High Blood Pressure` <br>
+   Expected: A new contact is created and the displayed person list is updated.
+1. Adding a person using only compulsory fields
+   1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
+    Expected: Creates a new patient contact with the minimum fields included.
+1. Adding a duplicate person `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
+   Expected: No person is created. Error message shows "This person already exists in the address book"
+1. Other incorrect commands to try: 
+   1. Invalid names: names containing non-alphabetical symbols
+   1. Invalid number: Less than 3 digits or non integer inputs
+   1. Invalid Date of Birth: Non integer and non slash inputs, incorrect date format (DD/MM/YYYY)
+   1. Invalid Blood type: Not matching any of the 8 specified blood types.
+   1. Invalid Appointment: Not matching patient or nurse, non-alphabetical inputs
+
+### Editing a Person
+1. Editing any field of a person currently being displayed
+    1. Prerequisites: List all persons using the clist` command. Multiple persons in the list.
+    1. Test case: `edit 2 n/Samantha`<br>
+       Expected: Changed the name of the person at index 2 of the displayed list to Samantha.
+    1. Test case: Other fields to be edited:
+       1. tags: `edit 1 t/discharge t/No family` <br>
+          Expected: Removes all tags of the person at index 1 and creates 2 tags for that person.
+       1. Medical History
+            1. Command: `edit 1 mh/Diabetes`<br>
+                Expected: Removes the medical history of the patient at index 1 and creates a new medical history containing diabetes. If the person is a nurse, an error will occur as medical history should not be added to a nurse.
+            1. Command: `edit 1 mh/`<br>
+                Expected: Clears the medical history of the person.
+       1. Appointment `edit 1 ap/nurse`
+            1. Patients contacts can be converted to Nurse appointment if it does not contain any medical history
+            1. Expected: Changes the patients appointment to a nurse if there is no medical history. Returns an error if the patient does have medical history.
+### Listing persons
+### Finding persons
+### Assigning a nurse / patient
+### Schedule checkups
 
 ### Saving data
 
@@ -510,3 +546,8 @@ testers are expected to do more *exploratory* testing.
 
    1. Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
    1. Delete the file and restart the app to recover and start with a small list of sample contacts.
+
+## **Appendix: Effort**
+
+## **Appendix: Planned Enhancements**
+
