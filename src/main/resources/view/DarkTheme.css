@@ -467,7 +467,7 @@
 }
 
 .checkup-label {
-    -fx-background-color: lightgray;
+    -fx-background-color: #bc8282;
     -fx-padding: 5px;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
@@ -477,7 +477,7 @@
 
 .tags-label {
     -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+    -fx-background-color: #b4a5cd;
     -fx-padding: 5px;
     -fx-background-radius: 10px;
     -fx-border-radius: 10;
