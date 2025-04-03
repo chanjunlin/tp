@@ -11,6 +11,8 @@ public class AppointmentTest {
 
     @Test
     public void isValidAppointment() {
+
+        //Valid appointment strings
         Appointment appt = new Appointment("Nurse");
         assertEquals("Nurse", appt.appointment);
         Appointment appt2 = new Appointment("Patient");
@@ -19,6 +21,10 @@ public class AppointmentTest {
         //null appointment
         assertThrows(NullPointerException.class, () -> Appointment.isValidAppointment(null));
 
+        //Empty appointment
+        assertFalse(Appointment.isValidAppointment(""));
+
+        //Invalid Appointment strings
         assertFalse(Appointment.isValidAppointment(""));
         assertFalse(Appointment.isValidAppointment("Manager"));
         assertFalse(Appointment.isValidAppointment("Potato"));

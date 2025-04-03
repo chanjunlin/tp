@@ -30,7 +30,6 @@ public class PersonBuilder {
     public static final String DEFAULT_BLOOD_TYPE = "AB+";
     public static final String DEFAULT_APPOINTMENT = "Patient";
     public static final String DEFAULT_NEXTOFKIN = "";
-    //public static final String DEFAULT_MEDICALHISTORY = "Diabetes";
 
     private Name name;
     private DateOfBirth dob;
