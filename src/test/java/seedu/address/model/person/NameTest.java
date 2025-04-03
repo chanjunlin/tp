@@ -29,32 +29,35 @@ public class NameTest {
         assertFalse(Name.isValidName(" ")); // spaces only
         assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
         assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        assertFalse(Name.isValidName("12345")); // numbers only
+        assertFalse(Name.isValidName("peter the 2nd")); // alphanumeric characters
 
         // valid name
         assertTrue(Name.isValidName("peter jack")); // alphabets only
-        assertTrue(Name.isValidName("12345")); // numbers only
-        assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
-        assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.isValidName("David Roger Jackson Ray Jr second")); // long names
     }
 
     @Test
     public void equals() {
-        Name name = new Name("Valid Name");
+        Name smallCapsName = new Name("Valid Name");
 
         // same values -> returns true
-        assertTrue(name.equals(new Name("Valid Name")));
+        assertTrue(smallCapsName.equals(new Name("valid name")));
+
+        //same value but different capitalisation -> returns true
+        assertTrue(smallCapsName.equals(new Name("VALID NAME")));
 
         // same object -> returns true
-        assertTrue(name.equals(name));
+        assertTrue(smallCapsName.equals(smallCapsName));
 
         // null -> returns false
-        assertFalse(name.equals(null));
+        assertFalse(smallCapsName.equals(null));
 
         // different types -> returns false
-        assertFalse(name.equals(5.0f));
+        assertFalse(smallCapsName.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(name.equals(new Name("Other Valid Name")));
+        assertFalse(smallCapsName.equals(new Name("Other Valid Name")));
     }
 }

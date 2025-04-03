@@ -17,26 +17,22 @@ public class ListCommandParser implements Parser<ListCommand> {
     public ListCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim().toLowerCase();
 
-        if (trimmedArgs.isEmpty()) {
-            return new ListCommand(null); // Show all persons if no filter is given
+        boolean isEmpty = trimmedArgs.isEmpty();
+        boolean isCheckup = trimmedArgs.equals("checkup");
+        boolean isValidAppointment = Appointment.isValidAppointment(trimmedArgs);
+
+        if (isEmpty) {
+            return new ListCommand(null);
         }
 
-        String formattedAppointment = capitalizeFirstLetter(trimmedArgs);
-
-        if (!Appointment.isValidAppointment(formattedAppointment)) {
-            throw new ParseException("Invalid appointment type! Only 'Nurse' or 'Patient' are allowed.");
+        if (isCheckup) {
+            return new ListCommand(true);
         }
 
-        return new ListCommand(new Appointment(formattedAppointment));
-    }
-
-    /**
-     * Capitalizes the first letter of the given string.
-     */
-    private String capitalizeFirstLetter(String str) {
-        if (str == null || str.isEmpty()) {
-            return str;
+        if (!isValidAppointment) {
+            throw new ParseException("Invalid input type! Only 'nurse', 'patient' or 'checkup' are allowed.");
         }
-        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+
+        return new ListCommand(new Appointment(trimmedArgs));
     }
 }

@@ -1,0 +1,76 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindCommandParser" as FindCommandParser LOGIC_COLOR
+participant "f:FindNurseCommand" as FindNurseCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("find nurse of patient 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("find nurse of patient 1")
+activate AddressBookParser
+
+create FindCommandParser
+AddressBookParser -> FindCommandParser
+activate FindCommandParser
+
+FindCommandParser --> AddressBookParser
+deactivate FindCommandParser
+
+AddressBookParser -> FindCommandParser : parse("nurse of patient 1")
+activate FindCommandParser
+
+create FindNurseCommand
+FindCommandParser -> FindNurseCommand
+activate FindNurseCommand
+
+FindNurseCommand --> FindCommandParser
+deactivate FindNurseCommand
+
+FindCommandParser --> AddressBookParser : f
+deactivate FindCommandParser
+FindCommandParser -[hidden]-> AddressBookParser
+destroy FindCommandParser
+
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+
+LogicManager -> FindNurseCommand : execute(m)
+activate FindNurseCommand
+
+FindNurseCommand -> Model : getPatientFromModel(m)
+activate Model
+
+Model --> FindNurseCommand : patient
+deactivate Model
+
+FindNurseCommand -> FindNurseCommand : getAssignedNurseName(patient)
+activate FindNurseCommand
+FindNurseCommand --> FindNurseCommand : nurseNames
+deactivate FindNurseCommand
+
+alt nurseNames.isEmpty()
+        FindNurseCommand --> LogicManager: throw CommandException
+else deafult
+    create CommandResult
+    FindNurseCommand -> CommandResult
+    activate CommandResult
+    CommandResult --> FindNurseCommand
+    deactivate CommandResult
+FindNurseCommand --> LogicManager : r
+deactivate FindNurseCommand
+end
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

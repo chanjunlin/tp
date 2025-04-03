@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AssignCommand;
+import seedu.address.logic.commands.AssignDeleteCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -22,6 +24,8 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ScheduleCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Appointment;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
@@ -33,13 +37,17 @@ import seedu.address.testutil.PersonUtil;
 public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
-    private Appointment nurse = new Appointment("nurse");
 
     @Test
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new AddCommand(person), command);
+    }
+
+    @Test
+    public void parseCommand_assign() throws Exception {
+        assertTrue(parser.parseCommand(AssignCommand.COMMAND_WORD + " 1 2") instanceof AssignCommand);
     }
 
     @Test
@@ -57,11 +65,11 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
+        Person person = new PersonBuilder().withTags("validTag").build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(nurse, INDEX_FIRST_PERSON, descriptor), command);
+        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
     @Test
@@ -79,14 +87,9 @@ public class AddressBookParserTest {
     }
 
     @Test
-    public void parseCommand_findNurse() throws Exception {
-        System.out.println("hi");
-    }
-
-    @Test
     public void parseCommand_invalidList_throwsParseException() {
-        assertThrows(ParseException.class, "Invalid appointment type! Only 'Nurse' or 'Patient' are allowed.", () ->
-                parser.parseCommand("list xyz"));
+        assertThrows(ParseException.class, "Invalid input type! Only 'nurse', 'patient' or "
+                + "'checkup' are allowed.", () -> parser.parseCommand("list xyz"));
     }
 
     @Test
@@ -98,9 +101,26 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
-        assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
-        assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list nurse"));
-        assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list patient"));
+        assertEquals(new ListCommand(new Appointment("Nurse")), parser.parseCommand("list Nurse"));
+        assertEquals(new ListCommand(new Appointment("Patient")), parser.parseCommand("list Patient"));
+        assertEquals(new ListCommand(true), parser.parseCommand("list checkup"));
+    }
+
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        assertTrue(parser.parseCommand(ScheduleCommand.COMMAND_WORD + " add for patient 1 12/12/2025 1200")
+                instanceof ScheduleCommand);
+    }
+
+    @Test
+    public void parseCommand_view() throws Exception {
+        assertTrue(parser.parseCommand("view 1") instanceof ViewCommand);
+    }
+
+    @Test
+    public void parseCommand_assignDelete() throws Exception {
+        assertTrue(parser.parseCommand(AssignDeleteCommand.COMMAND_WORD + " john lee 2")
+                instanceof AssignDeleteCommand);
     }
 
     @Test

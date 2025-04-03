@@ -15,7 +15,7 @@ public class Appointment {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^(Nurse|Patient)$";
+    public static final String VALIDATION_REGEX = "^(nurse|patient)$";
 
     public final String appointment;
 
@@ -27,11 +27,25 @@ public class Appointment {
     public Appointment(String appointment) {
         requireNonNull(appointment);
         checkArgument(isValidAppointment(appointment), MESSAGE_CONSTRAINTS);
-        this.appointment = appointment;
+        this.appointment = appointment.substring(0, 1).toUpperCase() + appointment.substring(1).toLowerCase();
     }
 
     public static boolean isValidAppointment(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.toLowerCase().matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if the appointment is nurse and false otherwise.
+     */
+    public boolean isNurse() {
+        return this.toString().equalsIgnoreCase("nurse");
+    }
+
+    /**
+     * Returns true if the appointment is patient and false otherwise.
+     */
+    public boolean isPatient() {
+        return this.toString().equalsIgnoreCase("patient");
     }
 
     @Override

@@ -21,19 +21,19 @@ public class BloodType {
     /**
      * Constructs a {@code BloodType}.
      *
-     * @param bloodType A valid name.
+     * @param bloodType A valid bloodType.
      */
     public BloodType(String bloodType) {
         requireNonNull(bloodType);
-        checkArgument(isValidBloodType(bloodType), MESSAGE_CONSTRAINTS);
-        this.bloodType = bloodType;
+        checkArgument(isValidBloodType(bloodType.toUpperCase()), MESSAGE_CONSTRAINTS);
+        this.bloodType = bloodType.toUpperCase();
     }
 
     /**
      * Returns true if a given string is a valid blood type.
      */
     public static boolean isValidBloodType(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.toUpperCase().matches(VALIDATION_REGEX);
     }
 
     @Override
