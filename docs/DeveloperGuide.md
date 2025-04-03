@@ -7,28 +7,28 @@ title: Developer Guide
 ## Table of Contents
 
 1. [Acknowledgements](#acknowledgements)
-2. [Settting up, getting started](#setting-up-getting-started)
-3. [Design](#design)
+1. [Settting up, getting started](#setting-up-getting-started)
+1. [Design](#design)
    * [Architecture](#architecture)
    * [UI Component](#ui-component)
    * [Logic Component](#logic-component)
    * [Model Component](#model-component)
    * [Storage Component](#storage-component)
-5. [Implementation](#implementation)
+1. [Implementation](#implementation)
    * [Add](#add-feature)
    * [Edit](#edit-feature)
    * [List](#list-feature)
    * [Find](#find-feature)
    * [Assign](#assign-feature)
    * [Schedule](#schedule-feature)
-6. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
-7. [Appendix: Requirements](#appendix-requirements)
+1. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+1. [Appendix: Requirements](#appendix-requirements)
    * [Product Scope](#product-scope)
    * [User Stories](#user-stories)
    * [Use Cases](#use-cases)
    * [Non-Functional Requirements](#non-functional-requirements)
    * [Glossary](#glossary)
-8. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
+1. [Appendix: Instructions for manual testing](#appendix-instructions-for-manual-testing)
    * [Launch and Shutdown](#launch-and-shutdown)
    * [Deleting a Person](#deleting-a-person)
    * [Saving Data](#saving-data)
@@ -50,12 +50,6 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Design**
-<!--
-<div markdown="span" class="alert alert-primary">
-
-:bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
-</div>
--->
 
 ### Architecture
 
@@ -126,8 +120,7 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 
 ![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
-</div>
+**Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 
 How the `Logic` component works:
 
@@ -148,7 +141,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<img src="images/ModelClassDiagram.png" width="450" />
+
 
 
 The `Model` component,
@@ -157,6 +150,8 @@ The `Model` component,
 * stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+
+<img src="images/ModelClassDiagram.png" width="550">
 
 ### Storage component
 
@@ -215,16 +210,16 @@ The `list` command allows users to display a subset of people in the address boo
 It supports the following use cases:
 * `list` — Lists **all persons** in the address book (patients and nurses).
 * `list nurse` or `list patient` — Lists **only nurses** or **only patients**, respectively.
-* `list checkup` — Lists all persons with scheduled **checkups**, sorted by earliest checkup date.
+* `list checkup` — Lists all patients with scheduled **checkups**, sorted by earliest checkup date.
 
 #### Execution Flow:
 1. `LogicManager` receives the command text (e.g., `"list checkup"`) and passes it to `AddressBookParser`.
-1. `AddressBookParser` uses a `ListCommandParser` to interpret the command.
+1. `AddressBookParser` parses the command and returns an `ListCommandParser` object.
 1. `ListCommandParser#parse()` constructs a `ListCommand` object, based on the input string.
 1. `ListCommand#execute()` evaluates the internal flags:
-    - If the command was `list checkup`, it calls `updateFilteredPersonListByEarliestCheckup(...)` with a `PersonHasCheckupPredicate`.
-    - If no filter was provided, it lists all persons using `Model.PREDICATE_SHOW_ALL_PERSONS`.
-    - If a specific appointment filter was provided (e.g., `"nurse"`), it filters with `PersonHasAppointmentPredicate`.
+   * If the command was `list checkup`, it calls `updateFilteredPersonListByEarliestCheckup(...)` with a `PersonHasCheckupPredicate`.
+   * If no filter was provided, it lists all persons using `Model.PREDICATE_SHOW_ALL_PERSONS`.
+   * If a specific appointment filter was provided (e.g., `"nurse"`), it filters with `PersonHasAppointmentPredicate`.
 1. A `CommandResult` is returned with a success message indicating what was listed.
 
 ![Sequence Diagram](images/ListCommandSequenceDiagram.png)
@@ -243,12 +238,12 @@ The `find` command enables users to search for specific entities in the address 
 This functionality improves user experience by allowing quick access to relevant information.
 
 #### Execution Flow:
-1. `LogicManager` receives the command text from the user and passes it to `AddressBookParser`.
-1. Depending on the arguments, `AddressBookParser` will return one of the following:
-    - `FindNurseCommand`: for searching nurses assigned to a specific patient.
-    - `FindPatientCommand`: for searching patients assigned to a specific nurse.
-    - `FindCommand`: a general command for searching based on keywords in user names.
-1. `AddressBookParser` parses the command and returns the appropriate `FindCommand` object.
+1. `LogicManager` receives the command text (e.g. `find nurse of patient 8`) from the user and passes it to `AddressBookParser`.
+1. `AddressBookParser` parses the command and returns a `FindCommandParser` object.
+1. Depending on the arguments, `FindCommandParser#parse()` will return one of the following:
+   * `FindNurseCommand`: for searching nurses assigned to a specific patient.
+   * `FindPatientCommand`: for searching patients assigned to a specific nurse.
+   * `FindCommand`: a general command for searching based on keywords in contacts' names.
 1. `FindCommand#execute()` retrieves the relevant entries from the model and returns a `CommandResult`.
 1. For `FindNurseCommand`, it finds and returns all nurses assigned to the specified patient.
 1. For `FindPatientCommand`, it finds and returns all patients assigned to the specified nurse.
@@ -266,6 +261,8 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 
 The `assign` command allows the user to assign a nurse to a patient.
 
+#### Execution Flow:
+
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
 1. `AddressBookParser` parses the command and returns an `AssignCommand` object.
 1. `AssignCommand#execute()` assigns the nurse to the patient and returns a `CommandResult`.
@@ -279,6 +276,8 @@ We chose to implement parsing with a `ParserUtil` helper class to simplify each 
 ### Schedule Feature
 
 The `schedule` command allows the user to create a checkup between a patient and a nurse.
+
+#### Execution Flow:
 
 1. `LogicManager` receives the command text and passes it to `AddressBookParser`.
 1. `AddressBookParser` parses the command and returns an `ScheduleCommand` object.
@@ -341,7 +340,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | Manager                       | view all patients attached to a certain nurse                                        | check which patients a nurse is currently assigned to                                           |
 | `* *`    | Manager                       | view the nurse assigned to a patient                                                 | check who is in charge of a certain patient                                                     |
 | `* *`    | Manager                       | schedule appointments for a patient                                                  | ensure the patient has an appointment and a nurse                                               |
-| `* *`    | Manager                       | assign a nurse to a appointment                                                      | ensure the appointment has a specified nurse                                                    |
+| `* *`    | Manager                       | assign a nurse to a patient                                                          | ensure the patient has a specified nurse                                                        |
 | `* *`    | Manager                       | sort patient details                                                                 | sort my patients according to various criteria such as blood type and severity level            |
 | `* *`    | Manager                       | assign categories to patients                                                        | add the severity of each patient                                                                |
 | `* *`    | Manager                       | adjust categories of patients                                                        | lower or increase the severity / priority of patients over time                                 |
@@ -353,11 +352,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | Nurse during a midnight shift | activate night mode interface with darker colours and larger text to enhance visuals | reduce eye strain while ensuring accuracy when recording patient data in dimly lit environments |
 | `*`      | Manager                       | log in using my staff credential                                                     | Securely access patient records                                                                 |
 
-*{More to be added}*
-
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `MediBook` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case 1: Delete a nurse / patient**
 
@@ -458,16 +455,18 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Nurse**: Tends to the patients
 * **Checkup**: A scheduled appointment for nurse to visit and treat the patient.
 
+### Requirements implemented ###
+
+### Requirements yet to be implemented ###
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
 
 Given below are instructions to test the app manually.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
+**Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
-
-</div>
 
 ### Launch and shutdown
 
@@ -484,7 +483,9 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. Shutdown
+   1. Type exit into the app CLI<br>
+      Expected: The MediBook application closes.
 
 ### Deleting a person
 
@@ -501,7 +502,43 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+### Adding a person
+1. Adding a person while all persons are being shown
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Test case: `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/AB+ ap/Patient nok/Jane 91234567 t/newcomer mh/Diabetes mh/High Blood Pressure` <br>
+   Expected: A new contact is created and the displayed person list is updated.
+1. Adding a person using only compulsory fields
+   1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
+    Expected: Creates a new patient contact with the minimum fields included.
+1. Adding a duplicate person `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
+   Expected: No person is created. Error message shows "This person already exists in the address book"
+1. Other incorrect commands to try: 
+   1. Invalid names: names containing non-alphabetical symbols
+   1. Invalid number: Less than 3 digits or non integer inputs
+   1. Invalid Date of Birth: Non integer and non slash inputs, incorrect date format (DD/MM/YYYY)
+   1. Invalid Blood type: Not matching any of the 8 specified blood types.
+   1. Invalid Appointment: Not matching patient or nurse, non-alphabetical inputs
+
+### Editing a Person
+1. Editing any field of a person currently being displayed
+    1. Prerequisites: List all persons using the clist` command. Multiple persons in the list.
+    1. Test case: `edit 2 n/Samantha`<br>
+       Expected: Changed the name of the person at index 2 of the displayed list to Samantha.
+    1. Test case: Other fields to be edited:
+       1. tags: `edit 1 t/discharge t/No family` <br>
+          Expected: Removes all tags of the person at index 1 and creates 2 tags for that person.
+       1. Medical History
+            1. Command: `edit 1 mh/Diabetes`<br>
+                Expected: Removes the medical history of the patient at index 1 and creates a new medical history containing diabetes. If the person is a nurse, an error will occur as medical history should not be added to a nurse.
+            1. Command: `edit 1 mh/`<br>
+                Expected: Clears the medical history of the person.
+       1. Appointment `edit 1 ap/nurse`
+            1. Patients contacts can be converted to Nurse appointment if it does not contain any medical history
+            1. Expected: Changes the patients appointment to a nurse if there is no medical history. Returns an error if the patient does have medical history.
+### Listing persons
+### Finding persons
+### Assigning a nurse / patient
+### Schedule checkups
 
 ### Saving data
 
@@ -509,3 +546,8 @@ testers are expected to do more *exploratory* testing.
 
    1. Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
    1. Delete the file and restart the app to recover and start with a small list of sample contacts.
+
+## **Appendix: Effort**
+
+## **Appendix: Planned Enhancements**
+
