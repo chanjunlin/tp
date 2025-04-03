@@ -10,6 +10,17 @@ import org.junit.jupiter.api.Test;
 public class MedicalHistoryTest {
 
     @Test
+    public void constructor_validInput_success() {
+        MedicalHistory mh = new MedicalHistory("Diabetes");
+        assertEquals("Diabetes", mh.medicalHistory);
+    }
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new MedicalHistory(null));
+    }
+
+    @Test
     public void isValidMedicalHistory() {
         MedicalHistory mh = new MedicalHistory("Diabetes");
         assertEquals("Diabetes", mh.medicalHistory);

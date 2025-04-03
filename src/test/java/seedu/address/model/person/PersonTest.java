@@ -44,6 +44,8 @@ public class PersonTest {
         String nameWithTrailingSpaces = VALID_NAME_BOB + " ";
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertTrue(BOB.isSamePerson(editedBob));
+
+        assertEquals(BOB.hashCode(), BOB.hashCode());
     }
 
     @Test
@@ -80,12 +82,24 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
+        // different blood type -> returns false
+        editedAlice = new PersonBuilder(ALICE).withBloodType("O-").build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different appointment -> returns false
+        editedAlice = new PersonBuilder(ALICE).withAppointment("Nurse").build();
+        assertFalse(ALICE.equals(editedAlice));
+
         //different NOK -> returns false
         editedAlice = new PersonBuilder(ALICE).withNextOfKin("Jane 91234567").build();
         assertFalse(ALICE.equals(editedAlice));
 
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(ALICE.equals(editedAlice));
+
+        // different medical history -> returns false
+        editedAlice = new PersonBuilder(ALICE).withMedicalHistory("Allergic to peanuts").build();
         assertFalse(ALICE.equals(editedAlice));
     }
 
