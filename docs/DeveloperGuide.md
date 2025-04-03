@@ -608,3 +608,10 @@ testers are expected to do more *exploratory* testing.
 
 ## **Appendix: Planned Enhancements**
 
+These are some features / improvements our team has planned to implement in the future due to lack of time.
+1. Assigning severity to patients
+2. Adjusting the severity of patients
+3. Allow sorting of the list to more filters e.g. Severity or age
+4. Allow reminders for checkups or missing assigned nurse
+5. Support for Dark mode
+6. Ability to adjust working hours for scheduling checkups or disable the working hours feature completely.
