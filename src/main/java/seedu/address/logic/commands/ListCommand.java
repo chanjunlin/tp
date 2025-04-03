@@ -46,12 +46,14 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
+        boolean isListingAll = (appointmentFilter == null);
+
         if (filterByCheckup) {
             model.updateFilteredPersonListByEarliestCheckup(new PersonHasCheckupPredicate());
             return new CommandResult(MESSAGE_SUCCESS_CHECKUP);
         }
 
-        if (appointmentFilter == null) {
+        if (isListingAll) {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
             currentAppointmentFilter = null;
             return new CommandResult(MESSAGE_SUCCESS_ALL);
