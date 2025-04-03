@@ -16,6 +16,12 @@ import seedu.address.model.person.NameContainsKeywordsPredicate;
  */
 public class FindCommandParser implements Parser<FindCommand> {
 
+    public static final String PREFIX_FIND_NURSE = "nurse of patient";
+    public static final String PREFIX_FIND_PATIENT = "patient of nurse";
+
+    public static final String PATIENT_INDEX = "PATIENT_INDEX";
+    public static final String NURSE_INDEX = "NURSE_INDEX";
+
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns a FindCommand object for execution.
@@ -28,9 +34,9 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        if (trimmedArgs.startsWith("nurse of patient")) {
+        if (trimmedArgs.startsWith(PREFIX_FIND_NURSE)) {
             return findNurseScenario(trimmedArgs);
-        } else if (trimmedArgs.startsWith("patient of nurse")) {
+        } else if (trimmedArgs.startsWith(PREFIX_FIND_PATIENT)) {
             return findPatientScenario(trimmedArgs);
         }
 
@@ -38,30 +44,34 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * test
-     * @param args test
-     * @param commandType test
-     * @return test
-     * @throws ParseException test
+     * Splits the input arguments into separate components and ensures that the correct number of arguments
+     * are provided. If there are not enough arguments, a ParseException is thrown with the appropriate message.
+     *
+     * @param args The arguments provided by the user, as a string.
+     * @param commandType The command type, which helps in determining the expected number of arguments.
+     * @return An array of split arguments.
+     * @throws ParseException If the number of arguments is incorrect for the given command type.
      */
     public String[] splitArguments(String args, String commandType) throws ParseException {
         String[] splitArgs = args.split("\\s+");
-        System.out.println(splitArgs.length);
         if (splitArgs.length != 4) {
-            String indexType = commandType.equals("nurse of patient") ? "PATIENT_INDEX" : "NURSE_INDEX";
+            String indexType = commandType.equals(PREFIX_FIND_NURSE) ? PATIENT_INDEX : NURSE_INDEX;
             throw new ParseException(String.format("Usage: find %s %s", commandType, indexType));
         }
         return splitArgs;
     }
 
     /**
-     * test
-     * @param trimmedArgs test
-     * @return test
-     * @throws ParseException test
+     * Parses the input arguments when the command involves finding a nurse for a specific patient.
+     * It splits the arguments and converts the index into an {@link Index} object before creating a
+     * {@link FindNurseCommand}.
+     *
+     * @param trimmedArgs The trimmed user input arguments for finding a nurse.
+     * @return A FindNurseCommand object with the parsed nurse index.
+     * @throws ParseException If the input format is invalid or the index cannot be parsed.
      */
     public FindNurseCommand findNurseScenario(String trimmedArgs) throws ParseException {
-        String[] splitArgs = splitArguments(trimmedArgs, "nurse of patient");
+        String[] splitArgs = splitArguments(trimmedArgs, PREFIX_FIND_NURSE);
 
         Index nurseIndex = ParserUtil.parseIndex(splitArgs[3]);
         return new FindNurseCommand(nurseIndex);
@@ -69,13 +79,16 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * test
-     * @param trimmedArgs test
-     * @return test
-     * @throws ParseException test
+     * Parses the input arguments when the command involves finding a patient for a specific nurse.
+     * It splits the arguments and converts the index into an {@link Index} object before creating a
+     * {@link FindPatientCommand}.
+     *
+     * @param trimmedArgs The trimmed user input arguments for finding a patient.
+     * @return A FindPatientCommand object with the parsed patient index.
+     * @throws ParseException If the input format is invalid or the index cannot be parsed.
      */
     public FindPatientCommand findPatientScenario(String trimmedArgs) throws ParseException {
-        String[] splitArgs = splitArguments(trimmedArgs, "patient of nurse");
+        String[] splitArgs = splitArguments(trimmedArgs, PREFIX_FIND_PATIENT);
 
         Index patientIndex = ParserUtil.parseIndex(splitArgs[3]);
         return new FindPatientCommand(patientIndex);
@@ -83,10 +96,12 @@ public class FindCommandParser implements Parser<FindCommand> {
     }
 
     /**
-     * test
-     * @param trimmedArgs test
-     * @return test
-     * @throws ParseException test
+     * Parses the input arguments when the command involves searching for a patient or nurse by name.
+     * It splits the arguments by whitespace and creates a {@link FindCommand} with the keywords as the predicate.
+     *
+     * @param trimmedArgs The trimmed user input arguments containing keywords to search by name.
+     * @return A FindCommand object containing the NameContainsKeywordsPredicate with the parsed keywords.
+     * @throws ParseException If the user input is invalid or cannot be parsed correctly.
      */
     public FindCommand findScenario(String trimmedArgs) throws ParseException {
         String[] nameKeywords = trimmedArgs.split("\\s+");

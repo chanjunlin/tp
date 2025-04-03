@@ -40,24 +40,24 @@ public class NameTest {
 
     @Test
     public void equals() {
-        Name small_caps_name = new Name("Valid Name");
+        Name smallCapsName = new Name("Valid Name");
 
         // same values -> returns true
-        assertTrue(small_caps_name.equals(new Name("valid name")));
+        assertTrue(smallCapsName.equals(new Name("valid name")));
 
         //same value but different capitalisation -> returns true
-        assertTrue(small_caps_name.equals(new Name("VALID NAME")));
+        assertTrue(smallCapsName.equals(new Name("VALID NAME")));
 
         // same object -> returns true
-        assertTrue(small_caps_name.equals(small_caps_name));
+        assertTrue(smallCapsName.equals(smallCapsName));
 
         // null -> returns false
-        assertFalse(small_caps_name.equals(null));
+        assertFalse(smallCapsName.equals(null));
 
         // different types -> returns false
-        assertFalse(small_caps_name.equals(5.0f));
+        assertFalse(smallCapsName.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(small_caps_name.equals(new Name("Other Valid Name")));
+        assertFalse(smallCapsName.equals(new Name("Other Valid Name")));
     }
 }
