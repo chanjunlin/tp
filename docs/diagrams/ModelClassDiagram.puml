@@ -19,6 +19,11 @@ Class Email
 Class Name
 Class Phone
 Class Tag
+Class Bloodtype
+Class Appointment
+Class NextOfKin
+Class Checkup
+Class MedicalHistory
 
 Class I #FFFFFF
 }
@@ -42,13 +47,23 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+Person *--> Bloodtype
+Person *--> Appointment
+Person *--> NextOfKin
+Person *--> "*" MedicalHistory
+Person *--> "*" Checkup
 
+I -[hidden]up--> UserPrefs
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
 Name -[hidden]right-> Phone
 Phone -[hidden]right-> Address
 Address -[hidden]right-> Email
+Email -[hidden]right-> Appointment
+Appointment -[hidden]right-> NextOfKin
+NextOfKin -[hidden]right-> Bloodtype
+Bloodtype -[hidden]right-> Tag
 
 ModelManager --> "~* filtered" Person
 ModelManager --> "~* sorted" Person
