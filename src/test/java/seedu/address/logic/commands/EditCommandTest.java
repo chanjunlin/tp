@@ -178,6 +178,30 @@ public class EditCommandTest {
     }
 
     @Test
+    public void equals_checkPersonFields() {
+        // different dob -> returns false
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(DESC_AMY)
+                                              .withDateOfBirth("01/01/2002").build();
+        assertFalse(DESC_AMY.equals(descriptor));
+
+        // different blood type -> returns false
+        descriptor = new EditPersonDescriptorBuilder(DESC_AMY).withBloodType("O+").build();
+        assertFalse(DESC_AMY.equals(descriptor));
+
+        // different appointment -> returns false
+        descriptor = new EditPersonDescriptorBuilder(DESC_AMY).withAppointment("Nurse").build();
+        assertFalse(DESC_AMY.equals(descriptor));
+
+        // different next of kin -> returns false
+        descriptor = new EditPersonDescriptorBuilder(DESC_AMY).withNextOfKin("John 92231333").build();
+        assertFalse(DESC_AMY.equals(descriptor));
+
+        // different medical history -> returns false
+        descriptor = new EditPersonDescriptorBuilder(DESC_AMY).withMedicalHistory("Disabled Leg").build();
+        assertFalse(DESC_AMY.equals(descriptor));
+    }
+
+    @Test
     public void toStringMethod() {
         Index index = Index.fromOneBased(1);
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
@@ -229,5 +253,4 @@ public class EditCommandTest {
 
         assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
-
 }

@@ -354,8 +354,9 @@
 }
 
 .split-pane:vertical > .split-pane-divider {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
+    -fx-background-color: white, #ccccff;
+    -fx-background-insets: 0, 0 700 0 700;
+    -fx-cursor: v-resize;
 }
 
 .command-box-container {
