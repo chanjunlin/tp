@@ -519,7 +519,9 @@ testers are expected to do more *exploratory* testing.
 1. Adding a person using only compulsory fields
    1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
     Expected: Creates a new patient contact with the minimum fields included.
-1. Adding a duplicate person `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
+1. Adding a duplicate person 
+   1. Prerequisites: A person by the name of John Sim has been created either through the previous test case or by manual testing.
+   1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
    Expected: No person is created. Error message shows "This person already exists in the address book"
 1. Other incorrect commands to try: 
    1. Invalid names: names containing non-alphabetical symbols
@@ -533,59 +535,69 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
     1. Test case: `edit 2 n/Samantha`<br>
        Expected: Changed the name of the person at index 2 of the displayed list to Samantha.
-    1. Test case: Other fields to be edited:
-       1. tags: `edit 1 t/discharge t/No family` <br>
+    1. Testing other fields that can be edited:
+       1. Editing tags
+          1. Test case: `edit 1 t/discharge t/No family` <br>
           Expected: Removes all tags of the person at index 1 and creates 2 tags for that person.
        1. Medical History
-            1. Command: `edit 1 mh/Diabetes`<br>
-                Expected: Removes the medical history of the patient at index 1 and creates a new medical history containing diabetes. If the person is a nurse, an error will occur as medical history should not be added to a nurse.
-            1. Command: `edit 1 mh/`<br>
-                Expected: Clears the medical history of the person.
-       1. Appointment `edit 1 ap/nurse`
-            1. Patients contacts can be converted to Nurse appointment if it does not contain any medical history
-            1. Expected: Changes the patients appointment to a nurse if there is no medical history. Returns an error if the patient does have medical history.
+          * Use `View` command to check medical history
+          1. Test case: `edit 1 mh/Diabetes`<br>
+             Expected: Removes the medical history of the patient at index 1 and creates a new medical history containing diabetes. If the person is a nurse, an error will occur as medical history should not be added to a nurse.
+          1. Test case: `edit 1 mh/`<br>
+             Expected: Clears the medical history of the person.
+       1. Appointment
+          1. **NOTE** Patients contacts can only be converted to Nurse appointment if it does not contain any medical history
+          1. Test case: `edit 2 ap/nurse`
+          1. Expected: Changes the patients appointment to a nurse if there is no medical history. Returns an error if the patient does have medical history.
+       1. Other tags to try: name, phone_number, blood_type, address, next_of_kin and email.
 
 ### Listing persons
 1. Listing all people, people based on appointments (nurse or patient), or based on checkups scheduled
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-   2. Test case: `list`<br>
+   1. Prerequisites: Multiple persons have been created and can be displayed.
+   1. Test case: `list`<br>
       Expected: Displays all contacts (nurses and patients).
-   2. Test case: `list patient`<br>
+   1. Test case: `list patient`<br>
       Expected: Displays all patients.
-   3. Test case: `list nurse`<br>
+   1. Test case: `list nurse`<br>
       Expected: Displays all nurses.
-   4. Test case: `list checkup`<br>
+   1. Test case: `list checkup`<br>
       Expected: Displays all patients with checkups scheduled, sorted from earliest to latest.
 
 ### Finding persons
 1. Finding people by name or part of name
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-   2. Test case: `find <first name>`<br>
-      Expected: Displays contacts whose names contain `<first name>` in any part of their name.
-   3. Test case: `find <part of name>`<br>
-      Expected: Displays contacts whose names contain `<part of name>` in any part of their name.
-2. Finding nurse(s) assigned to a patient
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-   2. Test case: `find nurse of patient PATIENT_INDEX`<br>
-      Expected: Displays nurse(s) assigned to patient at `PATIENT_INDEX`
-3. Finding patient(s) who have a specified nurse assigned to them
+   1. Prerequisites: List all persons using any `list` command. Multiple persons in the list.
+   1. Test case: `find John`<br>
+      Expected: Displays contacts whose names contain `John` in any part of their name.
+   1. Test case: `find hn`<br>
+      Expected: Displays contacts whose names contain `hn` in any part of their name. E.g. `John` will be displayed.
+   2. Test case: `find hn ce`<br>
+      Expected: Displays contacts whose name contain `hn` or `ce` in any part of their name. E.g. `John` and Alice will be displayed. 
+1. Finding nurse(s) assigned to a patient
+   1. Prerequisites: List persons using any `list` command. Multiple persons in the list. At least 1 patient has a nurse assigned to them.
+   1. Test case: `find nurse of patient 2`<br>
+      Expected: Displays nurse(s) assigned to patient at index 2 in the result box.
+1. Finding patient(s) who have a specified nurse assigned to them
+   1. Prerequisites: List persons using any `list` command. Multiple persons in the list. At least 1 patient has a nurse assigned to them.
+   1. Test case: `find patient of nurse 2`<br>
+      Expected: Displays patients(s) assigned to nurse at index 2 in the result box.
 
 ### Assigning a nurse to a patient
 1. Assigning a nurse to a patient by their index numbers
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list (nurses and patients).
-   2. Test case: `assign PATIENT_INDEX NURSE_INDEX`<br>
-      Expected: Nurse at `NURSE_INDEX` gets assigned to patient at `PATIENT_INDEX`.
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list where at least 1 nurse and at least 1 patient person exists.
+   2. Test case: `assign 6 2`<br>
+      Expected: Patient at index 6 is assigned to nurse at index 2.
    3. Test case: `assign`<br>
       Expected: Shows an invalid command format error message with usage instructions.
    4. Other incorrect commands to try:
       1. Missing an argument: no `NURSE_INDEX` specified
       2. Invalid index: using non-numeric characters for index values
+      3. Assigning a third nurse to a patient that has already been assigned 2 nurses.
 
 ### Removing nurse assignment from a patient
 1. Removing the assignment of a nurse from a patient
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list. Patients with assigned nurses exist.
-   2. Test case: `assign delete NURSE_NAME PATIENT_INDEX`<br>
-      Expected: Removes the assigned nurse with name `NURSE_NAME` from the patient at `PATIENT_INDEX`.
+   2. Test case: `assign delete John Doe 6`<br>
+      Expected: Removes the assigned nurse with name `John Doe` from the patient at index 6.
    3. Test case: `assign delete`<br>
       Expected: Shows an invalid command format error message with usage instructions.
    4. Other incorrect commands to try:
@@ -593,6 +605,26 @@ testers are expected to do more *exploratory* testing.
       2. Invalid index: using non-numeric characters for the index value
 
 ### Schedule checkups
+1. Adding a checkup to a patient
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list. At least 1 person with appointment of `Patient`.
+   1. Test case 1: `schedule add for patient 6 12/12/2025 1200`<br>
+      Expected: Creates a checkup for the patient at index 1 at the given time.
+   1. Test case 2: `schedule add for patient 6 01/01/2026 1105`<br>
+      Expected: Error message showing "Please use a time in blocks of 00, 15, 30, or 45 minutes (e.g., 1000, 1015, 1030, 1045)."
+   1. Test case: `schedule add for patient 6 12/12/2025 1200`
+      Expected: Error message saying "A checkup is already scheduled at this datetime." (if you executed test case 1 resulting in a duplicate checkup).
+   1. Test case: `schedule add for patient 6 12/12/2025 1205`<br>
+      Expected: Error message saying "There's a checkup scheduled on 12/12/2025 12:00! Please choose another time / date" (if you have executed test case 1 resulting in a checkup at 1200 on the same day).
+   1. Invalid inputs to test out
+      1. Date or time missing e.g. `schedule add for patient 6`
+      1. Person at given index is not a patient
+      1. Missing syntax e.g. `schedule 6 12/12/2025 1205`
+1. Removing a checkup from a patient
+   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list. At least 1 person with appointment of `Patient` with at least 1 scheduled checkup.
+   1. Test case: `schedule delete for patient 6 12/12/2025 1200`<br>
+      Expected: Checkup at given date time will be removed from the patient at index 6.
+   1. Test case: `schedule delete for patient 6 12/12/2025 1700`<br>
+      Expected: If there is no checkup created at that time yet, an error message saying that there is no such checkup will be shown. Else, same as test case above.
 
 ### Viewing nurses / patients
 1. Viewing nurse or patient details
@@ -624,3 +656,4 @@ These are some features / improvements our team has planned to implement in the 
 4. Allow reminders for checkups or missing assigned nurse
 5. Support for Dark mode
 6. Ability to adjust working hours for scheduling checkups or disable the working hours feature completely.
+7. Allow checkups & date of birth to be created on leap days like 29 of february.
