@@ -62,7 +62,10 @@ public class DateOfBirth {
     }
 
     /**
-     * test
+     * Returns true if a given string is not a date in the future
+     *
+     * @param dateString The date of birth
+     * @return True if date is not in the future, False if date is in the future.
      */
     public static boolean isNotFutureDate(String dateString) {
         LocalDate doob = LocalDate.parse(dateString, FORMATTER);
