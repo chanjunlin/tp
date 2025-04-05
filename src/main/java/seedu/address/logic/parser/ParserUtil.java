@@ -66,6 +66,8 @@ public class ParserUtil {
         String trimmedDob = dob.trim();
         if (!DateOfBirth.isValidDate(trimmedDob)) {
             throw new ParseException(DateOfBirth.MESSAGE_CONSTRAINTS);
+        } else if (!DateOfBirth.isNotFutureDate(trimmedDob)) {
+            throw new ParseException(DateOfBirth.FUTURE_DOB);
         }
         return new DateOfBirth(trimmedDob);
     }

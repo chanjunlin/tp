@@ -160,7 +160,9 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName());
+                && otherPerson.getName().equals(getName()) && otherPerson.getDateOfBirth().equals(getDateOfBirth())
+                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail())
+                || otherPerson.getAddress().equals(getAddress()));
     }
 
     /**
