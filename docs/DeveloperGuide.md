@@ -2,7 +2,7 @@
 layout: page
 title: Developer Guide
 ---
-# MediBook Developer's Guide
+## MediBook Developer's Guide
 
 ## Table of Contents
 
@@ -458,7 +458,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type, next-of-kin))
+* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type, next-of-kin)
 * **Appointment**: The role of the person
 * **Manager**: Manages the nurses
 * **Nurse**: Tends to the patients
@@ -483,13 +483,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediBook.jar` command to run the application.
 
 1. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   1. Re-launch the app by going into the terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediBook.jar`.<br>
        Expected: The most recent window size and location is retained.
 
 1. Shutdown
@@ -650,10 +650,13 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix: Planned Enhancements**
 
 These are some features / improvements our team has planned to implement in the future due to lack of time.
-1. Assigning severity to patients
-2. Adjusting the severity of patients
-3. Allow sorting of the list to more filters e.g. Severity or age
-4. Allow reminders for checkups or missing assigned nurse
-5. Support for Dark mode
-6. Ability to adjust working hours for scheduling checkups or disable the working hours feature completely.
-7. Allow checkups & date of birth to be created on leap days like 29 of february.
+1. first
+1. 2
+1. 3
+1. 4
+1. 5
+1. 6
+1. 7
+1. 8
+1. 9
+1. 10
