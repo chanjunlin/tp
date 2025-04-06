@@ -61,7 +61,7 @@ deactivate FindNurseCommand
 
 alt nurseNames.isEmpty()
         FindNurseCommand --> LogicManager: throw CommandException
-else deafult
+else default
     create CommandResult
     FindNurseCommand -> CommandResult
     activate CommandResult
