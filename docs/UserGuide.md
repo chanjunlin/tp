@@ -130,10 +130,10 @@ This section provides an overview of all the attributes a person in MediBook can
 | Medical History  | `m/`       | ❌ Optional*   | Free text                            | ❗ Only allowed for **patients**          |
 | Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command      | Not included in `add` command            |
 
-> **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**  
-> ✅ Correct: `e/john@example.com`  
+> **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
+> ✅ Correct: `e/john@example.com`
 > ❌ Incorrect: `[e/john@example.com]`
- 
+
  [🔝 Navigate back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
@@ -164,7 +164,7 @@ This section provides an overview of all the attributes a person in MediBook can
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-Quick Navigation:  
+Quick Navigation:
 [Viewing Help](#viewing-help--help) •
 [Adding a person](#adding-a-person--add) •
 [Listing all persons](#listing-persons--list) •
