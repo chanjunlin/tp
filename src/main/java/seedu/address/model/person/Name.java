@@ -15,11 +15,9 @@ public class Name {
 
     /*
      * The first character of the address must not be a whitespace or special symbol,
-     * otherwise " " (a blank string) becomes a valid input. "^[A-Za-z][A-Za-z ]*$"
+     * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "^[A-Za-z]+(?:[ '\\-/][A-Za-z]+)*$";
-
-
 
     public final String fullName;
 
