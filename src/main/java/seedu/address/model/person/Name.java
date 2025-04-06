@@ -10,13 +10,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names should only contain alphabetical characters and spaces, and it should not be blank";
+            "Names should only contain alphabetical characters, spaces, non-consecutive special symbols(hyphens, "
+                    + "apostrophes and slash), it should not be blank, must not start or end with a special character.";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the name must not be a whitespace or special symbol,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String VALIDATION_REGEX = "^[A-Za-z][A-Za-z ]*$";
+    public static final String VALIDATION_REGEX = "^[A-Za-z]+(?:[ '\\-/][A-Za-z]+)*$";
 
     public final String fullName;
 
@@ -28,7 +29,7 @@ public class Name {
     public Name(String name) {
         requireNonNull(name);
         String trimmedName = trimAndNormalizeWhitespace(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidName(trimmedName), MESSAGE_CONSTRAINTS);
         fullName = trimmedName.toUpperCase();
     }
 
