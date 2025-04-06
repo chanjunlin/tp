@@ -14,7 +14,7 @@ public class Name {
                     + "apostrophes and slash), it should not be blank, must not start or end with a special character.";
 
     /*
-     * The first character of the address must not be a whitespace or special symbol,
+     * The first character of the name must not be a whitespace or special symbol,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "^[A-Za-z]+(?:[ '\\-/][A-Za-z]+)*$";
