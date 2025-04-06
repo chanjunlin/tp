@@ -78,8 +78,10 @@ public class ParserUtil {
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
+        String trimmedPhone = phone.trim().replaceAll(" +", " ");
+        String testPhone = trimmedPhone.replaceAll(" ", "");
+        boolean isValidLength = testPhone.length() <= 17;
+        if (!Phone.isValidPhone(trimmedPhone) || !isValidLength) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
         return new Phone(trimmedPhone);
