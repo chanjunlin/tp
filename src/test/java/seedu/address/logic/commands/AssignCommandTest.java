@@ -98,6 +98,6 @@ public class AssignCommandTest {
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
 
         CommandException exception = assertThrows(CommandException.class, () -> assignCommand.execute(model));
-        assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, exception.getMessage());
+        assertEquals("Invalid patient index: 1", exception.getMessage());
     }
 }
