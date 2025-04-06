@@ -78,7 +78,7 @@ public class ParserUtil {
      */
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
-        String trimmedPhone = phone.replaceAll(" +", " ");
+        String trimmedPhone = phone.trim().replaceAll(" +", " ");
         String testPhone = trimmedPhone.replaceAll(" ", "");
         boolean isValidLength = testPhone.length() <= 17;
         if (!Phone.isValidPhone(trimmedPhone) || !isValidLength) {
