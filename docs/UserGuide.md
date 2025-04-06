@@ -8,7 +8,7 @@ MediBook is a **desktop app for private nurse center managers, to manage patient
 Designed for speed and efficiency, **MediBook** empowers private nurse centres to:
 - assign nurses to patients
 - retrieve patient and nurse information
-- manage appointments and medical history of patients
+- manage checkup sessions and medical history of patients
 
 All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick installation guide and exploring the Features of the app below!
 
@@ -22,7 +22,8 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 2. [Using this User Guide](#using-this-user-guide)
 3. [Table of Contents](#table-of-contents)
 4. [Installation Guide](#installation-guide)
-5. [Features](#features)
+5. [Person-attribute](#overview-of-person-attributes)
+6. [Features](#features)
     * [Viewing Help](#viewing-help--help)
     * [Adding a person](#adding-a-person-add)
     * [Listing all persons](#listing-persons-list)
@@ -34,14 +35,15 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
     * [Clearing all entries](#clearing-all-entries--clear)
     * [Exiting the program](#exiting-the-program--exit)
     * [Assigning a nurse to a patient](#assign-a-nurse-to-a-patient--assign)
-    * [Schedule checkups](#schedule-checkup-appointments--schedule-add-for-patient--schedule-delete-for-patient)
+    * [Delete nurse assignment from patient](#delete-nurse-assignment-from-a-patient--assign-delete)
+    * [Schedule checkups](#schedule-checkup--schedule-add-for-patient--schedule-delete-for-patient)
     * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
     * [Archiving data files](#archiving-data-files)
-6. [FAQ](#faq)
-7. [Known Issues](#known-issues)
-8. [Command Summary](#command-summary)
+7. [FAQ](#faq)
+8. [Known Issues](#known-issues)
+9. [Command Summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -52,11 +54,25 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
    * **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
+   - [What is a JAR file?](https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jarGuide.html)
 
 1. Copy the file to the folder you want to use as the _home folder_ for MediBook.
+   - MediBook will create a data folder in this _home folder_ to store your [data files](#faq).
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, run the following commands:<br>
+   ```
+   cd home_folder
+   java -jar MediBook.jar
+   ```
+   Example: if your `MediBook.jar` is in the folder `C:/Users/user/Documents`,
+   Run the commands:
+   ```
+   cd C:/Users/user/Documents
+   java -jar MediBook.jar
+   ```
+
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/Ui.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -92,6 +108,34 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 1. Refer to the [Features](#features) below for details of each command.
 
+[🔝 Navigate back to Table of Contents](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Overview of Person Attributes
+
+This section provides an overview of all the attributes a person in MediBook can have, including whether they're required, what format they should follow, and any special notes.
+
+| **Attribute**     | **Prefix** | **Required?** | **Valid Format / Example**           | **Notes**                                |
+|------------------|------------|---------------|--------------------------------------|------------------------------------------|
+| Name             | `n/`       | ✅ Yes         | Alphanumeric and spaces              | E.g., `John Doe`                         |
+| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                         | E.g., `11/11/2003`                       |
+| Phone Number     | `p/`       | ✅ Yes         | 8-digit number                       | E.g., `9123 1234`                        |
+| Address          | `a/`       | ✅ Yes         | Free text                            | E.g., `10 NUS Road, #03-21`              |
+| Blood Type       | `b/`       | ✅ Yes         | `A+`, `AB-`, etc.                    | Standard blood group types               |
+| Appointment Type | `ap/`      | ✅ Yes         | `Nurse` or `Patient`                | Case-insensitive                         |
+| Email            | `e/`       | ✅ Yes         | Valid email format                   | E.g., `john@example.com`                 |
+| Next of Kin      | `nok/`     | ❌ Optional    | `Name Phone`                         | E.g., `Jane 91234567`, or can be omitted |
+| Tags             | `t/`       | ❌ Optional    | Alphanumeric                         | Multiple tags allowed                    |
+| Medical History  | `m/`       | ❌ Optional*   | Free text                            | ❗ Only allowed for **patients**          |
+| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command      | Not included in `add` command            |
+
+> **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**  
+> ✅ Correct: `e/john@example.com`  
+> ❌ Incorrect: `[e/john@example.com]`
+ 
+ [🔝 Navigate back to Table of Contents](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Features
@@ -103,7 +147,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
+* Items in square brackets are optional — do not include the brackets themselves when typing commands.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
@@ -120,6 +164,25 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+Quick Navigation:  
+[Viewing Help](#viewing-help--help) •
+[Adding a person](#adding-a-person--add) •
+[Listing all persons](#listing-persons--list) •
+[Editing a person](#editing-a-person--edit) •
+[Locating by name](#locating-persons-by-name--find) •
+[Finding patients](#finding-patient--find-patient-of-nurse-) •
+[Finding nurse](#finding-nurse--find-nurse-of-patient) •
+[Deleting](#deleting-a-person--delete) •
+[Clearing all entries](#clearing-all-entries--clear) •
+[Exiting program](#exiting-the-program--exit) •
+[Assigning nurse](#assign-a-nurse-to-a-patient--assign) •
+[Delete nurse assignment](#delete-nurse-assignment-from-a-patient--assign-delete) •
+[Schedule checkups](#schedule-checkup--schedule-add-for-patient--schedule-delete-for-patient) •
+[Viewing person](#viewing-a-nurse-or-patient--view) •
+[Saving data](#saving-the-data) •
+[Editing data file](#editing-the-data-file) •
+[Archiving](#archiving-data-files)
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -128,6 +191,7 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+[🔙 Back to Features](#features)
 
 ### Adding a person: `add`
 
@@ -142,6 +206,8 @@ Format: `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT
 Examples:
 * `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend`
 * `add n/Betsy Crowe dob/01/01/2001 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/No Family mh/Insane, but not dangerous b/B+ ap/Patient`
+
+[🔙 Back to Features](#features)
 
 ### Listing persons: `list`
 
@@ -167,6 +233,8 @@ Examples:
 
 `list checkup` : Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
 
+[🔙 Back to Features](#features)
+
 ### Editing a person: `edit`
 
 Edits an existing person in the address book.
@@ -187,6 +255,8 @@ Examples:
 *  `edit 2 n/Betsy Crower t/ mh/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags and medical history.
 * `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index.
 
+[🔙 Back to Features](#features)
+
 ### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords or prefixes.
@@ -206,6 +276,8 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+[🔙 Back to Features](#features)
+
 ### Finding patient `find patient of nurse `
 
 Finds patients assigned under a specified nurse.
@@ -219,6 +291,8 @@ Format: `find patient of nurse INDEX`
 Examples:
 * `find patient of nurse 1`
 
+[🔙 Back to Features](#features)
+
 ### Finding nurse `find nurse of patient`
 
 Finds nurse(s) assigned to a specified patient.
@@ -231,6 +305,8 @@ Format: `find nurse of patient INDEX`
 
 Examples:
 * `find nurse of patient 2`
+
+[🔙 Back to Features](#features)
 
 ### Deleting a person : `delete`
 
@@ -246,17 +322,23 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+[🔙 Back to Features](#features)
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
 
 Format: `clear`
 
+[🔙 Back to Features](#features)
+
 ### Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
+
+[🔙 Back to Features](#features)
 
 ### Assign a nurse to a patient : `assign`
 
@@ -270,6 +352,8 @@ Format: `assign PATIENT_INDEX NURSE_INDEX`
 
 Examples:
 * `assign 2 1` assigns the nurse at index 1 to the patient at index 2.
+
+[🔙 Back to Features](#features)
 
 ### Delete nurse assignment from a patient : `assign delete`
 
@@ -285,9 +369,11 @@ Format: `assign delete NURSE_NAME PATIENT_INDEX`
 Examples:
 * `assign delete john doe 2` removes the assignment of Nurse JOHN DOE from the patient at index 2.
 
-### Schedule checkup appointments : `schedule add for patient` / `schedule delete for patient`
+[🔙 Back to Features](#features)
 
-Schedules a checkup appointment for the patient, or deletes an existing checkup appointment.
+### Schedule checkup : `schedule add for patient` / `schedule delete for patient`
+
+Schedules a checkup session for the patient, or deletes an existing checkup session.
 
 **Note**
 * Checkups cannot be created before the current time.
@@ -313,6 +399,8 @@ Examples:
 * `schedule add for patient 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm
 * `schedule delete for patient 1 12/12/2025 1200` deletes a checkup for patient at index 1 on 12/12/2025 at 12:00pm
 
+[🔙 Back to Features](#features)
+
 ### Viewing a nurse or patient : `view`
 
 Displays details of specified person. If specified person is a patient with medical history, the medical history will be shown in the result display box.
@@ -322,11 +410,15 @@ Format: `view INDEX`
 * Displays the details of the person at `INDEX`.
 * If the person is a patient, then the patient's medical history is shown (if any).
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3
+
+[🔙 Back to Features](#features)
 
 ### Saving the data
 
 MediBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+
+[🔙 Back to Features](#features)
 
 ### Editing the data file
 
@@ -336,12 +428,18 @@ MediBook data are saved automatically as a JSON file `[JAR file location]/data/a
 If your changes to the data file makes its format invalid, MediBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the MediBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 
+[🔙 Back to Features](#features)
+
+[🔝 Navigate back to Table of Contents](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+
+[🔝 Navigate back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -350,25 +448,29 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
+[🔝 Navigate back to Table of Contents](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOODT_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Find Patient** | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1`
-**Find Nurse** | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2`
-**List** | `list` `list nurse` `list patient` `list checkup`
-**Help** | `help`
-**Assign** | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`
-**Assign Delete** | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2`
-**Schedule** | `schedule add for patient PATIENT_INDEX DATE_TIME`<br>e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100`
-**View** | `view INDEX`<br> e.g., `view 2`
+| **Action**                                                | **Format, Examples** |
+|-----------------------------------------------------------|----------------------|
+| [**Add**](#adding-a-person-add)                           | `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOODT_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse` |
+| [**Clear**](#clearing-all-entries--clear)                 | `clear` |
+| [**Delete**](#deleting-a-person--delete)                  | `delete INDEX`<br> e.g., `delete 3` |
+| [**Edit**](#editing-a-person-edit)                        | `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com` |
+| [**Find**](#locating-persons-by-name-find)                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake` |
+| [**Find Patient**](#finding-patient-find-patient-of-nurse-) | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1` |
+| [**Find Nurse**](#finding-nurse-find-nurse-of-patient)    | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2` |
+| [**List**](#listing-persons-list)                         | `list` `list nurse` `list patient` `list checkup` |
+| [**Help**](#viewing-help--help)                           | `help` |
+| [**Assign**](#assign-a-nurse-to-a-patient--assign)        | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1` |
+| [**Assign Delete**](#delete-nurse-assignment-from-a-patient--assign-delete)                                     | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2` |
+| [**Schedule**](#schedule-checkup-appointments--schedule-add-for-patient--schedule-delete-for-patient)                        | `schedule add for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100` |
+| [**View**](#viewing-a-nurse-or-patient--view)                   | `view INDEX`<br> e.g., `view 2` |
+
+[🔝 Navigate back to Table of Contents](#table-of-contents)
 
 ## Colour Legend
 
@@ -379,3 +481,5 @@ Nurse Appointment | Orange
 Tag | Light Purple
 Checkup | Light brown
 Assigned Nurse | Green
+
+[🔝 Navigate back to Table of Contents](#table-of-contents)
