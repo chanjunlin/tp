@@ -69,6 +69,9 @@ public class ViewCommand extends Command {
                     medicalHistory);
             responseMessage += "\n\n" + medicalHistoryMessage;
         }
+        ListCommand.clearCheckupFilter();
+        ListCommand.clearAppointmentFilter();
+        FindCommand.clearLastFindPredicate();
         return new CommandResult(responseMessage);
     }
 
@@ -97,5 +100,10 @@ public class ViewCommand extends Command {
      */
     public static Predicate<Person> getLastShownListPredicate() {
         return lastShownListPredicate;
+    }
+
+    /** Clears the last shown list predicate. */
+    public static void clearLastShownListPredicate() {
+        lastShownListPredicate = null;
     }
 }

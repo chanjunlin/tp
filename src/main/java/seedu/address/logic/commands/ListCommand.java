@@ -52,6 +52,9 @@ public class ListCommand extends Command {
         if (filterByCheckup) {
             model.updateFilteredPersonListByEarliestCheckup(new PersonHasCheckupPredicate());
             checkupFilterActive = true;
+            clearAppointmentFilter();
+            FindCommand.clearLastFindPredicate();
+            ViewCommand.clearLastShownListPredicate();
             return new CommandResult(MESSAGE_SUCCESS_CHECKUP);
         }
         checkupFilterActive = false;
@@ -59,11 +62,17 @@ public class ListCommand extends Command {
         if (isListingAll) {
             model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
             currentAppointmentFilter = null;
+            clearCheckupFilter();
+            FindCommand.clearLastFindPredicate();
+            ViewCommand.clearLastShownListPredicate();
             return new CommandResult(MESSAGE_SUCCESS_ALL);
         }
 
         model.updateFilteredPersonList(new PersonHasAppointmentPredicate(appointmentFilter));
         currentAppointmentFilter = appointmentFilter;
+        FindCommand.clearLastFindPredicate();
+        ViewCommand.clearLastShownListPredicate();
+        clearCheckupFilter();
         return new CommandResult(String.format(MESSAGE_SUCCESS_FILTERED, appointmentFilter));
     }
 
@@ -89,6 +98,11 @@ public class ListCommand extends Command {
         return currentAppointmentFilter;
     }
 
+    /** Clears the current appointment filter. */
+    public static void clearAppointmentFilter() {
+        currentAppointmentFilter = null;
+    }
+
     /**
      * Returns whether the checkup filter is active.
      *
@@ -96,5 +110,10 @@ public class ListCommand extends Command {
      */
     public static boolean isCheckupFilterActive() {
         return checkupFilterActive;
+    }
+
+    /** Clears the checkup filter. */
+    public static void clearCheckupFilter() {
+        checkupFilterActive = false;
     }
 }

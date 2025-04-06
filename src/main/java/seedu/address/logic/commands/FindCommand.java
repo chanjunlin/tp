@@ -37,6 +37,9 @@ public class FindCommand extends Command {
         requireNonNull(model);
         lastFindPredicate = predicate;
         model.updateFilteredPersonList(predicate);
+        ListCommand.clearCheckupFilter();
+        ListCommand.clearAppointmentFilter();
+        ViewCommand.clearLastShownListPredicate();
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
     }
@@ -70,5 +73,10 @@ public class FindCommand extends Command {
      */
     public static Predicate<Person> getLastFindPredicate() {
         return lastFindPredicate;
+    }
+
+    /** Clears the last find predicate. */
+    public static void clearLastFindPredicate() {
+        lastFindPredicate = null;
     }
 }
