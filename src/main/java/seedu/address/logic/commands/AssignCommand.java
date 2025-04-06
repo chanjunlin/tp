@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -56,8 +55,8 @@ public class AssignCommand extends Command {
         requireNonNull(model);
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        Person patient = getPersonFromIndex(lastShownList, patientIndex);
-        Person nurse = getPersonFromIndex(lastShownList, nurseIndex);
+        Person patient = getPersonFromIndex(lastShownList, patientIndex, "patient");
+        Person nurse = getPersonFromIndex(lastShownList, nurseIndex, "nurse");
 
         validateAppointmentType(patient, ROLE_PATIENT, patientIndex, MESSAGE_INVALID_PATIENT);
         validateAppointmentType(nurse, ROLE_NURSE, nurseIndex, MESSAGE_INVALID_NURSE);
@@ -82,9 +81,9 @@ public class AssignCommand extends Command {
     /**
      * Returns the person at the specified index from the list or throws if index is out of bounds.
      */
-    private Person getPersonFromIndex(List<Person> list, Index index) throws CommandException {
+    private Person getPersonFromIndex(List<Person> list, Index index, String role) throws CommandException {
         if (index.getZeroBased() >= list.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException("Invalid " + role + " index: " + index.getOneBased());
         }
         return list.get(index.getZeroBased());
     }
@@ -104,7 +103,6 @@ public class AssignCommand extends Command {
             throw new CommandException(String.format(errorMessageFormat, index.getOneBased()));
         }
     }
-
 
     @Override
     public boolean equals(Object other) {
