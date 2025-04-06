@@ -225,7 +225,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_dobFieldSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + DOB_DESC_AMY;
+        String userInput = targetIndex.getOneBased() + DOB_DESC_AMY;
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withDateOfBirth(VALID_DOB_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -234,7 +234,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_nextOfKinFieldSpecified_success() {
         Index targetIndex = INDEX_FIRST_PERSON;
-        String userInput = targetIndex.getOneBased() + " " + NOK_DESC_AMY;
+        String userInput = targetIndex.getOneBased() + NOK_DESC_AMY;
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withNextOfKin(VALID_NOK_AMY).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -244,16 +244,16 @@ public class EditCommandParserTest {
     public void parse_allFieldSpecifiedWithDobAndNok_success() {
         Index targetIndex = INDEX_SECOND_PERSON;
         String userInput = targetIndex.getOneBased()
-                         + " " + NAME_DESC_AMY
-                         + " " + DOB_DESC_AMY
-                         + " " + PHONE_DESC_BOB
-                         + " " + EMAIL_DESC_AMY
-                         + " " + ADDRESS_DESC_AMY
-                         + " " + BLOOD_TYPE_AMY
-                         + " " + APPOINTMENT_AMY
-                         + " " + TAG_DESC_FRIEND
-                         + " " + NOK_DESC_AMY
-                         + " " + MEDICAL_HISTORY_AMY;
+                         + NAME_DESC_AMY
+                         + DOB_DESC_AMY
+                         + PHONE_DESC_BOB
+                         + EMAIL_DESC_AMY
+                         + ADDRESS_DESC_AMY
+                         + BLOOD_TYPE_AMY
+                         + APPOINTMENT_AMY
+                         + TAG_DESC_FRIEND
+                         + NOK_DESC_AMY
+                         + MEDICAL_HISTORY_AMY;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
                                                                           .withName(VALID_NAME_AMY)
@@ -280,5 +280,4 @@ public class EditCommandParserTest {
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-
 }
