@@ -2,38 +2,54 @@
 layout: page
 title: User Guide
 ---
+# About Medibook
+MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI)**. 
 
-MediBook is a desktop app for managing patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI). Designed for speed and efficiency, MediBook empowers private nurse centres to assign staff, retrieve patient information, and manage appointments faster than traditional pen-and-paper or GUI-based systems.
+Designed for speed and efficiency, **MediBook** empowers private nurse centres to:
+- assign nurses to patients
+- retrieve patient and nurse information
+- manage appointments and medical history of patients
+
+All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick installation guide and exploring the Features of the app below!
+
+# Using this User Guide
+This user guide is designed to help you get started with **MediBook**, and to provide a simple and concise reference if you need any help while using the app. You may click on the words in blue to jump directly to the relevant section of the user guide.
+
+To get an overview of the guide, you can refer to the [Table of contents](#table-of-contents) below.
 
 # Table of Contents
-1. [Quick start](#quick-start)
-2. [Features](#features)
+1. [About Medibook](#about-medibook)
+2. [Using this User Guide](#using-this-user-guide)
+3. [Table of Contents](#table-of-contents)
+4. [Installation Guide](#installation-guide)
+5. [Features](#features)
     * [Viewing Help](#viewing-help--help)
     * [Adding a person](#adding-a-person-add)
-    * [Listing all persons](#listing-all-persons--list)
-    * [Editing a person](#editing-a-person--edit)
+    * [Listing all persons](#listing-persons-list)
+    * [Editing a person](#editing-a-person-edit)
     * [Locating persons by name](#locating-persons-by-name-find)
-    * [Finding patients](#finding-patient)
-    * [Finding nurse](#finding-nurse)
+    * [Finding patients](#finding-patient-find-patient-of-nurse-)
+    * [Finding nurse](#finding-nurse-find-nurse-of-patient)
     * [Deleting a person](#deleting-a-person--delete)
     * [Clearing all entries](#clearing-all-entries--clear)
     * [Exiting the program](#exiting-the-program--exit)
-    * [Assigning a nurse to a patient](#assigning-a-nurse-to-a-patient--assign)
-    * [Schedule checkups](#schedule-checkups--schedule)
+    * [Assigning a nurse to a patient](#assign-a-nurse-to-a-patient--assign)
+    * [Schedule checkups](#schedule-checkup-appointments--schedule-add-for-patient--schedule-delete-for-patient)
     * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
-    * [Archiving data files](#archiving-data-files-coming-in-v20)
-3. [FAQ](#faq)
-4. [Known Issues](#known-issues)
-5. [Command Summary](#command-summary)
+    * [Archiving data files](#archiving-data-files)
+6. [FAQ](#faq)
+7. [Known Issues](#known-issues)
+8. [Command Summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+# Installation Guide
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+   * 
+   * **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
 
