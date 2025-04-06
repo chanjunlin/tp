@@ -23,6 +23,7 @@ public class Email {
            + "    - have each domain label consist of alphanumeric characters, separated only by hyphens, if any.\n"
            + "3. The .com after domain name can be replaced with any other words like .org, .net, etc. (min 2 letters)";
     // alphanumeric and special characters
+    // the regex format (line 27 to 34) is partly done with the assistance of chatGPT
     private static final String LOCAL_ALLOWED = "[A-Za-z0-9_]";
     private static final String DOMAIN_ALLOWED = "[A-Za-z0-9]";
     private static final String LOCAL_PART_REGEX = LOCAL_ALLOWED + "+(?:[+_.-]" + LOCAL_ALLOWED + "+)*";

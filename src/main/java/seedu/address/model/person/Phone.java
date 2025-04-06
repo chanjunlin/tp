@@ -13,7 +13,10 @@ public class Phone {
             Invalid phone number format! Please follow the criterias below:
             - Phone numbers should only contain valid numbers (i.e. no all zeros)
             - Should be at least 3 digits long
-            - Phone numbers can be separated by a space with at least 3 digits in each group""";
+            - Phone numbers can be separated by a space with at least 3 digits in each group
+            - Phone numbers should not contain any other characters or symbols
+            - Total number of digits cannot exceed 17""";
+    // the regex format (line 18) is partly done with the assistance of chatGPT
     public static final String VALIDATION_REGEX = "^(?!0+(?:\\s+0+)*$)(?:\\d{3,}(?:\\s+\\d{3,})*)$";
     public final String value;
 
