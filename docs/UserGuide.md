@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 # About Medibook
-MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI)**. 
+MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI)**.
 
 Designed for speed and efficiency, **MediBook** empowers private nurse centres to:
 - assign nurses to patients
@@ -48,7 +48,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 # Installation Guide
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   * 
+   *
    * **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
@@ -71,9 +71,9 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
    * `assign 1 2`: Assigns the patient at index 1 to the nurse at index 2 shown in the current list.
-   
+
    * `assign delete john doe 3` : Removes assigned nurse John Doe from the patient at index 3.
-   
+
    * `find j` : Finds all contacts whose names start contains the letter 'j'.
 
    * `find patient of nurse 1` : Finds the patients assigned to the nurse at index 1 of the currently shown list.
@@ -289,7 +289,7 @@ Examples:
 
 Schedules a checkup appointment for the patient, or deletes an existing checkup appointment.
 
-**Note** 
+**Note**
 * Checkups cannot be created before the current time.
 * Checkups can only be created during working hours (9am to 5pm).
 * Checkups are only allowed at times with minutes of ```0```, ```15```, ```30```, ```45```.
