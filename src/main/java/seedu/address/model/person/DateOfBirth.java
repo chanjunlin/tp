@@ -15,7 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 public class DateOfBirth {
     public static final String MESSAGE_CONSTRAINTS = "Date Of Birth can only take the format:"
             + "DD/MM/YYYY";
-    public static final String FUTURE_DOB = "Date Of i cannot be in the future!";
+    public static final String FUTURE_DOB = "Date Of Birth cannot be in the future!";
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final Logger logger = LogsCenter.getLogger(DateOfBirth.class);
     private static final String DATE_VALIDATION_REGEX = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
