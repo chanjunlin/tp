@@ -163,7 +163,7 @@ public class Person {
                 && otherPerson.getName().equals(getName())
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getDateOfBirth().equals(getDateOfBirth());
-    }   
+    }
 
     /**
      * Returns true if the appointment is nurse and false otherwise.
