@@ -310,7 +310,6 @@ Finds patients assigned under a specified nurse.
 * `find patient of nurse 1` returns e.g: Patient(s) assigned to nurse ALEX YEOH: ROY BALAKRISHNAN.
 * `find patient of nurse 3` returns e.g: No patient assigned to the nurse at index 3. 
 
-![result for 'find patient of nurse 1'](images/FindPatientOfNurse.png)
 ![result for 'find patient of nurse 3'](images/FindNoPatient.png)
 
 [🔙 Back to Features](#features)
@@ -337,7 +336,6 @@ Finds nurse(s) assigned to a specified patient.
 * `find nurse of patient 7` returns e.g: No nurse assigned to the patient at index 7.
 
 ![result for 'find nurse of patient 6'](images/FindNurseOfPatient.png)
-![result for 'find nurse of patient 7'](images/FindNoNurse.png)
 
 [🔙 Back to Features](#features)
 
