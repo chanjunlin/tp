@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -98,6 +97,6 @@ public class AssignCommandTest {
         AssignCommand assignCommand = new AssignCommand(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
 
         CommandException exception = assertThrows(CommandException.class, () -> assignCommand.execute(model));
-        assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, exception.getMessage());
+        assertEquals("Invalid patient index: 1", exception.getMessage());
     }
 }

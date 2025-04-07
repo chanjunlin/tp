@@ -43,7 +43,7 @@ public class NextOfKin {
             return false;
         }
 
-        String name = trimmedInput.substring(0, lastSpaceIndex);
+        String name = trimmedInput.substring(0, lastSpaceIndex).trim();
         String phone = trimmedInput.substring(lastSpaceIndex + 1);
 
         return Name.isValidName(name) && Phone.isValidPhone(phone);
