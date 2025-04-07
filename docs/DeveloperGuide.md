@@ -642,7 +642,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
+   1. Simulate a corrupted file by editing the saved .json file such that it is no longer in json format. This should result in a empty screen upon start up.
    1. Delete the file and restart the app to recover and start with a small list of sample contacts.
 
 ## **Appendix: Effort**
@@ -650,13 +650,25 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix: Planned Enhancements**
 
 These are some features / improvements our team has planned to implement in the future due to lack of time.
-1. first
-1. 2
-1. 3
-1. 4
-1. 5
-1. 6
-1. 7
-1. 8
-1. 9
-1. 10
+1. Patient medical history can be edited and added on to existing medical history.
+   * Currently, editing patient medical history will remove the existing medical history, meaning that if the user wants to keep the existing medical history, they would need to re-enter everything again.
+   * For future enhancements, we plan to allow users to add on to the existing medical history when they edit a patient's medical history.
+   * There will also be a separate command that will allow users to delete specific medical history entries for a patient.
+2. The `assign` command will have a command format that is more intuitive and be easier to remember for users.
+   * Currently, the `assign` command has the format: `assign PATIENT_INDEX NURSE_INDEX`, which is slightly hard to understand and is not the most intuitive.
+   * For future enhancements, we plan to modify to command format to something similar to the following: `assign nurse NURSE_INDEX to patient PATIENT_INDEX`.
+3. More nurses can be assigned to one patient.
+   * Currently, the maximum number of nurses that can be assigned to a patient is 2.
+   * For future enhancements, we may increase the number of nurses that can be assigned to a patient, as this would be more realistic for cases where multiple nurses would be needed to attend to one patient.
+4. Leap year DOB / February DOB will be handled correctly.
+   * Currently, DOB for leap years is not handled correctly, and dates such as 30/02/2000 are allowed in the DOB field.
+   * For future enhancements, such dates will be handled correctly to only allow logical date inputs.
+5. Corrupted JSON file will be handled gracefully.
+   * Currently, a blank page will be displayed if the JSON file is corrupted.
+   * For future enhancements, we may display a warning message to the user, and instructions would be given for reloading the app or retrieving sample data.
+6. Reminders can be added for checkups.
+   * Currently, checkups can be scheduled for a patient, but nurses will not receive a reminder about the checkups for the patients that they are assigned to.
+   * For future enhancements, a reminder feature would allow nurses to receive reminders in advance for the patient checkups that they are assigned to.
+7. Warning messages will be displayed when scheduling checkups for patients who do not have any assigned nurses.
+   * Currently, users are allowed to schedule checkups for patients even if the patient does not have any nurses assigned to them.
+   * For future enhancements, a warning will be displayed to alert the user that the patient they are scheduling a checkup for does not have any assigned nurses.
