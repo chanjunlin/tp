@@ -3,24 +3,25 @@ layout: page
 title: User Guide
 ---
 
-# About Medibook
-MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI)**.
+## About Medibook
+MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI)**, while still offering the benefits of a Graphical User Interface (GUI).
 
 Designed for speed and efficiency, **MediBook** empowers private nurse centres to:
-- assign nurses to patients
-- retrieve patient and nurse information
-- manage checkup sessions and medical history of patients
+- Assign nurses to patients
+- Retrieve patient and nurse information
+- Manage checkup sessions and medical history of patients
 
-All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick installation guide and exploring the Features of the app below!
+All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick [Installation Guide](#installation-guide) and exploring the [Features](#features) of the app below!
 
-# Using this User Guide
+## Using this User Guide
 This user guide is designed to help you get started with **MediBook**, and to provide a simple and concise reference if you need any help while using the app. You may click on the words in blue to jump directly to the relevant section of the user guide.
 
 To get an overview of the guide, you can refer to the [Table of contents](#table-of-contents) below.
 
 <div style="page-break-after: always;"></div>
 
-# Table of Contents
+## Table of Contents
+
 1. [About Medibook](#about-medibook)
 2. [Using this User Guide](#using-this-user-guide)
 3. [Table of Contents](#table-of-contents)
@@ -43,24 +44,24 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
     * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
-    * [Archiving data files](#archiving-data-files)
 7. [FAQ](#faq)
 8. [Known Issues](#known-issues)
 9. [Command Summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
+
 <div style="page-break-after: always;"></div>
 
-# Installation Guide
+## Installation Guide
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   * Steps to check your current Java version, click [here]().
+   * Steps to check your current Java version, click [here](#faq).
    * Steps to install Java in your computer, click [here](https://se-education.org/guides/tutorials/javaInstallation.html).
    * **For Mac users:** Ensure you have the precise Java version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 > 🧠 **Why do I have to install Java?**
-> - Java is a versatile programming language that lets apps run on any device with a Java Virtual Machine (JVM). Once installed, you can run any Java app, including MediBook. You can find out more about Java [here]().
+> - Java is a versatile programming language that lets apps run on any device with a Java Virtual Machine (JVM). Once installed, you can run any Java app, including MediBook. You can find out more about Java [here](https://dev.java/learn/getting-started/).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
    - [What is a JAR file?](https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jarGuide.html)
@@ -126,19 +127,19 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 This section provides an overview of all the attributes a person in MediBook can have, including whether they're required, what format they should follow, and any special notes.
 
-| **Attribute** | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                                                                                                       | **Example**                              |
-|---------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| Name          | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive                                                                                       | E.g., `Joh'n-S/O-Doe`                    |
-| Date of Birth | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                                                                                           | E.g., `11/11/2003`                       |
-| Phone Number  | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                                                                                                | E.g., `1234 567 890`                     |
-| Address       | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                                                                                                      | E.g., `10 NUS Road, #03-21`              |
-| Blood Type    | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                                                                                                   | E.g., `A+`, `AB-`, etc.                  |
-| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                                                                                                | E.g., `Nurse` or `Patient`               |
-| Email         | `e/`       | ❌ Optional         | - `local-part@domain.com` <br/>- Local-part (min 2 characters) with special characters (plus, underscore, dot, hyphen) <br/>- Local-part must start with alphanumeric character <br/>- Domain (min 1 character) <br/>- `com` can be replaced with minimum 2 characters | E.g., `john@example.com`                 |
-| Next of Kin   | `nok/`     | ❌ Optional    | - `Name Phone` <br/>- A space is required between `Name` and `Phone` <br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed                  | E.g., `Jane 91234567` |
-| Tags          | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed <br/>- [Colour based](#Colour-Legend)                                                                                                                                        | E.g., `2 Smart`       |
-| Medical History | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed                                                                                  | E.g., `(Very, sick): - urgent/needy12`   |
-| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command <br/>- Each checkup is fixed 30 minutes <br/>- Checkups cannot be scheduled in the past.                                                                                                                                                                  | Not included in `add` command            |
+| **Attribute**    | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                                                                                                       | **Example**                            |
+|------------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive                                                                                       | E.g., `Joh'n-S/O-Doe`                  |
+| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                                                                                           | E.g., `11/11/2003`                     |
+| Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                                                                                                | E.g., `1234 567 890`                   |
+| Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                                                                                                      | E.g., `10 NUS Road, #03-21`            |
+| Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                                                                                                   | E.g., `A+`, `AB-`, etc.                |
+| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                                                                                                | E.g., `Nurse` or `Patient`             |
+| Email            | `e/`       | ❌ Optional    | - `local-part@domain.com` <br/>- Local-part (min 2 characters) with special characters (plus, underscore, dot, hyphen) <br/>- Local-part must start with alphanumeric character <br/>- Domain (min 1 character) <br/>- `com` can be replaced with minimum 2 characters | E.g., `john@example.com`               |
+| Next of Kin      | `nok/`     | ❌ Optional    | - `Name Phone` <br/>- A space is required between `Name` and `Phone` <br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed                  | E.g., `Jane 91234567`                  |
+| Tags             | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed <br/>- [Colour based](#Colour-Legend)                                                                                                                                        | E.g., `2 Smart`                        |
+| Medical History  | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed                                                                                  | E.g., `(Very, sick): - urgent/needy12` |
+| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command <br/>- Each checkup is fixed 30 minutes <br/>- Checkups cannot be scheduled in the past.                                                                                                                                                | Not included in `add` command          |
 
 > ⚠️ **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
 > ✅ Correct: `e/john@example.com`
@@ -193,7 +194,6 @@ Quick Navigation:
 [Viewing person](#viewing-a-nurse-or-patient--view) •
 [Saving data](#saving-the-data) •
 [Editing data file](#editing-the-data-file) •
-[Archiving](#archiving-data-files)
 
 ### Viewing help : `help`
 
@@ -210,13 +210,18 @@ Format: `help`
 
 Adds a person to the address book.
 
-Format: `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+#### Details
 
-*Note*: A person can have any number of tags and medical history (including 0)
-
+* A person can have any number of tags and medical history (including 0)
 * Medical history is only for patients, an error will occur if you try to add a nurse with medical history.
 
-Examples:
+#### Format
+
+`add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+
+
+#### Examples
+
 * `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend`
 * `add n/Betsy Crowe dob/01/01/2001 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/No Family mh/Insane, but not dangerous b/B+ ap/Patient`
 
@@ -224,31 +229,30 @@ Examples:
 
 > ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
 
+![result for 'add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend'](images/AddPerson.png)
+
 [🔙 Back to Features](#features)
+[📋 View Person Attributes](#overview-of-person-attributes)
 
 ### Listing persons: `list`
 
 Displays a list of persons in the address book. You can choose to list all persons, only patients, only nurses or all patients with checkups.
 
-Formats:
+#### Formats 
 
-`list` — Lists all persons.
+* `list`: Lists all persons.
+* `list patient`: Lists only patients.
+* `list nurse`: Lists only nurses.
+* `list checkup`: Lists all patients with checkups.
 
-`list patient` — Lists only patients.
+#### Examples
 
-`list nurse` — Lists only nurses.
+* `list`: Shows every entry in the address book.
+* `list patient`: Shows only persons with the appointment role `Patient`.
+* `list nurse`: Shows only persons with the appointment role `Nurse`.
+* `list checkup`: Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
 
-`list checkup` - Lists all patients with checkups.
-
-Examples:
-
-`list` : Shows every entry in the address book.
-
-`list patient` : Shows only persons with the appointment role Patient.
-
-`list nurse` : Shows only persons with the appointment role Nurse.
-
-`list checkup` : Shows only the patients with scheduled checkups, sorted from earliest to latest checkup.
+![result for 'list'](images/ListAllNurseAndPatient.png)
 
 [🔙 Back to Features](#features)
 
@@ -256,7 +260,7 @@ Examples:
 
 Edits an existing person's information in MediBook.
 
-Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+#### Details
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3,…​
 * At least one of the optional fields must be provided.
@@ -269,7 +273,12 @@ Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_
 * If a change of appointment is required, nurse to patient, do ensure the nurse has no patients assigned to them before changing appointment.
 * If a change of nurse name is required, do ensure the nurse has no patients assigned to them before changing name.
 
-Examples:
+#### Format
+
+`edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+
+#### Examples
+
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/ mh/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags and medical history.
 * `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index to the respective values.
@@ -292,7 +301,9 @@ Finds persons whose names contain any of the given keywords or prefixes.
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
-#### Format `find KEYWORD [MORE_KEYWORDS]`
+#### Format 
+
+`find KEYWORD [MORE_KEYWORDS]`
 
 #### Parameters
 
@@ -322,7 +333,9 @@ Finds patients assigned under a specified nurse.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, ... and be within the total number of person in the list.
 
-#### Format `find patient of nurse INDEX`
+#### Format 
+
+`find patient of nurse INDEX`
 
 #### Examples
 
@@ -347,9 +360,11 @@ Finds nurse(s) assigned to a specified patient.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, ... and be within the total number of person in the list.
 
-#### Format `find nurse of patient INDEX`
+#### Format 
 
-#### Examples:
+`find nurse of patient INDEX`
+
+#### Examples
 
 * `find nurse of patient 6` returns e.g: Nurse(s) assigned to patient ROY BALAKRISHNAN:  ALEX YEOH,  CHARLOTTE OLIVEIRO.
 * `find nurse of patient 7` returns e.g: No nurse assigned to the patient at index 7.
@@ -362,32 +377,41 @@ Finds nurse(s) assigned to a specified patient.
 
 Assigns a specified nurse to a specified patient.
 
-Format: `assign PATIENT_INDEX NURSE_INDEX`
+#### Details
 
 * Assigns the nurse at `NURSE_INDEX` to the patient at `PATIENT_INDEX`.
 * `NURSE_INDEX` and `PATIENT_INDEX` both refer to the index number shown in the displayed person list.
 * At most 2 nurses can be assigned to one patient.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+#### Format
+
+`assign PATIENT_INDEX NURSE_INDEX`
+
+#### Examples
+
 * `assign 6 4` assigns the nurse at index 4 to the patient at index 6.
 
 ![result for 'assign 6 4'](images/AssignScreenshot.png)
-
 [🔙 Back to Features](#features)
 
 ### Delete nurse assignment from a patient : `assign delete`
 
 Removes a specified assigned nurse from a specified patient.
 
-Format: `assign delete NURSE_NAME PATIENT_INDEX`
+#### Details
 
 * Removes the assigned nurse with name `NURSE_NAME` from the patient at `PATIENT_INDEX`.
 * `NURSE_NAME` needs to match the full name shown on the patient's assigned nurse tag, but is case-insensitive.
 * `PATIENT_INDEX` refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+#### Format
+
+`assign delete NURSE_NAME PATIENT_INDEX`
+
+#### Examples
+
 * `assign delete john doe 2` removes the assignment of Nurse JOHN DOE from the patient at index 2.
 
 [🔙 Back to Features](#features)
@@ -396,7 +420,7 @@ Examples:
 
 Schedules or deletes checkup sessions for patients.
 
-#### Constraints
+#### Details
 
 *   Checkups cannot be scheduled for:
     *   Dates or times in the past (as of the current date and time).
@@ -443,12 +467,22 @@ Schedules or deletes checkup sessions for patients.
 
 Displays details of specified person. If specified person is a patient with medical history, the medical history will be shown in the result display box.
 
-Format: `view INDEX`
+#### Details
 
 * Displays the details of the person at `INDEX`.
 * If the person is a patient, then the patient's medical history is shown (if any).
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3
+
+#### Format
+
+`view INDEX`
+
+#### Example
+
+* `view 7`: Views the patient medical history
+
+![result for 'view 7'](images/ViewMedicalHistory.png)
 
 [🔙 Back to Features](#features)
 
@@ -456,13 +490,17 @@ Format: `view INDEX`
 
 Deletes the specified person from the address book.
 
-Format: `delete INDEX`
-
+#### Details
 * Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the displayed person list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
-Examples:
+#### Format
+
+`delete INDEX`
+
+#### Example
+
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
@@ -472,7 +510,9 @@ Examples:
 
 Clears all entries from the address book.
 
-Format: `clear`
+#### Format
+
+`clear`
 
 [🔙 Back to Features](#features)
 
@@ -480,7 +520,9 @@ Format: `clear`
 
 Exits the program.
 
-Format: `exit`
+#### Format
+
+`exit`
 
 [🔙 Back to Features](#features)
 
@@ -505,6 +547,9 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
+**Q**: How do I check my current Java version?<br>
+**A**: Open a command terminal and type `java --version`. If you see a version number, Java is installed.
+If not, you need to install Java.
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
@@ -552,12 +597,12 @@ Example:
 [🔝 Back to Table of Contents](#table-of-contents)
 
 ## Colour Legend
-Field | Colour
---------|------------------
-Patient Appointment | Light Blue
-Nurse Appointment | Orange
-Tag | Light Purple
-Checkup | Light brown
-Assigned Nurse | Green
+| Field               | Colour       |
+|---------------------|--------------|
+| Patient Appointment | Light Blue   |
+| Nurse Appointment   | Orange       |
+| Tag                 | Light Purple |
+| Checkup             | Light brown  |
+| Assigned Nurse      | Green        |
 
 [🔝 Back to Table of Contents](#table-of-contents)
