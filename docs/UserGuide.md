@@ -371,33 +371,47 @@ Examples:
 
 [🔙 Back to Features](#features)
 
-### Schedule checkup : `schedule add for patient` / `schedule delete for patient`
+### Schedule Checkups: `schedule add for patient` / `schedule delete for patient`
 
-Schedules a checkup session for the patient, or deletes an existing checkup session.
+Schedules or deletes checkup sessions for patients.
 
-**Note**
-* Checkups cannot be created before the current time.
-* Checkups can only be created during working hours (9am to 5pm).
-* Checkups are only allowed at times with minutes of ```0```, ```15```, ```30```, ```45```.
-* Checkups are not allowed if there's a checkup within 30 minutes of the desired checkup.
-* Date Time follows the format of DD/MM/YYYY HHMM.
-* A warning will be given if the target patient does not have a assigned nurse.
+#### Constraints
 
+*   Checkups cannot be scheduled for:
+    *   Dates or times in the past (as of the current date and time).
+    *   Times outside of working hours (9:00 AM to 5:00 PM).*   Times that are not in 15-minute increments (e.g., `:00`, `:15`, `:30`, `:45`).
+    *   Times that are within 30 minutes of an existing checkup.
+*   All Checkups are, by default, 30 minutes duration.
+*   Default timing checkups are for 30 minutes.
+*   The date and time must be in the format `DD/MM/YYYY HHMM`.
+*   A warning will be issued if the target patient doesn't have an assigned nurse.
 
-Actions:
-* Add a checkup.
-* Delete a checkup (that exists).
+#### Actions
 
-Format:
-* `schedule add for patient INDEX DATE TIME`
-* `schedule delete for patient INDEX DATE TIME`
+*   **Add checkup:** Schedules a new checkup session.
+*   **Delete checkup:** Removes an existing checkup session.
 
-* `INDEX` refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+#### Format
 
-Examples:
-* `schedule add for patient 1 12/12/2025 1200` schedules a checkup for patient at index 1 on 12/12/2025 at 12:00pm
-* `schedule delete for patient 1 12/12/2025 1200` deletes a checkup for patient at index 1 on 12/12/2025 at 12:00pm
+*   Add checkup:
+    ```
+    schedule add for patient INDEX DATE TIME
+    ```
+*   Delete checkup:
+    ```
+    schedule delete for patient INDEX DATE TIME
+    ```
+
+#### Parameters
+
+*   `INDEX`: Refers to the index number of the patient in the displayed list. The index must be a positive integer (1, 2, 3, ...).
+*   `DATE`: The date for the checkup, in `DD/MM/YYYY` format.
+*   `TIME`: The time for the checkup, in `HHMM` format (24-hour clock).
+
+#### Examples
+
+*   `schedule add for patient 1 12/12/2025 1200`: Schedules a checkup for the patient at index 1 on December 12, 2025, at 12:00 PM.
+*   `schedule delete for patient 1 12/12/2025 1200`: Deletes a checkup for the patient at index 1 on December 12, 2025, at 12:00 PM.
 
 [🔙 Back to Features](#features)
 
