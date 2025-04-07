@@ -217,6 +217,7 @@ Examples:
 > ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
 
 [🔙 Back to Features](#features)
+[📋 View Person Attributes](#overview-of-person-attributes)
 
 ### Listing persons: `list`
 
