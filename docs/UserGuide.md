@@ -1,7 +1,7 @@
 ---
 layout: page
-title: User Guide
 ---
+
 # About Medibook
 MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI)**.
 
