@@ -18,6 +18,8 @@ This user guide is designed to help you get started with **MediBook**, and to pr
 
 To get an overview of the guide, you can refer to the [Table of contents](#table-of-contents) below.
 
+<div style="page-break-after: always;"></div>
+
 # Table of Contents
 1. [About Medibook](#about-medibook)
 2. [Using this User Guide](#using-this-user-guide)
@@ -47,6 +49,8 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 9. [Command Summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 # Installation Guide
 
@@ -116,6 +120,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 [🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Overview of Person Attributes
 
@@ -145,6 +150,7 @@ This section provides an overview of all the attributes a person in MediBook can
  [🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Features
 
@@ -477,6 +483,7 @@ Exits the program.
 Format: `exit`
 
 [🔙 Back to Features](#features)
+<div style="page-break-after: always;"></div>
 
 ## Saving the data
 
@@ -515,6 +522,7 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 [🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
+<div style="page-break-after: always;"></div>
 
 ## Command summary
 
