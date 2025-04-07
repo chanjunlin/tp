@@ -39,8 +39,8 @@ title: Developer Guide
    * [Schedule Checkups](#schedule-checkups)
    * [View nurses / patients](#viewing-nurses--patients)
    * [Saving Data](#saving-data)
-1. [Appendix: Effort](#appendix-effort)
 1. [Appendix: Planned Enhancements](#appendix-planned-enhancements)
+1. [Appendix: Effort](#appendix-effort)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -641,21 +641,64 @@ testers are expected to do more *exploratory* testing.
 
 1. Dealing with missing/corrupted data files
 
-   1. Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
+   1. Simulate a corrupted file by editing the saved .json file such that it is no longer in json format. This should result in a empty screen upon start up.
    1. Delete the file and restart the app to recover and start with a small list of sample contacts.
-
-## **Appendix: Effort**
 
 ## **Appendix: Planned Enhancements**
 
 These are some features / improvements our team has planned to implement in the future due to lack of time.
-1. first
-1. 2
-1. 3
-1. 4
-1. 5
-1. 6
-1. 7
-1. 8
-1. 9
-1. 10
+1. Patient medical history can be edited and added on to existing medical history.
+   * Currently, editing patient medical history will remove the existing medical history, meaning that if the user wants to keep the existing medical history, they would need to re-enter everything again.
+   * For future enhancements, we plan to allow users to add on to the existing medical history when they edit a patient's medical history.
+   * There will also be a separate command that will allow users to delete specific medical history entries for a patient.
+2. The `assign` command will have a command format that is more intuitive and be easier to remember for users.
+   * Currently, the `assign` command has the format: `assign PATIENT_INDEX NURSE_INDEX`, which is slightly hard to understand and is not the most intuitive.
+   * For future enhancements, we plan to modify to command format to something similar to the following: `assign nurse NURSE_INDEX to patient PATIENT_INDEX`.
+3. More nurses can be assigned to one patient.
+   * Currently, the maximum number of nurses that can be assigned to a patient is 2.
+   * For future enhancements, we may increase the number of nurses that can be assigned to a patient, as this would be more realistic for cases where multiple nurses would be needed to attend to one patient.
+4. Leap year DOB / February DOB will be handled correctly.
+   * Currently, DOB for leap years is not handled correctly, and dates such as 30/02/2000 are allowed in the DOB field.
+   * For future enhancements, such dates will be handled correctly to only allow logical date inputs.
+5. Corrupted JSON file will be handled gracefully.
+   * Currently, a blank page will be displayed if the JSON file is corrupted.
+   * For future enhancements, we may display a warning message to the user, and instructions would be given for reloading the app or retrieving sample data.
+6. Reminders can be added for checkups.
+   * Currently, checkups can be scheduled for a patient, but nurses will not receive a reminder about the checkups for the patients that they are assigned to.
+   * For future enhancements, a reminder feature would allow nurses to receive reminders in advance for the patient checkups that they are assigned to.
+7. Warning messages will be displayed when scheduling checkups for patients who do not have any assigned nurses.
+   * Currently, users are allowed to schedule checkups for patients even if the patient does not have any nurses assigned to them.
+   * For future enhancements, a warning will be displayed to alert the user that the patient they are scheduling a checkup for does not have any assigned nurses.
+
+## **Appendix: Effort**
+
+### Difficulty Level
+Our project was highly complex as it expanded on the AddressBook 3 (AB3) baseline . We had to manage multiple new entity types such as patients, nurses, appointments, checkups and medical history compared to AB3 which only manages 1 person entity. Our project required careful coordination and encapsulation of all related data attributes.
+
+### Challenges Faced
+1. Multi-entity Integration
+   * We introduced distinct roles like patient and nurse via an appointment field and had to integrate these new fields into the system. E.g. adjusting both add and edit functions to allow the changes to these fields.
+   * We then had to design features specific to these such as nurse assignment and checkup scheduling.
+1. Checkup Scheduling
+   * Implementing checkup scheduling requires the introduction of a Checkup entity and validations like conflicting checkups.
+1. Optional and Validated Fields
+   * We added some optional fields like NextOfKin, which necessitated custom validation logic while ensuring the rest of the systems remained robust.
+1. Command Complexity
+   * We had to design new commands like assign and schedule, as well as enhance the current existing commands in AB3 (add, edit, list, etc.). These had to handle entity-specific behavior such as enforcing rules and validations.
+
+### Effort Required
+Our project required effort in these 4 main aspects:
+1. Design and Refactoring
+   * Significant refactoring was done to support distinct entity behavior while keeping the core model extensible.
+
+1. Command System
+   * Multiple new commands and parser classes were developed to enable features like nurse-patient assignment and checkup scheduling.
+
+1. Validation and Edge Cases 
+   * Custom checks were built into the logic and parser layers to prevent invalid operations (e.g., assigning a non-nurse or scheduling duplicate checkups).
+
+1. Testing and Debugging
+   * Each new command and behavior introduced unique test cases. We implemented extensive unit and integration tests to ensure system reliability.
+
+### Achievements
+Despite the complexity and effort required, our final project offers a user-friendly and extensible system. Our main achievements in this project were: implementing scheduling of medical checkups with conflict management implemented, list command with important filters such as checkup existence, allowing more optional fields like next of kin and email to provide more flexibility to the user, and last but not least adjusting requirements of duplicate persons to better match real world situations.

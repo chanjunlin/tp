@@ -54,9 +54,10 @@ public class ViewCommand extends Command {
         }
 
         Person viewedPerson = lastShownList.get(index.getZeroBased());
+        int zeroBasedIndex = index.getZeroBased();
 
-        lastShownListPredicate = person -> person.isSamePerson(viewedPerson);
-        model.updateFilteredPersonList(new PersonHasSameNamePredicate(viewedPerson.getName()));
+//        lastShownListPredicate = person -> person.isSamePerson(viewedPerson);
+        model.updateFilteredPersonList(person -> model.getFilteredPersonList().indexOf(person) == index.getZeroBased());
 
         String responseMessage = String.format(MESSAGE_SUCCESS, viewedPerson.getName());
         if (viewedPerson.getAppointment().toString().equals("Patient")) {
