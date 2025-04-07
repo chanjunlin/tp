@@ -187,7 +187,8 @@ Quick Navigation:
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Launches a popup window with a link for our User Guide. Clicking on `Copy URL` will copy the URL for you to paste 
+in your browser.
 
 ![help message](images/helpMessage.png)
 
