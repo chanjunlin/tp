@@ -599,6 +599,7 @@ Example:
 [🔝 Back to Table of Contents](#table-of-contents)
 
 ## Colour Legend
+
 | Field               | Colour       |
 |---------------------|--------------|
 | Patient Appointment | Light Blue   |
