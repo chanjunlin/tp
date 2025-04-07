@@ -113,7 +113,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 6. Refer to the [Features](#features) below for details of each command.
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -142,7 +142,7 @@ This section provides an overview of all the attributes a person in MediBook can
 > ⚠️ **Email Constraints:** The email format given [above](#overview-of-person-attributes) is a simplified version, for tidiness, you can find the 
 > full constraints, through a warning message, when you enter an invalid email in the app.
 
- [🔝 Navigate back to Table of Contents](#table-of-contents)
+ [🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -494,7 +494,7 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 
 [🔙 Back to Features](#features)
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -503,7 +503,7 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -512,7 +512,7 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -534,7 +534,7 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 | [**Schedule**](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient) | `schedule add for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100`                                              |
 | [**View**](#viewing-a-nurse-or-patient--view)                                                         | `view INDEX`<br> e.g., `view 2`                                                                                                                                                                                                                                           |
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
 
 ## Duplicate Policy
 MediBook allows all persons to have identical attributes through `edit` and `add` commands. User will be warned if it results in having two person sharing any of these attributes: `Name`, `Date of Birth` and `Phone Number`.
@@ -542,7 +542,7 @@ MediBook allows all persons to have identical attributes through `edit` and `add
 Example:
 > 
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
 
 ## Colour Legend
 Field | Colour
@@ -553,4 +553,4 @@ Tag | Light Purple
 Checkup | Light brown
 Assigned Nurse | Green
 
-[🔝 Navigate back to Table of Contents](#table-of-contents)
+[🔝 Back to Table of Contents](#table-of-contents)
