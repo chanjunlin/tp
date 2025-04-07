@@ -120,19 +120,19 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 This section provides an overview of all the attributes a person in MediBook can have, including whether they're required, what format they should follow, and any special notes.
 
-| **Attribute**     | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                 | **Example**                              |
-|------------------|------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive | E.g., `Joh'n-S/O-Doe`                    |
-| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                     | E.g., `11/11/2003`                       |
-| Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits                                                                                      | E.g., `1234 567 890`                     |
-| Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                | E.g., `10 NUS Road, #03-21`              |
-| Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                             | E.g., `A+`, `AB-`, etc.                  |
-| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                          | E.g., `Nurse` or `Patient`                                   |
-| Email            | `e/`       | ✅ Yes         | Valid email format                                                                                                                                                               | E.g., `john@example.com`                 |
-| Next of Kin      | `nok/`     | ❌ Optional    | `Name Phone`                                                                                                                                                                     | E.g., `Jane 91234567`, or can be omitted |
-| Tags             | `t/`       | ❌ Optional    | Alphanumeric                                                                                                                                                                     | Multiple tags allowed                    |
-| Medical History  | `m/`       | ❌ Optional*   | Free text                                                                                                                                                                        | ❗ Only allowed for **patients**          |
-| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command                                                                                                                                                   | Not included in `add` command            |
+| **Attribute**     | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                               | **Example**                              |
+|------------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive               | E.g., `Joh'n-S/O-Doe`                    |
+| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                   | E.g., `11/11/2003`                       |
+| Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                        | E.g., `1234 567 890`                     |
+| Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                              | E.g., `10 NUS Road, #03-21`              |
+| Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                           | E.g., `A+`, `AB-`, etc.                  |
+| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                        | E.g., `Nurse` or `Patient`               |
+| Email            | `e/`       | ❌ Optional         | Valid email format                                                                                                                                                                             | E.g., `john@example.com`                 |
+| Next of Kin      | `nok/`     | ❌ Optional    | - `Name Phone`<br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed | E.g., `Jane 91234567` |
+| Tags             | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed                                                                                                      | E.g., `2 Smart`       |
+| Medical History  | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed          | E.g., `(Very, sick): - urgent/needy12`   |
+| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command                                                                                                                                                                 | Not included in `add` command            |
 
 > **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
 > ✅ Correct: `e/john@example.com`
@@ -156,8 +156,6 @@ This section provides an overview of all the attributes a person in MediBook can
 
 * Items with `…`​ after them can be used multiple times including zero times.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-
-* Tag and Medical History allows only alphanumeric characters and spaces.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -189,7 +187,8 @@ Quick Navigation:
 
 ### Viewing help : `help`
 
-Shows a message explaining how to access the help page.
+Launches a popup window with a link for our User Guide. Clicking on `Copy URL` will copy the URL for you to paste 
+in your browser.
 
 ![help message](images/helpMessage.png)
 
