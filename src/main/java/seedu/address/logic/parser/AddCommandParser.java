@@ -69,7 +69,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         BloodType bloodType = ParserUtil.parseBloodType(argMultimap.getValue(PREFIX_BLOODTYPE).get());
         Appointment appointment = ParserUtil.parseAppointment(argMultimap.getValue(PREFIX_APPOINTMENT).get());
         Optional<String> nokInput = argMultimap.getValue(PREFIX_NOK);
-        NextOfKin nextOfKin = new NextOfKin(nokInput.orElse(""));
+        NextOfKin nextOfKin = ParserUtil.parseNextOfKin(nokInput.orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         ensureNurseDoesNotHaveMedicalHistory(appointment, argMultimap, PREFIX_MEDICAL_HISTORY);

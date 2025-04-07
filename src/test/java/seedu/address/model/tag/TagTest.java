@@ -54,5 +54,4 @@ public class TagTest {
         // different types -> returns false
         assertFalse(tag1.equals(tag2));
     }
-
 }

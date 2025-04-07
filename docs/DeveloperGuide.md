@@ -2,7 +2,7 @@
 layout: page
 title: Developer Guide
 ---
-# MediBook Developer's Guide
+## MediBook Developer's Guide
 
 ## Table of Contents
 
@@ -458,7 +458,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type, next-of-kin))
+* **Patient Contact**: Refers to the information stored about a patient in the system (e.g: Name, Phone number, Email, Address, Appointment, Blood Type, next-of-kin)
 * **Appointment**: The role of the person
 * **Manager**: Manages the nurses
 * **Nurse**: Tends to the patients
@@ -483,13 +483,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediBook.jar` command to run the application.
 
 1. Saving window preferences
 
    1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
+   1. Re-launch the app by going into the terminal, `cd` into the folder you put the jar file in, and use the `java -jar MediBook.jar`.<br>
        Expected: The most recent window size and location is retained.
 
 1. Shutdown
@@ -519,11 +519,11 @@ testers are expected to do more *exploratory* testing.
 1. Adding a person using only compulsory fields
    1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
     Expected: Creates a new patient contact with the minimum fields included.
-1. Adding a duplicate person 
+1. Adding a duplicate person
    1. Prerequisites: A person by the name of John Sim has been created either through the previous test case or by manual testing.
    1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
    Expected: No person is created. Error message shows "This person already exists in the address book"
-1. Other incorrect commands to try: 
+1. Other incorrect commands to try:
    1. Invalid names: names containing non-alphabetical symbols
    1. Invalid number: Less than 3 digits or non integer inputs
    1. Invalid Date of Birth: Non integer and non slash inputs, incorrect date format (DD/MM/YYYY)
@@ -571,7 +571,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `find hn`<br>
       Expected: Displays contacts whose names contain `hn` in any part of their name. E.g. `John` will be displayed.
    2. Test case: `find hn ce`<br>
-      Expected: Displays contacts whose name contain `hn` or `ce` in any part of their name. E.g. `John` and Alice will be displayed. 
+      Expected: Displays contacts whose name contain `hn` or `ce` in any part of their name. E.g. `John` and Alice will be displayed.
 1. Finding nurse(s) assigned to a patient
    1. Prerequisites: List persons using any `list` command. Multiple persons in the list. At least 1 patient has a nurse assigned to them.
    1. Test case: `find nurse of patient 2`<br>
@@ -650,10 +650,13 @@ testers are expected to do more *exploratory* testing.
 ## **Appendix: Planned Enhancements**
 
 These are some features / improvements our team has planned to implement in the future due to lack of time.
-1. Assigning severity to patients
-2. Adjusting the severity of patients
-3. Allow sorting of the list to more filters e.g. Severity or age
-4. Allow reminders for checkups or missing assigned nurse
-5. Support for Dark mode
-6. Ability to adjust working hours for scheduling checkups or disable the working hours feature completely.
-7. Allow checkups & date of birth to be created on leap days like 29 of february.
+1. first
+1. 2
+1. 3
+1. 4
+1. 5
+1. 6
+1. 7
+1. 8
+1. 9
+1. 10
