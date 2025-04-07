@@ -39,8 +39,8 @@ title: Developer Guide
    * [Schedule Checkups](#schedule-checkups)
    * [View nurses / patients](#viewing-nurses--patients)
    * [Saving Data](#saving-data)
-1. [Appendix: Effort](#appendix-effort)
 1. [Appendix: Planned Enhancements](#appendix-planned-enhancements)
+1. [Appendix: Effort](#appendix-effort)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -645,8 +645,6 @@ testers are expected to do more *exploratory* testing.
    1. Simulate a corrupted file by editing the saved .json file such that is is no longer in json format. This should result in a empty screen upon start up.
    1. Delete the file and restart the app to recover and start with a small list of sample contacts.
 
-## **Appendix: Effort**
-
 ## **Appendix: Planned Enhancements**
 
 These are some features / improvements our team has planned to implement in the future due to lack of time.
@@ -660,3 +658,36 @@ These are some features / improvements our team has planned to implement in the 
 1. 8
 1. 9
 1. 10
+
+## **Appendix: Effort**
+
+### Difficulty Level
+Our project was highly complex as it expanded on the AddressBook 3 (AB3) baseline . We had to manage multiple new entity types such as patients, nurses, appointments, checkups and medical history compared to AB3 which only manages 1 person entity. Our project required careful coordination and encapsulation of all related data attributes.
+
+### Challenges Faced
+1. Multi-entity Integration
+   * We introduced distinct roles like patient and nurse via an appointment field and had to integrate these new fields into the system. E.g. adjusting both add and edit functions to allow the changes to these fields.
+   * We then had to design features specific to these such as nurse assignment and checkup scheduling.
+1. Checkup Scheduling
+   * Implementing checkup scheduling requires the introduction of a Checkup entity and validations like conflicting checkups.
+1. Optional and Validated Fields
+   * We added some optional fields like NextOfKin, which necessitated custom validation logic while ensuring the rest of the systems remained robust.
+1. Command Complexity
+   * We had to design new commands like assign and schedule, as well as enhance the current exiting commands in AB3 (add, edit, list, etc.). These had to handle entity-specific behavior such as enforcing rules and validations.
+
+### Effort Required
+Our project required effort in these 4 main aspects:
+1. Design and Refactoring
+   * Significant refactoring was done to support distinct entity behavior while keeping the core model extensible.
+
+1. Command System
+   * Multiple new commands and parser classes were developed to enable features like nurse-patient assignment and checkup scheduling.
+
+1. Validation and Edge Cases 
+   * Custom checks were built into the logic and parser layers to prevent invalid operations (e.g., assigning a non-nurse or scheduling duplicate checkups).
+
+1. Testing and Debugging
+   * Each new command and behavior introduced unique test cases. We implemented extensive unit and integration tests to ensure system reliability.
+
+### Achievements
+Despite the complexity and effort required, our final project offers a user-friendly and extensible system. Our main achievements in this project were: implementing scheduling of medical checkups with conflict management implemented, list command with important filters such as checkup existence, allowing more optional fields like next of kin and email to provide more flexibility to the user, and last but not least adjusting requirements of duplicate persons to better match real world situations.
