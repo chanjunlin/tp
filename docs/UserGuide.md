@@ -50,12 +50,12 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 ## Installation Guide
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   * Steps to check your current Java version, click [here]().
+   * Steps to check your current Java version, click [here](#faq).
    * Steps to install Java in your computer, click [here](https://se-education.org/guides/tutorials/javaInstallation.html).
    * **For Mac users:** Ensure you have the precise Java version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 > 🧠 **Why do I have to install Java?**
-> - Java is a versatile programming language that lets apps run on any device with a Java Virtual Machine (JVM). Once installed, you can run any Java app, including MediBook. You can find out more about Java [here]().
+> - Java is a versatile programming language that lets apps run on any device with a Java Virtual Machine (JVM). Once installed, you can run any Java app, including MediBook. You can find out more about Java [here](https://dev.java/learn/getting-started/).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
    - [What is a JAR file?](https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jarGuide.html)
@@ -497,6 +497,9 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
+**Q**: How do I check my current Java version?<br>
+**A**: Open a command terminal and type `java --version`. If you see a version number, Java is installed.
+If not, you need to install Java.
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
