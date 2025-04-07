@@ -483,7 +483,6 @@ Exits the program.
 Format: `exit`
 
 [🔙 Back to Features](#features)
-<div style="page-break-after: always;"></div>
 
 ## Saving the data
 
