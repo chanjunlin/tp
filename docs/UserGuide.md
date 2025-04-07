@@ -211,6 +211,7 @@ Examples:
 * `add n/Betsy Crowe dob/01/01/2001 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/No Family mh/Insane, but not dangerous b/B+ ap/Patient`
 
 [🔙 Back to Features](#features)
+[📋 View Person Attributes](#51-overview-of-person-attributes)
 
 ### Listing persons: `list`
 
@@ -259,6 +260,7 @@ Examples:
 * `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index.
 
 [🔙 Back to Features](#features)
+[📋 View Person Attributes](#51-overview-of-person-attributes)
 
 ### Locating persons: `find`
 
