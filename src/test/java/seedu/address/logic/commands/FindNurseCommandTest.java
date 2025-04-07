@@ -73,7 +73,7 @@ public class FindNurseCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> {
             command.execute(model);
         });
-        String msg =  String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 7);
+        String msg = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 7);
 
         assertEquals(msg, exception.getMessage());
     }

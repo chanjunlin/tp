@@ -130,7 +130,7 @@ public class EditCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
-        String msg =  String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 7);
+        String msg = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 7);
         assertCommandFailure(editCommand, model, msg);
     }
 
@@ -147,7 +147,7 @@ public class EditCommandTest {
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
                 new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
-        String msg =  String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 1);
+        String msg = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 1);
 
         assertCommandFailure(editCommand, model, msg);
     }

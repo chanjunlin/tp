@@ -36,7 +36,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
     * [Exiting the program](#exiting-the-program--exit)
     * [Assigning a nurse to a patient](#assign-a-nurse-to-a-patient--assign)
     * [Delete nurse assignment from patient](#delete-nurse-assignment-from-a-patient--assign-delete)
-    * [Schedule checkups](#schedule-checkup--schedule-add-for-patient--schedule-delete-for-patient)
+    * [Schedule checkups](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient)
     * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
@@ -123,7 +123,7 @@ This section provides an overview of all the attributes a person in MediBook can
 | **Attribute**     | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                               | **Example**                              |
 |------------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
 | Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive               | E.g., `Joh'n-S/O-Doe`                    |
-| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                   | E.g., `11/11/2003`                       |
+| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`<br/>- DOB should not be set in the future (from current date)                                                                                                                                                                                     | E.g., `11/11/2003`                       |
 | Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                        | E.g., `1234 567 890`                     |
 | Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                              | E.g., `10 NUS Road, #03-21`              |
 | Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                           | E.g., `A+`, `AB-`, etc.                  |
@@ -132,7 +132,7 @@ This section provides an overview of all the attributes a person in MediBook can
 | Next of Kin      | `nok/`     | ❌ Optional    | - `Name Phone`<br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed | E.g., `Jane 91234567` |
 | Tags             | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed                                                                                                      | E.g., `2 Smart`       |
 | Medical History  | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed          | E.g., `(Very, sick): - urgent/needy12`   |
-| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command                                                                                                                                                                 | Not included in `add` command            |
+| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command <br/>- Each checkup is fixed 30 minutes <br/>- Checkups cannot be scheduled in the past.                                                                                                                                                                  | Not included in `add` command            |
 
 > **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
 > ✅ Correct: `e/john@example.com`
@@ -168,18 +168,18 @@ This section provides an overview of all the attributes a person in MediBook can
 
 Quick Navigation:
 [Viewing Help](#viewing-help--help) •
-[Adding a person](#adding-a-person--add) •
-[Listing all persons](#listing-persons--list) •
-[Editing a person](#editing-a-person--edit) •
-[Locating by name](#locating-persons-by-name--find) •
-[Finding patients](#finding-patient--find-patient-of-nurse-) •
-[Finding nurse](#finding-nurse--find-nurse-of-patient) •
+[Adding a person](#adding-a-person-add) •
+[Listing all persons](#listing-persons-list) •
+[Editing a person](#editing-a-person-edit) •
+[Locating by name](#locating-persons-find) •
+[Finding patients](#finding-patient-find-patient-of-nurse-) •
+[Finding nurse](#finding-nurse-find-nurse-of-patient) •
 [Deleting](#deleting-a-person--delete) •
 [Clearing all entries](#clearing-all-entries--clear) •
 [Exiting program](#exiting-the-program--exit) •
 [Assigning nurse](#assign-a-nurse-to-a-patient--assign) •
 [Delete nurse assignment](#delete-nurse-assignment-from-a-patient--assign-delete) •
-[Schedule checkups](#schedule-checkup--schedule-add-for-patient--schedule-delete-for-patient) •
+[Schedule checkups](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient) •
 [Viewing person](#viewing-a-nurse-or-patient--view) •
 [Saving data](#saving-the-data) •
 [Editing data file](#editing-the-data-file) •
@@ -312,7 +312,6 @@ Finds patients assigned under a specified nurse.
 * `find patient of nurse 1` returns e.g: Patient(s) assigned to nurse ALEX YEOH: ROY BALAKRISHNAN.
 * `find patient of nurse 3` returns e.g: No patient assigned to the nurse at index 3. 
 
-![result for 'find patient of nurse 1'](images/FindPatientOfNurse.png)
 ![result for 'find patient of nurse 3'](images/FindNoPatient.png)
 
 [🔙 Back to Features](#features)
@@ -339,7 +338,6 @@ Finds nurse(s) assigned to a specified patient.
 * `find nurse of patient 7` returns e.g: No nurse assigned to the patient at index 7.
 
 ![result for 'find nurse of patient 6'](images/FindNurseOfPatient.png)
-![result for 'find nurse of patient 7'](images/FindNoNurse.png)
 
 [🔙 Back to Features](#features)
 
@@ -416,8 +414,11 @@ Schedules or deletes checkup sessions for patients.
 
 #### Examples
 
-*   `schedule add for patient 1 12/12/2025 1200`: Schedules a checkup for the patient at index 1 on December 12, 2025, at 12:00 PM.
-*   `schedule delete for patient 1 12/12/2025 1200`: Deletes a checkup for the patient at index 1 on December 12, 2025, at 12:00 PM.
+*   `schedule add for patient 6 11/04/2025 1400`: Schedules a checkup for the patient at index 6 on April 11, 2025, at 14:00 PM. 
+*   `schedule delete for patient 6 11/04/2025 1400`: Deletes a checkup for the patient at index 6 on April 11, 2025, at 14:00 PM.
+
+![result for 'schedule add for patient 6 11/04/2025 1400'](images/ScheduleCheckupForPatient.png)
+
 
 [🔙 Back to Features](#features)
 

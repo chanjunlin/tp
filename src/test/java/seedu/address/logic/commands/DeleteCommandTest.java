@@ -75,7 +75,7 @@ public class DeleteCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
-        String msg =  String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 1);
+        String msg = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 1);
         assertCommandFailure(deleteCommand, model, msg);
     }
 
