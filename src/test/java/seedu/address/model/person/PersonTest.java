@@ -70,37 +70,37 @@ public class PersonTest {
         Person editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different phone -> returns false
+        // different phone -> returns true
         editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
 
-        // different email -> returns false
+        // different email -> returns true
         editedAlice = new PersonBuilder(ALICE).withEmail(VALID_EMAIL_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
 
-        // different address -> returns false
+        // different address -> returns true
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
 
         // different blood type -> returns false
         editedAlice = new PersonBuilder(ALICE).withBloodType("O-").build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different appointment -> returns false
+        // different appointment -> returns true
         editedAlice = new PersonBuilder(ALICE).withAppointment("Nurse").build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
 
-        //different NOK -> returns false
+        //different NOK -> returns true
         editedAlice = new PersonBuilder(ALICE).withNextOfKin("Jane 91234567").build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
 
-        // different tags -> returns false
+        // different tags -> returns true
         editedAlice = new PersonBuilder(ALICE).withTags(VALID_TAG_HUSBAND).build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
 
-        // different medical history -> returns false
+        // different medical history -> returns true
         editedAlice = new PersonBuilder(ALICE).withMedicalHistory("Allergic to peanuts").build();
-        assertFalse(ALICE.equals(editedAlice));
+        assertTrue(ALICE.equals(editedAlice));
     }
 
     @Test

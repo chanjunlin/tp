@@ -71,22 +71,26 @@ public class DateOfBirthTest {
 
     @Test
     public void toString_returnFutureDateError() {
-        DateOfBirth dob = new DateOfBirth("31/12/2025");
-        assertEquals(FUTURE_DOB, dob.toString());
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, ()
+                -> new DateOfBirth("31/12/2025"));
+        assertEquals(FUTURE_DOB, exception.getMessage());
     }
 
     @Test
-    public void equals() {
+    public void testEquals() {
         DateOfBirth dob = new DateOfBirth("01/01/2001");
 
-        assertTrue(dob.equals(new DateOfBirth("01/01/2001")));
+        assertTrue(dob.equals(new DateOfBirth("01/01/2001"))); // Same date
+        assertTrue(dob.equals(dob)); // Same object
+        assertFalse(dob.equals(null)); // Null object
+        assertFalse(dob.equals(5.0f)); // Different type
+        assertFalse(dob.equals(new DateOfBirth("01/01/2002"))); // Different date
+    }
 
-        assertTrue(dob.equals(dob));
+    @Test
+    public void testIsNotFutureDate() {
+        assertTrue(DateOfBirth.isNotFutureDate("01/01/2001"));
 
-        assertFalse(dob.equals(null));
-
-        assertFalse(dob.equals(5.0f));
-
-        assertFalse(dob.equals(new DateOfBirth("01/01/2002")));
+        assertFalse(DateOfBirth.isNotFutureDate("31/12/2025")); // Future date
     }
 }

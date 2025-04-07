@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.commands.FindNurseCommand.MESSAGE_INVALID_PATIENT;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_CLASH;
 import static seedu.address.logic.commands.ScheduleCommand.MESSAGE_CHECKUP_CREATED;
@@ -21,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -183,7 +183,9 @@ public class ScheduleCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> {
             invalidIndexCommand.execute(model);
         });
-        assertEquals(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+        String msg = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 7);
+
+        assertEquals(msg,
                 exception.getMessage());
     }
 }

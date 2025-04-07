@@ -53,6 +53,8 @@ public class ViewCommandTest {
         ViewCommand viewCommand = new ViewCommand(INDEX_FIRST_PERSON);
 
         CommandException exception = assertThrows(CommandException.class, () -> viewCommand.execute(model));
-        assertEquals(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, exception.getMessage());
+        String msg = String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 0);
+
+        assertEquals(msg, exception.getMessage());
     }
 }
