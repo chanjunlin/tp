@@ -673,7 +673,7 @@ Our project was highly complex as it expanded on the AddressBook 3 (AB3) baselin
 1. Optional and Validated Fields
    * We added some optional fields like NextOfKin, which necessitated custom validation logic while ensuring the rest of the systems remained robust.
 1. Command Complexity
-   * We had to design new commands like assign and schedule, as well as enhance the current exiting commands in AB3 (add, edit, list, etc.). These had to handle entity-specific behavior such as enforcing rules and validations.
+   * We had to design new commands like assign and schedule, as well as enhance the current existing commands in AB3 (add, edit, list, etc.). These had to handle entity-specific behavior such as enforcing rules and validations.
 
 ### Effort Required
 Our project required effort in these 4 main aspects:
