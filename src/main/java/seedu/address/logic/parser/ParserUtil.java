@@ -182,7 +182,10 @@ public class ParserUtil {
      */
     public static NextOfKin parseNextOfKin(String nok) throws ParseException {
         requireNonNull(nok);
-        if (!NextOfKin.isValidNextOfKin(nok)) {
+        String trimmedNok = nok.trim();
+        if (trimmedNok.isEmpty() || trimmedNok.equals("nil")) {
+            return new NextOfKin("");
+        } else if (!NextOfKin.isValidNextOfKin(nok)) {
             throw new ParseException(NextOfKin.MESSAGE_CONSTRAINTS);
         }
         return new NextOfKin(nok);
