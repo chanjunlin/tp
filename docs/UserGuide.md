@@ -277,6 +277,8 @@ Edits an existing person's information in MediBook.
 
 > ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
 
+![result for 'edit 1 p/8549 9584 b/O+'](images/EditPerson.png)
+
 [🔙 Back to Features](#features)
 [📋 View Person Attributes](#overview-of-person-attributes)
 
