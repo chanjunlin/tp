@@ -36,7 +36,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
     * [Exiting the program](#exiting-the-program--exit)
     * [Assigning a nurse to a patient](#assign-a-nurse-to-a-patient--assign)
     * [Delete nurse assignment from patient](#delete-nurse-assignment-from-a-patient--assign-delete)
-    * [Schedule checkups](#schedule-checkup--schedule-add-for-patient--schedule-delete-for-patient)
+    * [Schedule checkups](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient)
     * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
@@ -168,18 +168,18 @@ This section provides an overview of all the attributes a person in MediBook can
 
 Quick Navigation:
 [Viewing Help](#viewing-help--help) •
-[Adding a person](#adding-a-person--add) •
-[Listing all persons](#listing-persons--list) •
-[Editing a person](#editing-a-person--edit) •
-[Locating by name](#locating-persons-by-name--find) •
-[Finding patients](#finding-patient--find-patient-of-nurse-) •
-[Finding nurse](#finding-nurse--find-nurse-of-patient) •
+[Adding a person](#adding-a-person-add) •
+[Listing all persons](#listing-persons-list) •
+[Editing a person](#editing-a-person-edit) •
+[Locating by name](#locating-persons-find) •
+[Finding patients](#finding-patient-find-patient-of-nurse-) •
+[Finding nurse](#finding-nurse-find-nurse-of-patient) •
 [Deleting](#deleting-a-person--delete) •
 [Clearing all entries](#clearing-all-entries--clear) •
 [Exiting program](#exiting-the-program--exit) •
 [Assigning nurse](#assign-a-nurse-to-a-patient--assign) •
 [Delete nurse assignment](#delete-nurse-assignment-from-a-patient--assign-delete) •
-[Schedule checkups](#schedule-checkup--schedule-add-for-patient--schedule-delete-for-patient) •
+[Schedule checkups](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient) •
 [Viewing person](#viewing-a-nurse-or-patient--view) •
 [Saving data](#saving-the-data) •
 [Editing data file](#editing-the-data-file) •
@@ -409,8 +409,11 @@ Schedules or deletes checkup sessions for patients.
 
 #### Examples
 
-*   `schedule add for patient 1 12/12/2025 1200`: Schedules a checkup for the patient at index 1 on December 12, 2025, at 12:00 PM.
-*   `schedule delete for patient 1 12/12/2025 1200`: Deletes a checkup for the patient at index 1 on December 12, 2025, at 12:00 PM.
+*   `schedule add for patient 6 11/04/2025 1400`: Schedules a checkup for the patient at index 6 on April 11, 2025, at 14:00 PM. 
+*   `schedule delete for patient 6 11/04/2025 1400`: Deletes a checkup for the patient at index 6 on April 11, 2025, at 14:00 PM.
+
+![result for 'schedule add for patient 6 11/04/2025 1400'](images/ScheduleCheckupForPatient.png)
+
 
 [🔙 Back to Features](#features)
 
