@@ -61,9 +61,9 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
    - [What is a JAR file?](https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jarGuide.html)
 
 3. Copy the file to an empty folder you want to use as the _home folder_ for MediBook.
-   - MediBook will create a data folder in this _home folder_ to store your [data files](#faq).
+   - MediBook will create a data folder in this _home folder_ to store your [data files](#saving-the-data).
 
-4. Open a [command terminal](), run the following commands:<br>
+4. Open a [command terminal](#faq), run the following commands:<br>
    ```
    cd home_folder
    java -jar MediBook.jar
@@ -339,38 +339,6 @@ Finds nurse(s) assigned to a specified patient.
 
 [🔙 Back to Features](#features)
 
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
-[🔙 Back to Features](#features)
-
-### Clearing all entries : `clear`
-
-Clears all entries from the address book.
-
-Format: `clear`
-
-[🔙 Back to Features](#features)
-
-### Exiting the program : `exit`
-
-Exits the program.
-
-Format: `exit`
-
-[🔙 Back to Features](#features)
-
 ### Assign a nurse to a patient : `assign`
 
 Assigns a specified nurse to a specified patient.
@@ -459,13 +427,45 @@ Format: `view INDEX`
 
 [🔙 Back to Features](#features)
 
-### Saving the data
+### Deleting a person : `delete`
+
+Deletes the specified person from the address book.
+
+Format: `delete INDEX`
+
+* Deletes the person at the specified `INDEX`.
+* The index refers to the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+
+Examples:
+* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+[🔙 Back to Features](#features)
+
+### Clearing all entries : `clear`
+
+Clears all entries from the address book.
+
+Format: `clear`
+
+[🔙 Back to Features](#features)
+
+### Exiting the program : `exit`
+
+Exits the program.
+
+Format: `exit`
+
+[🔙 Back to Features](#features)
+
+## Saving the data
 
 MediBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 [🔙 Back to Features](#features)
 
-### Editing the data file
+## Editing the data file
 
 MediBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 

@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -79,8 +80,9 @@ public class FindPatientCommandTest {
         CommandException exception = assertThrows(CommandException.class, () -> {
             command.execute(model);
         });
+        String msg =  String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, 7);
 
-        assertEquals("The person index provided is invalid", exception.getMessage());
+        assertEquals(msg, exception.getMessage());
     }
 
     @Test
