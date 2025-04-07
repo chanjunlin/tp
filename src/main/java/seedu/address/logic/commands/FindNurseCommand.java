@@ -23,7 +23,7 @@ public class FindNurseCommand extends FindCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all patients assigned to the nurse at "
             + "the specified index and displays them as a list with index numbers.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Example: " + COMMAND_WORD + " 1 ";
 
     public static final String MESSAGE_INVALID_PATIENT = "The person at index %d is not a patient.";
     public static final String MESSAGE_NO_NURSE_ASSIGNED = "No nurse assigned to the patient at index %d.";
