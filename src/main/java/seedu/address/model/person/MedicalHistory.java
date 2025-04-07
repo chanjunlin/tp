@@ -9,7 +9,7 @@ public class MedicalHistory {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Medical history should only contain alphanumeric characters and spaces, and it should not be blank\n"
-            + "It may contain commas, hyphens, dash, rounded brackets, colon and spaces.";
+            + "It may also contain commas, hyphens, slash, rounded brackets and colon.";
     public static final String VALIDATION_REGEX = "^[a-zA-Z0-9, /():-]+$";
 
     public final String medicalHistory;
