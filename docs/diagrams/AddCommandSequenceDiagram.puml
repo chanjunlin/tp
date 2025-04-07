@@ -46,7 +46,7 @@ LogicManager -> AddCommand : execute(m)
 activate AddCommand
 alt model.hasPerson(toAdd) == true
     AddCommand -> AddCommand : throw CommandException
-else
+else else
     AddCommand -> Model : addPerson(toAdd)
     activate Model
     Model --> AddCommand
