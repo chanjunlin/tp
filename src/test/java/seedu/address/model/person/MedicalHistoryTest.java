@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
@@ -22,11 +23,6 @@ public class MedicalHistoryTest {
 
     @Test
     public void isValidMedicalHistory() {
-        MedicalHistory mh = new MedicalHistory("Diabetes");
-        assertEquals("Diabetes", mh.medicalHistory);
-        MedicalHistory mh2 = new MedicalHistory("Hypertension");
-        assertEquals("Hypertension", mh2.medicalHistory);
-
         assertTrue(MedicalHistory.isValidMedicalHistory("Diabetes"));
 
         // null medical history.
@@ -37,7 +33,7 @@ public class MedicalHistoryTest {
         assertFalse(MedicalHistory.isValidMedicalHistory(" "));
 
         // Invalid medical history (i.e. illegal character).
-        assertFalse(MedicalHistory.isValidMedicalHistory("Diabetes!"));
+        assertFalse(MedicalHistory.isValidMedicalHistory("Diabetes@@!"));
     }
 
     @Test
@@ -46,16 +42,26 @@ public class MedicalHistoryTest {
         MedicalHistory mh2 = new MedicalHistory("Hypertension");
 
         assertEquals(new MedicalHistory("Diabetes"), mh1);
-        assertEquals(mh1.hashCode(), new MedicalHistory("Diabetes").hashCode());
-        assertEquals(mh1.hashCode(), mh1.hashCode());
         assertEquals(mh1.toString(), new MedicalHistory("Diabetes").toString());
         assertEquals("[Diabetes]", mh1.toString());
         assertEquals(mh1, mh1);
 
         assertFalse(mh1.equals(null));
         assertFalse(mh1.equals(5));
+        assertFalse(mh2.equals("Fever"));
         assertFalse(mh1.equals(mh2));
         assertFalse(mh1.equals(new MedicalHistory("Diabetes ")));
         assertFalse(mh1.equals(new MedicalHistory(" Diabetes")));
+    }
+
+    @Test
+    public void hashCodeTest() {
+        MedicalHistory mh1 = new MedicalHistory("Diabetes");
+        MedicalHistory mh2 = new MedicalHistory("Hypertension");
+
+        assertEquals(mh1.hashCode(), new MedicalHistory("Diabetes").hashCode());
+        assertEquals(mh1.hashCode(), mh1.hashCode());
+
+        assertNotEquals(mh1.hashCode(), mh2.hashCode());
     }
 }
