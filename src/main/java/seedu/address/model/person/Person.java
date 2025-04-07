@@ -160,9 +160,17 @@ public class Person {
         }
 
         return otherPerson != null
-                && otherPerson.getName().equals(getName()) && otherPerson.getDateOfBirth().equals(getDateOfBirth())
-                && (otherPerson.getPhone().equals(getPhone()) || otherPerson.getEmail().equals(getEmail())
-                || otherPerson.getAddress().equals(getAddress()));
+                && name.equals(otherPerson.name)
+                && dob.equals(otherPerson.dob)
+                && phone.equals(otherPerson.phone)
+                && email.equals(otherPerson.email)
+                && address.equals(otherPerson.address)
+                && bloodType.equals(otherPerson.bloodType)
+                && appointment.equals(otherPerson.appointment)
+                && nextOfKin.equals(otherPerson.nextOfKin)
+                && tags.equals(otherPerson.tags)
+                && medicalHistory.equals(otherPerson.medicalHistory)
+                && checkups.equals(otherPerson.checkups);
     }
 
     /**
@@ -203,15 +211,11 @@ public class Person {
 
         Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
-                && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email)
-                && address.equals(otherPerson.address)
+                && dob.equals(otherPerson.dob)
                 && bloodType.equals(otherPerson.bloodType)
-                && appointment.equals(otherPerson.appointment)
-                && nextOfKin.equals(otherPerson.nextOfKin)
-                && tags.equals(otherPerson.tags)
-                && medicalHistory.equals(otherPerson.medicalHistory)
-                && checkups.equals(otherPerson.checkups);
+                && (address.equals(otherPerson.address)
+                || phone.equals(otherPerson.phone)
+                || email.equals(otherPerson.email));
     }
 
     @Override

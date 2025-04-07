@@ -87,7 +87,8 @@ public class FindPatientCommand extends FindCommand {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (nurseIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+                    lastShownList.size()));
         }
 
         Person nurse = lastShownList.get(nurseIndex.getZeroBased());

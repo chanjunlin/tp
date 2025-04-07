@@ -116,19 +116,20 @@ public class EditCommand extends Command {
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX,
+                    lastShownList.size()));
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+        System.out.println("index = " + index.toString());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         ensureOnlyPatientCanHaveMedicalHistory(editedPerson);
 
         boolean isAppointmentBeingEdited = editPersonDescriptor.getAppointment().isPresent();
         boolean isNameBeingEdited = editPersonDescriptor.getName().isPresent();
-        boolean isRenamingToExistingPerson = !personToEdit.isSamePerson(editedPerson)
-                && model.hasPerson(editedPerson);
-
+        boolean isRenamingToExistingPerson = personToEdit.equals(editedPerson) && model.hasPerson(editedPerson);
+        boolean isExactlySamePerson = personToEdit.isSamePerson(editedPerson);
         if (isAppointmentBeingEdited) {
             ensurePatientHasNoAssignedNurse(personToEdit, model);
             ensureNurseHasNoPatient(personToEdit, editedPerson, model);
@@ -139,7 +140,11 @@ public class EditCommand extends Command {
         }
 
         if (isRenamingToExistingPerson) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException("Person might be in MediBook!");
+        }
+
+        if (isExactlySamePerson) {
+            throw new CommandException("DUPE!");
         }
 
         model.setPerson(personToEdit, editedPerson);
