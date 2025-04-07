@@ -211,6 +211,7 @@ Examples:
 * `add n/Betsy Crowe dob/01/01/2001 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/No Family mh/Insane, but not dangerous b/B+ ap/Patient`
 
 [🔙 Back to Features](#features)
+[📋 View Person Attributes](#51-overview-of-person-attributes)
 
 ### Listing persons: `list`
 
@@ -259,6 +260,7 @@ Examples:
 * `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index.
 
 [🔙 Back to Features](#features)
+[📋 View Person Attributes](#51-overview-of-person-attributes)
 
 ### Locating persons: `find`
 
@@ -347,10 +349,13 @@ Format: `assign PATIENT_INDEX NURSE_INDEX`
 
 * Assigns the nurse at `NURSE_INDEX` to the patient at `PATIENT_INDEX`.
 * `NURSE_INDEX` and `PATIENT_INDEX` both refer to the index number shown in the displayed person list.
+* At most 2 nurses can be assigned to one patient.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `assign 2 1` assigns the nurse at index 1 to the patient at index 2.
+* `assign 6 4` assigns the nurse at index 4 to the patient at index 6.
+
+![result for 'assign 6 4'](images/AssignScreenshot.png)
 
 [🔙 Back to Features](#features)
 
