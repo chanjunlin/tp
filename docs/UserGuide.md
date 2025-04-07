@@ -4,6 +4,7 @@ title: User Guide
 ---
 
 ## About Medibook
+
 MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI)**, while still offering the benefits of a Graphical User Interface (GUI).
 
 Designed for speed and efficiency, **MediBook** empowers private nurse centres to:
@@ -14,11 +15,13 @@ Designed for speed and efficiency, **MediBook** empowers private nurse centres t
 All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick [Installation Guide](#installation-guide) and exploring the [Features](#features) of the app below!
 
 ## Using this User Guide
+
 This user guide is designed to help you get started with **MediBook**, and to provide a simple and concise reference if you need any help while using the app. You may click on the words in blue to jump directly to the relevant section of the user guide.
 
 To get an overview of the guide, you can refer to the [Table of contents](#table-of-contents) below.
 
 ## Table of Contents
+
 1. [About Medibook](#about-medibook)
 2. [Using this User Guide](#using-this-user-guide)
 3. [Table of Contents](#table-of-contents)
@@ -541,6 +544,7 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
+
 **Q**: How do I check my current Java version?<br>
 **A**: Open a command terminal and type `java --version`. If you see a version number, Java is installed.
 If not, you need to install Java.
@@ -563,33 +567,36 @@ If not, you need to install Java.
 
 ## Command summary
 
-| **Action**                                                                                            | **Format, Examples**                                                                                                                                                                                                                                                      |
-|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [**Add**](#adding-a-person-add)                                                                       | `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOODT_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse` |
-| [**Clear**](#clearing-all-entries--clear)                                                             | `clear`                                                                                                                                                                                                                                                                   |
-| [**Delete**](#deleting-a-person--delete)                                                              | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                       |
-| [**Edit**](#editing-a-person-edit)                                                                    | `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`                                                       |
-| [**Find**](#locating-persons-find)                                                                                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake` |
-| [**Find Patient**](#finding-patient-find-patient-of-nurse-)                                           | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1`                                                                                                                                                                                                         |
-| [**Find Nurse**](#finding-nurse-find-nurse-of-patient)                                                | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2`                                                                                                                                                                                                         |
-| [**List**](#listing-persons-list)                                                                     | `list` `list nurse` `list patient` `list checkup`                                                                                                                                                                                                                         |
-| [**Help**](#viewing-help--help)                                                                       | `help`                                                                                                                                                                                                                                                                    |
-| [**Assign**](#assign-a-nurse-to-a-patient--assign)                                                    | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`                                                                                                                                                                                                                 |
-| [**Assign Delete**](#delete-nurse-assignment-from-a-patient--assign-delete)                           | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2`                                                                                                                                                                                             |
-| [**Schedule**](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient) | `schedule add for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100`                                              |
-| [**View**](#viewing-a-nurse-or-patient--view)                                                         | `view INDEX`<br> e.g., `view 2`                                                                                                                                                                                                                                           |
+| **Action**                                                                               | **Format, Examples**                                                                                                                                                                                                                                                                                                                                                                          |
+|------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Add**](#adding-a-person-add)                                                          | `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOOD_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse`                                                                                                                    |
+| [**Clear**](#clearing-all-entries--clear)                                                | `clear`                                                                                                                                                                                                                                                                                                                                                                                       |
+| [**Delete**](#deleting-a-person--delete)                                                 | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                                                                                                                                           |
+| [**Edit**](#editing-a-person-edit)                                                       |`edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​` <br/> e.g., `edit 2 n/James Lee e/jameslee@example.com` |
+| [**Find**](#locating-persons-find)                                                       | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`                                                                                                                                                                                                                                                                                                                                    |
+| [**Find Patient**](#finding-patient-find-patient-of-nurse-)                              | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1`                                                                                                                                                                                                                                                                                                                             |
+| [**Find Nurse**](#finding-nurse-find-nurse-of-patient)                                   | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2`                                                                                                                                                                                                                                                                                                                             |
+| [**List**](#listing-persons-list)                                                        | `list` `list nurse` `list patient` `list checkup`                                                                                                                                                                                                                                                                                                                                             |
+| [**Help**](#viewing-help--help)                                                          | `help`                                                                                                                                                                                                                                                                                                                                                                                        |
+| [**Assign**](#assign-a-nurse-to-a-patient--assign)                                       | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`                                                                                                                                                                                                                                                                                                                                     |
+| [**Assign Delete**](#delete-nurse-assignment-from-a-patient--assign-delete)              | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2`                                                                                                                                                                                                                                                                                                                 |
+| [**Schedule**](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient) | `schedule add for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100`                                                                                                                                                                  |
+| [**View**](#viewing-a-nurse-or-patient--view)                                            | `view INDEX`<br> e.g., `view 2`                                                                                                                                                                                                                                                                                                                                                               |
 
 [🔝 Back to Table of Contents](#table-of-contents)
 
 ## Duplicate Policy
-MediBook allows all persons to have identical attributes through `edit` and `add` commands. User will be warned if it results in having two person sharing any of these attributes: `Name`, `Date of Birth` and `Phone Number`.
+
+MediBook allows all persons to have nearly identical attributes using the `edit` and `add` commands. However, a warning message will be shown, if it results in having two person sharing all of these attributes: `Name`, `Date of Birth` and `Phone Number`.
 
 Example:
-> 
+- Using `edit` command to change the `Name` of a person to an existing `Name` while having the same `Date of Birth` and `Phone Number` will result in a warning message.
+- Using `add` command to add a person with the same `Name`, `Date of Birth` and `Phone Number` as an existing person will result in a warning message.
 
 [🔝 Back to Table of Contents](#table-of-contents)
 
 ## Colour Legend
+
 | Field               | Colour       |
 |---------------------|--------------|
 | Patient Appointment | Light Blue   |

@@ -158,10 +158,16 @@ public class Person {
         if (otherPerson == this) {
             return true;
         }
+        if (otherPerson == null) {
+            return false;
+        }
+
+        String otherPersonPhone = otherPerson.getPhone().toString().replaceAll(" ", "");
+        String thisPersonPhone = getPhone().toString().replaceAll(" ", "");
 
         return otherPerson != null
                 && otherPerson.getName().equals(getName())
-                && otherPerson.getPhone().equals(getPhone())
+                && otherPersonPhone.equals(thisPersonPhone)
                 && otherPerson.getDateOfBirth().equals(getDateOfBirth());
     }
 
