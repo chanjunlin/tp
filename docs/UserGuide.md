@@ -1,5 +1,6 @@
 ---
 layout: page
+title: User Guide
 ---
 
 # About Medibook
@@ -120,23 +121,26 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 This section provides an overview of all the attributes a person in MediBook can have, including whether they're required, what format they should follow, and any special notes.
 
-| **Attribute**     | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                               | **Example**                              |
-|------------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive               | E.g., `Joh'n-S/O-Doe`                    |
-| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`<br/>- DOB should not be set in the future (from current date)                                                                                                                                                                                     | E.g., `11/11/2003`                       |
-| Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                        | E.g., `1234 567 890`                     |
-| Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                              | E.g., `10 NUS Road, #03-21`              |
-| Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                           | E.g., `A+`, `AB-`, etc.                  |
-| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                        | E.g., `Nurse` or `Patient`               |
-| Email            | `e/`       | ❌ Optional         | Valid email format                                                                                                                                                                             | E.g., `john@example.com`                 |
-| Next of Kin      | `nok/`     | ❌ Optional    | - `Name Phone`<br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed | E.g., `Jane 91234567` |
-| Tags             | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed                                                                                                      | E.g., `2 Smart`       |
-| Medical History  | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed          | E.g., `(Very, sick): - urgent/needy12`   |
+| **Attribute** | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                                                                                                       | **Example**                              |
+|---------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| Name          | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive                                                                                       | E.g., `Joh'n-S/O-Doe`                    |
+| Date of Birth | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                                                                                           | E.g., `11/11/2003`                       |
+| Phone Number  | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                                                                                                | E.g., `1234 567 890`                     |
+| Address       | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                                                                                                      | E.g., `10 NUS Road, #03-21`              |
+| Blood Type    | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                                                                                                   | E.g., `A+`, `AB-`, etc.                  |
+| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                                                                                                | E.g., `Nurse` or `Patient`               |
+| Email         | `e/`       | ❌ Optional         | - `local-part@domain.com` <br/>- Local-part (min 2 characters) with special characters (plus, underscore, dot, hyphen) <br/>- Local-part must start with alphanumeric character <br/>- Domain (min 1 character) <br/>- `com` can be replaced with minimum 2 characters | E.g., `john@example.com`                 |
+| Next of Kin   | `nok/`     | ❌ Optional    | - `Name Phone` <br/>- A space is required between `Name` and `Phone` <br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed                  | E.g., `Jane 91234567` |
+| Tags          | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed <br/>- [Colour based](#Colour-Legend)                                                                                                                                        | E.g., `2 Smart`       |
+| Medical History | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed                                                                                  | E.g., `(Very, sick): - urgent/needy12`   |
 | Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command <br/>- Each checkup is fixed 30 minutes <br/>- Checkups cannot be scheduled in the past.                                                                                                                                                                  | Not included in `add` command            |
 
-> **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
+> ⚠️ **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
 > ✅ Correct: `e/john@example.com`
 > ❌ Incorrect: `[e/john@example.com]`
+
+> ⚠️ **Email Constraints:** The email format given [above](#overview-of-person-attributes) is a simplified version, for tidiness, you can find the 
+> full constraints, through a warning message, when you enter an invalid email in the app.
 
  [🔝 Navigate back to Table of Contents](#table-of-contents)
 
@@ -166,7 +170,7 @@ This section provides an overview of all the attributes a person in MediBook can
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-Quick Navigation:
+Quick Navigation: 
 [Viewing Help](#viewing-help--help) •
 [Adding a person](#adding-a-person-add) •
 [Listing all persons](#listing-persons-list) •
@@ -210,6 +214,10 @@ Examples:
 * `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse t/friend`
 * `add n/Betsy Crowe dob/01/01/2001 t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/No Family mh/Insane, but not dangerous b/B+ ap/Patient`
 
+>💡**Tip**: You can refer back to [here](#overview-of-person-attributes), for more details on the person attributes and their formats.
+
+> ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
+
 [🔙 Back to Features](#features)
 [📋 View Person Attributes](#51-overview-of-person-attributes)
 
@@ -241,23 +249,27 @@ Examples:
 
 ### Editing a person: `edit`
 
-Edits an existing person in the address book.
+Edits an existing person's information in MediBook.
 
-Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
+Format: `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3,…​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags or medical history, the existing tags or medical history of the person will be removed i.e adding of tags or medical history is not cumulative.
+* When editing tags or medical history, the existing tags or medical history of the person will be removed i.e. tags or medical history is not cumulative.
 * You can remove all the person’s tags by typing `t/` without specifying any tags after it.
 * You can remove all the person’s medical history by typing `mh/` without specifying any medical history after it.
-* Editing of medical history is only for patients, an error will occur if you try to edit a nurse’s medical history.
-* If a change of appointment is required, patient to nurse, do ensure medical history is cleared before changing appointment. Else if nurse to patient, edit the appointment as required.
+* Editing of medical history is only for patients, an error will occur if you try to add by editing in a medical history to a nurse.
+* If a change of appointment is required, patient to nurse, do ensure medical history is cleared before changing appointment.
+* If a change of appointment is required, nurse to patient, do ensure the nurse has no patients assigned to them before changing appointment.
+* If a change of nurse name is required, do ensure the nurse has no patients assigned to them before changing name.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/ mh/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags and medical history.
-* `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index.
+* `edit 3 t/one t/two mh/one mh/two` Edits the tags and medical history of the person at the third index to the respective values.
+
+> ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
 
 [🔙 Back to Features](#features)
 [📋 View Person Attributes](#51-overview-of-person-attributes)
@@ -525,8 +537,15 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 
 [🔝 Navigate back to Table of Contents](#table-of-contents)
 
-## Colour Legend
+## Duplicate Policy
+MediBook allows all persons to have identical attributes through `edit` and `add` commands. User will be warned if it results in having two person sharing any of these attributes: `Name`, `Date of Birth` and `Phone Number`.
 
+Example:
+> 
+
+[🔝 Navigate back to Table of Contents](#table-of-contents)
+
+## Colour Legend
 Field | Colour
 --------|------------------
 Patient Appointment | Light Blue
