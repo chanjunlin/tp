@@ -160,18 +160,11 @@ public class Person {
         }
 
         return otherPerson != null
-                && name.equals(otherPerson.name)
-                && dob.equals(otherPerson.dob)
-                && phone.equals(otherPerson.phone)
-                && email.equals(otherPerson.email)
-                && address.equals(otherPerson.address)
-                && bloodType.equals(otherPerson.bloodType)
-                && appointment.equals(otherPerson.appointment)
-                && nextOfKin.equals(otherPerson.nextOfKin)
-                && tags.equals(otherPerson.tags)
-                && medicalHistory.equals(otherPerson.medicalHistory)
-                && checkups.equals(otherPerson.checkups);
+                && otherPerson.getName().equals(getName())
+                && otherPerson.getPhone().equals(getPhone())
+                && otherPerson.getDateOfBirth().equals(getDateOfBirth());
     }
+
 
     /**
      * Returns true if the appointment is nurse and false otherwise.
