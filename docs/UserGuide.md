@@ -3,22 +3,22 @@ layout: page
 title: User Guide
 ---
 
-# About Medibook
-MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI), while still offering the benefits of a Graphical User Interface (GUI)**.
+## About Medibook
+MediBook is a **desktop app for private nurse center managers, to manage patient and nurse records, optimized for use via a Command Line Interface (CLI)**, while still offering the benefits of a Graphical User Interface (GUI).
 
 Designed for speed and efficiency, **MediBook** empowers private nurse centres to:
-- assign nurses to patients
-- retrieve patient and nurse information
-- manage checkup sessions and medical history of patients
+- Assign nurses to patients
+- Retrieve patient and nurse information
+- Manage checkup sessions and medical history of patients
 
-All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick installation guide and exploring the Features of the app below!
+All within a user-friendly interface that is faster than traditional pen-and-paper or GUI-based systems. Get ready to revolutionize your private nurse centre management with **MediBook**, by getting started on a quick [Installation Guide](#installation-guide) and exploring the [Features](#features) of the app below!
 
-# Using this User Guide
+## Using this User Guide
 This user guide is designed to help you get started with **MediBook**, and to provide a simple and concise reference if you need any help while using the app. You may click on the words in blue to jump directly to the relevant section of the user guide.
 
 To get an overview of the guide, you can refer to the [Table of contents](#table-of-contents) below.
 
-# Table of Contents
+## Table of Contents
 1. [About Medibook](#about-medibook)
 2. [Using this User Guide](#using-this-user-guide)
 3. [Table of Contents](#table-of-contents)
@@ -41,14 +41,13 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
     * [Viewing a nurse or patient](#viewing-a-nurse-or-patient--view)
     * [Saving the data](#saving-the-data)
     * [Editing the data file](#editing-the-data-file)
-    * [Archiving data files](#archiving-data-files)
 7. [FAQ](#faq)
 8. [Known Issues](#known-issues)
 9. [Command Summary](#command-summary)
 
 --------------------------------------------------------------------------------------------------------------------
 
-# Installation Guide
+## Installation Guide
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    * Steps to check your current Java version, click [here]().
@@ -121,19 +120,19 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 This section provides an overview of all the attributes a person in MediBook can have, including whether they're required, what format they should follow, and any special notes.
 
-| **Attribute** | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                                                                                                       | **Example**                              |
-|---------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| Name          | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive                                                                                       | E.g., `Joh'n-S/O-Doe`                    |
-| Date of Birth | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                                                                                           | E.g., `11/11/2003`                       |
-| Phone Number  | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                                                                                                | E.g., `1234 567 890`                     |
-| Address       | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                                                                                                      | E.g., `10 NUS Road, #03-21`              |
-| Blood Type    | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                                                                                                   | E.g., `A+`, `AB-`, etc.                  |
-| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                                                                                                | E.g., `Nurse` or `Patient`               |
-| Email         | `e/`       | ❌ Optional         | - `local-part@domain.com` <br/>- Local-part (min 2 characters) with special characters (plus, underscore, dot, hyphen) <br/>- Local-part must start with alphanumeric character <br/>- Domain (min 1 character) <br/>- `com` can be replaced with minimum 2 characters | E.g., `john@example.com`                 |
-| Next of Kin   | `nok/`     | ❌ Optional    | - `Name Phone` <br/>- A space is required between `Name` and `Phone` <br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed                  | E.g., `Jane 91234567` |
-| Tags          | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed <br/>- [Colour based](#Colour-Legend)                                                                                                                                        | E.g., `2 Smart`       |
-| Medical History | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed                                                                                  | E.g., `(Very, sick): - urgent/needy12`   |
-| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command <br/>- Each checkup is fixed 30 minutes <br/>- Checkups cannot be scheduled in the past.                                                                                                                                                                  | Not included in `add` command            |
+| **Attribute**    | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                                                                                                       | **Example**                            |
+|------------------|------------|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive                                                                                       | E.g., `Joh'n-S/O-Doe`                  |
+| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                                                                                                           | E.g., `11/11/2003`                     |
+| Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits <br/>- Only numericals and spaces are allowed, no other symbols are allowed                                                                                                | E.g., `1234 567 890`                   |
+| Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                                                                                                      | E.g., `10 NUS Road, #03-21`            |
+| Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                                                                                                                   | E.g., `A+`, `AB-`, etc.                |
+| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                                                                                                                | E.g., `Nurse` or `Patient`             |
+| Email            | `e/`       | ❌ Optional    | - `local-part@domain.com` <br/>- Local-part (min 2 characters) with special characters (plus, underscore, dot, hyphen) <br/>- Local-part must start with alphanumeric character <br/>- Domain (min 1 character) <br/>- `com` can be replaced with minimum 2 characters | E.g., `john@example.com`               |
+| Next of Kin      | `nok/`     | ❌ Optional    | - `Name Phone` <br/>- A space is required between `Name` and `Phone` <br/>- `Name` Same format constraints as the name attribute above <br/>- `Phone` Same format constraints as the phone number attribute above <br/>- Only one Next of Kin allowed                  | E.g., `Jane 91234567`                  |
+| Tags             | `t/`       | ❌ Optional    | - Only alphanumeric and spaces allowed <br/>- Case-sensitive <br/>- Multiple tags allowed <br/>- [Colour based](#Colour-Legend)                                                                                                                                        | E.g., `2 Smart`                        |
+| Medical History  | `m/`       | ❌ Optional*   | - Alphanumerical and spaces <br/>- Special characters (commas, hyphens, slash, rounded brackets, colon)<br/>- Only allowed for **patients** <br/>- Multiple medical histories allowed                                                                                  | E.g., `(Very, sick): - urgent/needy12` |
+| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command <br/>- Each checkup is fixed 30 minutes <br/>- Checkups cannot be scheduled in the past.                                                                                                                                                | Not included in `add` command          |
 
 > ⚠️ **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
 > ✅ Correct: `e/john@example.com`
@@ -187,7 +186,6 @@ Quick Navigation:
 [Viewing person](#viewing-a-nurse-or-patient--view) •
 [Saving data](#saving-the-data) •
 [Editing data file](#editing-the-data-file) •
-[Archiving](#archiving-data-files)
 
 ### Viewing help : `help`
 
@@ -545,12 +543,12 @@ Example:
 [🔝 Navigate back to Table of Contents](#table-of-contents)
 
 ## Colour Legend
-Field | Colour
---------|------------------
-Patient Appointment | Light Blue
-Nurse Appointment | Orange
-Tag | Light Purple
-Checkup | Light brown
-Assigned Nurse | Green
+| Field               | Colour       |
+|---------------------|--------------|
+| Patient Appointment | Light Blue   |
+| Nurse Appointment   | Orange       |
+| Tag                 | Light Purple |
+| Checkup             | Light brown  |
+| Assigned Nurse      | Green        |
 
 [🔝 Navigate back to Table of Contents](#table-of-contents)
