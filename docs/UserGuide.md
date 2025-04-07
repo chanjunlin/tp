@@ -261,11 +261,11 @@ Examples:
 
 [🔙 Back to Features](#features)
 
-### Locating persons by name: `find`
+### Locating persons: `find`
 
 Finds persons whose names contain any of the given keywords or prefixes.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+#### Details 
 
 * The search is case-insensitive. e.g `hans` will match `HANS`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
@@ -274,11 +274,19 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
-Examples:
+#### Format `find KEYWORD [MORE_KEYWORDS]`
+
+#### Parameters
+
+* `KEYWORD`: The keyword to search for in a person's name. May be a full or partial name.
+* `[MORE_KEYWORDS]`: Additional keywords (optional) to further find more than one person.
+
+#### Examples:
 * `find John` returns `john` and `John Doe`
 * `find al` returns `Alex Yeoh` and `Sally`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+* `find alex david` returns `Alex Yeoh`, `David Li`
+
+![result for 'find alex david'](images/findAlexDavidResult.png)
 
 [🔙 Back to Features](#features)
 
@@ -286,14 +294,25 @@ Examples:
 
 Finds patients assigned under a specified nurse.
 
-Format: `find patient of nurse INDEX`
+#### Details
 
-* Finds patients who have the nurse at `INDEX` assigned to them.
+* Finds patients assigned to the nurse at `INDEX`.
+* If no patients are assigned to the nurse, the program will return that no patients were found.
+
+#### Parameters 
+
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3, ... and be within the total number of person in the list.
 
-Examples:
-* `find patient of nurse 1`
+#### Format `find patient of nurse INDEX`
+
+#### Examples
+
+* `find patient of nurse 1` returns e.g: Patient(s) assigned to nurse ALEX YEOH: ROY BALAKRISHNAN.
+* `find patient of nurse 3` returns e.g: No patient assigned to the nurse at index 3. 
+
+![result for 'find patient of nurse 1'](images/FindPatientOfNurse.png)
+![result for 'find patient of nurse 3'](images/FindNoPatient.png)
 
 [🔙 Back to Features](#features)
 
@@ -301,14 +320,25 @@ Examples:
 
 Finds nurse(s) assigned to a specified patient.
 
-Format: `find nurse of patient INDEX`
+#### Details
 
-* Finds the nurse(s) assigned to the patient at `INDEX`.
+* Finds nurse at assigned to the patient at `INDEX`.
+* If no patients are assigned to the nurse, the program will return that no patients were found.
+
+#### Parameters
+
 * The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+* The index **must be a positive integer** 1, 2, 3, ... and be within the total number of person in the list.
 
-Examples:
-* `find nurse of patient 2`
+#### Format `find nurse of patient INDEX`
+
+#### Examples:
+
+* `find nurse of patient 6` returns e.g: Nurse(s) assigned to patient ROY BALAKRISHNAN:  ALEX YEOH,  CHARLOTTE OLIVEIRO.
+* `find nurse of patient 7` returns e.g: No nurse assigned to the patient at index 7.
+
+![result for 'find nurse of patient 6'](images/FindNurseOfPatient.png)
+![result for 'find nurse of patient 7'](images/FindNoNurse.png)
 
 [🔙 Back to Features](#features)
 
@@ -383,9 +413,9 @@ Schedules or deletes checkup sessions for patients.
 
 *   Checkups cannot be scheduled for:
     *   Dates or times in the past (as of the current date and time).
-    *   Times outside of working hours (9:00 AM to 5:00 PM).*   Times that are not in 15-minute increments (e.g., `:00`, `:15`, `:30`, `:45`).
+    *   Times outside of working hours (9:00 AM to 5:00 PM).
+    *   Times that are not in 15-minute increments (e.g., `00`, `15`, `30`, `45`).
     *   Times that are within 30 minutes of an existing checkup.
-*   All Checkups are, by default, 30 minutes duration.
 *   Default timing checkups are for 30 minutes.
 *   The date and time must be in the format `DD/MM/YYYY HHMM`.
 *   A warning will be issued if the target patient doesn't have an assigned nurse.
