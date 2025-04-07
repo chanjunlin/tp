@@ -7,7 +7,7 @@ title: Developer Guide
 ## Table of Contents
 
 1. [Acknowledgements](#acknowledgements)
-1. [Settting up, getting started](#setting-up-getting-started)
+1. [Setting up, getting started](#setting-up-getting-started)
 1. [Design](#design)
    * [Architecture](#architecture)
    * [UI Component](#ui-component)

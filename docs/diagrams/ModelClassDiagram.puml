@@ -42,31 +42,47 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
-Person *--> Name
+Person *-left-> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
-Person *--> "*" Tag
+Person *-right-> "*" Tag
 Person *--> Bloodtype
 Person *--> Appointment
-Person *--> NextOfKin
+Person *-down-> NextOfKin
 Person *--> "*" MedicalHistory
 Person *--> "*" Checkup
-Person *--> DateOfBirth
+Person *-left-> DateOfBirth
 
 I -[hidden]up--> UserPrefs
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
-Email -[hidden]right-> Appointment
-Appointment -[hidden]right-> NextOfKin
-NextOfKin -[hidden]right-> Bloodtype
-Bloodtype -[hidden]right-> DateOfBirth
-Bloodtype -[hidden]right-> Tag
+Name -[hidden]down-> Phone
+Name -[hidden]down-> NextOfKin
+Tag -[hidden]down-> MedicalHistory
+Tag -[hidden]down-> Bloodtype
+
+Phone -[hidden]down-> Email
+Phone -[hidden]right-> NextOfKin
+NextOfKin -[hidden]down->DateOfBirth
+NextOfKin -[hidden]right-> Address
+NextOfKin -[hidden]down->Email
+
+Address -[hidden]down-> Appointment
+Address -[hidden]right->Bloodtype
+Address -[hidden]down->DateOfBirth
+Bloodtype -[hidden]down-> Checkup
+Bloodtype -[hidden]down-> Appointment
+Bloodtype -[hidden]right-> MedicalHistory
+MedicalHistory -[hidden]down->Checkup
+
+
+DateOfBirth -[hidden]up-> Address
+DateOfBirth -[hidden]up->NextOfKin
+Appointment -[hidden]up-> Bloodtype
+Checkup -[hidden]up->Bloodtype
 
 ModelManager --> "~* filtered" Person
-ModelManager --> "~* sorted" Person
+'ModelManager --> "~* sorted" Person
 @enduml
