@@ -50,16 +50,20 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 # Installation Guide
 
 1. Ensure you have Java `17` or above installed in your Computer.<br>
-   *
-   * **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+   * Steps to check your current Java version, click [here]().
+   * Steps to install Java in your computer, click [here](https://se-education.org/guides/tutorials/javaInstallation.html).
+   * **For Mac users:** Ensure you have the precise Java version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
+> 🧠 **Why do I have to install Java?**
+> - Java is a versatile programming language that lets apps run on any device with a Java Virtual Machine (JVM). Once installed, you can run any Java app, including MediBook. You can find out more about Java [here]().
+
+2. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-T13-2/tp/releases).
    - [What is a JAR file?](https://docs.oracle.com/javase/8/docs/technotes/guides/jar/jarGuide.html)
 
-1. Copy the file to the folder you want to use as the _home folder_ for MediBook.
+3. Copy the file to an empty folder you want to use as the _home folder_ for MediBook.
    - MediBook will create a data folder in this _home folder_ to store your [data files](#faq).
 
-1. Open a command terminal, run the following commands:<br>
+4. Open a [command terminal](), run the following commands:<br>
    ```
    cd home_folder
    java -jar MediBook.jar
@@ -75,14 +79,14 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe dob/01/01/2025 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Patient` : Adds a contact named `John Doe` to the Address Book.
+   * `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/AB+ ap/Patient nok/Jane 91234567 t/Big Boy mh/High Blood Pressure` : Adds a contact named `John Doe` to MediBook.
 
-   * `edit 2 b/AB-` : Edits the blood type of the 2nd contact shown in the current list.
+   * `edit 2 b/O+` : Edits the blood type of the 2nd contact shown in the current list to O+.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -106,7 +110,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 [🔝 Navigate back to Table of Contents](#table-of-contents)
 
@@ -116,19 +120,19 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
 
 This section provides an overview of all the attributes a person in MediBook can have, including whether they're required, what format they should follow, and any special notes.
 
-| **Attribute**     | **Prefix** | **Required?** | **Valid Format / Example**           | **Notes**                                |
-|------------------|------------|---------------|--------------------------------------|------------------------------------------|
-| Name             | `n/`       | ✅ Yes         | Alphanumeric and spaces              | E.g., `John Doe`                         |
-| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                         | E.g., `11/11/2003`                       |
-| Phone Number     | `p/`       | ✅ Yes         | 8-digit number                       | E.g., `9123 1234`                        |
-| Address          | `a/`       | ✅ Yes         | Free text                            | E.g., `10 NUS Road, #03-21`              |
-| Blood Type       | `b/`       | ✅ Yes         | `A+`, `AB-`, etc.                    | Standard blood group types               |
-| Appointment Type | `ap/`      | ✅ Yes         | `Nurse` or `Patient`                | Case-insensitive                         |
-| Email            | `e/`       | ✅ Yes         | Valid email format                   | E.g., `john@example.com`                 |
-| Next of Kin      | `nok/`     | ❌ Optional    | `Name Phone`                         | E.g., `Jane 91234567`, or can be omitted |
-| Tags             | `t/`       | ❌ Optional    | Alphanumeric                         | Multiple tags allowed                    |
-| Medical History  | `m/`       | ❌ Optional*   | Free text                            | ❗ Only allowed for **patients**          |
-| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command      | Not included in `add` command            |
+| **Attribute**     | **Prefix** | **Required?** | **Valid Format**                                                                                                                                                                 | **Example**                              |
+|------------------|------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| Name             | `n/`       | ✅ Yes         | - Alphabetical<br/>- **Non consecutive** special characters (hyphens, slash, apostrophes)<br/>- Spaces<br/>- Cannot start or end with a special character<br/>- Case-insensitive | E.g., `Joh'n-S/O-Doe`                    |
+| Date of Birth    | `dob/`     | ✅ Yes         | `dd/mm/yyyy`                                                                                                                                                                     | E.g., `11/11/2003`                       |
+| Phone Number     | `p/`       | ✅ Yes         | - Max allowable is 17 digits<br/>- Spaces are allowed, but each group requires min 3 digits                                                                                      | E.g., `1234 567 890`                     |
+| Address          | `a/`       | ✅ Yes         | -  Free text<br/>- Case-sensitive                                                                                                                                                | E.g., `10 NUS Road, #03-21`              |
+| Blood Type       | `b/`       | ✅ Yes         | - Standard blood group types <br/>- Case-insensitive                                                                                                                             | E.g., `A+`, `AB-`, etc.                  |
+| Appointment Type | `ap/`      | ✅ Yes         | - Appointment type of personnel <br/>- Case-insensitive                                                                                                                          | E.g., `Nurse` or `Patient`                                   |
+| Email            | `e/`       | ✅ Yes         | Valid email format                                                                                                                                                               | E.g., `john@example.com`                 |
+| Next of Kin      | `nok/`     | ❌ Optional    | `Name Phone`                                                                                                                                                                     | E.g., `Jane 91234567`, or can be omitted |
+| Tags             | `t/`       | ❌ Optional    | Alphanumeric                                                                                                                                                                     | Multiple tags allowed                    |
+| Medical History  | `m/`       | ❌ Optional*   | Free text                                                                                                                                                                        | ❗ Only allowed for **patients**          |
+| Checkups         | *(N/A)*    | ❌ Optional    | Managed via `schedule` command                                                                                                                                                   | Not included in `add` command            |
 
 > **Note:** Optional fields are marked with square brackets in command formats for readability. **Do not include square brackets in your actual command input.**
 > ✅ Correct: `e/john@example.com`
