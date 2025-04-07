@@ -29,7 +29,7 @@ To get an overview of the guide, you can refer to the [Table of contents](#table
     * [Adding a person](#adding-a-person-add)
     * [Listing all persons](#listing-persons-list)
     * [Editing a person](#editing-a-person-edit)
-    * [Locating persons by name](#locating-persons-by-name-find)
+    * [Locating persons by name](#locating-persons-find)
     * [Finding patients](#finding-patient-find-patient-of-nurse-)
     * [Finding nurse](#finding-nurse-find-nurse-of-patient)
     * [Deleting a person](#deleting-a-person--delete)
@@ -219,7 +219,6 @@ Examples:
 > ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
 
 [🔙 Back to Features](#features)
-[📋 View Person Attributes](#51-overview-of-person-attributes)
 
 ### Listing persons: `list`
 
@@ -272,7 +271,7 @@ Examples:
 > ⚠️ **Contraints:** MediBook has a duplicate policy which you can view [here](#duplicate-policy).
 
 [🔙 Back to Features](#features)
-[📋 View Person Attributes](#51-overview-of-person-attributes)
+[📋 View Person Attributes](#overview-of-person-attributes)
 
 ### Locating persons: `find`
 
@@ -519,21 +518,21 @@ Furthermore, certain edits can cause the MediBook to behave in unexpected ways (
 
 ## Command summary
 
-| **Action**                                                | **Format, Examples** |
-|-----------------------------------------------------------|----------------------|
-| [**Add**](#adding-a-person-add)                           | `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOODT_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse` |
-| [**Clear**](#clearing-all-entries--clear)                 | `clear` |
-| [**Delete**](#deleting-a-person--delete)                  | `delete INDEX`<br> e.g., `delete 3` |
-| [**Edit**](#editing-a-person-edit)                        | `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com` |
-| [**Find**](#locating-persons-by-name-find)                | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake` |
-| [**Find Patient**](#finding-patient-find-patient-of-nurse-) | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1` |
-| [**Find Nurse**](#finding-nurse-find-nurse-of-patient)    | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2` |
-| [**List**](#listing-persons-list)                         | `list` `list nurse` `list patient` `list checkup` |
-| [**Help**](#viewing-help--help)                           | `help` |
-| [**Assign**](#assign-a-nurse-to-a-patient--assign)        | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1` |
-| [**Assign Delete**](#delete-nurse-assignment-from-a-patient--assign-delete)                                     | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2` |
-| [**Schedule**](#schedule-checkup-appointments--schedule-add-for-patient--schedule-delete-for-patient)                        | `schedule add for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100` |
-| [**View**](#viewing-a-nurse-or-patient--view)                   | `view INDEX`<br> e.g., `view 2` |
+| **Action**                                                                                            | **Format, Examples**                                                                                                                                                                                                                                                      |
+|-------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [**Add**](#adding-a-person-add)                                                                       | `add n/NAME dob/DOB p/PHONE_NUMBER a/ADDRESS b/BLOODT_TYPE ap/APPOINTMENT [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `add n/John Doe dob/01/01/2001 p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/AB+ ap/Nurse` |
+| [**Clear**](#clearing-all-entries--clear)                                                             | `clear`                                                                                                                                                                                                                                                                   |
+| [**Delete**](#deleting-a-person--delete)                                                              | `delete INDEX`<br> e.g., `delete 3`                                                                                                                                                                                                                                       |
+| [**Edit**](#editing-a-person-edit)                                                                    | `edit INDEX [n/NAME] [dob/DOB] [p/PHONE] [a/ADDRESS] [b/BLOOD_TYPE] [ap/APPOINTMENT] [e/EMAIL] [nok/NEXT_OF_KIN_NAME_PHONE] [t/TAG]…​ [mh/MEDICAL_HISTORY]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`                                                       |
+| [**Find**](#locating-persons-find)                                                                                 | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake` |
+| [**Find Patient**](#finding-patient-find-patient-of-nurse-)                                           | `find patient of nurse INDEX`<br> e.g., `find patient of nurse 1`                                                                                                                                                                                                         |
+| [**Find Nurse**](#finding-nurse-find-nurse-of-patient)                                                | `find nurse of patient INDEX`<br> e.g., `find nurse of patient 2`                                                                                                                                                                                                         |
+| [**List**](#listing-persons-list)                                                                     | `list` `list nurse` `list patient` `list checkup`                                                                                                                                                                                                                         |
+| [**Help**](#viewing-help--help)                                                                       | `help`                                                                                                                                                                                                                                                                    |
+| [**Assign**](#assign-a-nurse-to-a-patient--assign)                                                    | `assign PATIENT_INDEX NURSE_INDEX`<br> e.g., `assign 2 1`                                                                                                                                                                                                                 |
+| [**Assign Delete**](#delete-nurse-assignment-from-a-patient--assign-delete)                           | `assign delete NURSE_NAME PATIENT_INDEX`<br> e.g., `assign delete john doe 2`                                                                                                                                                                                             |
+| [**Schedule**](#schedule-checkups-schedule-add-for-patient--schedule-delete-for-patient) | `schedule add for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule add for patient 2 01/01/2025 1100`<br>`schedule delete for patient PATIENT_INDEX DATE_TIME`<br> e.g., `schedule delete for patient 2 01/01/2025 1100`                                              |
+| [**View**](#viewing-a-nurse-or-patient--view)                                                         | `view INDEX`<br> e.g., `view 2`                                                                                                                                                                                                                                           |
 
 [🔝 Navigate back to Table of Contents](#table-of-contents)
 
