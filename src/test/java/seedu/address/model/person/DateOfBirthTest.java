@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.model.person.DateOfBirth.FUTURE_DOB;
 
 import org.junit.jupiter.api.Test;
 
@@ -69,9 +70,9 @@ public class DateOfBirthTest {
     }
 
     @Test
-    public void toString_returnsCorrectFormat() {
+    public void toString_returnFutureDateError() {
         DateOfBirth dob = new DateOfBirth("31/12/2025");
-        assertEquals("31/12/2025", dob.toString());
+        assertEquals(FUTURE_DOB, dob.toString());
     }
 
     @Test
