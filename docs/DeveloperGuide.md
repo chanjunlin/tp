@@ -519,11 +519,11 @@ testers are expected to do more *exploratory* testing.
 1. Adding a person using only compulsory fields
    1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
     Expected: Creates a new patient contact with the minimum fields included.
-1. Adding a duplicate person 
+1. Adding a duplicate person
    1. Prerequisites: A person by the name of John Sim has been created either through the previous test case or by manual testing.
    1. Test case: `add n/John Sim dob/01/01/2025 p/98765432 a/123 Block 7 b/AB+ ap/patient` <br>
    Expected: No person is created. Error message shows "This person already exists in the address book"
-1. Other incorrect commands to try: 
+1. Other incorrect commands to try:
    1. Invalid names: names containing non-alphabetical symbols
    1. Invalid number: Less than 3 digits or non integer inputs
    1. Invalid Date of Birth: Non integer and non slash inputs, incorrect date format (DD/MM/YYYY)
@@ -571,7 +571,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `find hn`<br>
       Expected: Displays contacts whose names contain `hn` in any part of their name. E.g. `John` will be displayed.
    2. Test case: `find hn ce`<br>
-      Expected: Displays contacts whose name contain `hn` or `ce` in any part of their name. E.g. `John` and Alice will be displayed. 
+      Expected: Displays contacts whose name contain `hn` or `ce` in any part of their name. E.g. `John` and Alice will be displayed.
 1. Finding nurse(s) assigned to a patient
    1. Prerequisites: List persons using any `list` command. Multiple persons in the list. At least 1 patient has a nurse assigned to them.
    1. Test case: `find nurse of patient 2`<br>
